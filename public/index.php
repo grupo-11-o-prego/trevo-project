@@ -16,15 +16,17 @@ $conn = new DBConnection;
 $con = $conn->getConn();
 
 
-$baseFolder = '/trevo/public';
+$baseFolder = '/trevo/trevo-project/public';
 switch (Controller::requestUrl($baseFolder)) {
     case '/' :
-        require __DIR__ . '/../app/controllers/HomeController.php';
+        echo "Página inicial";
+        var_dump($baseFolder);
+        // require __DIR__ . '/../app/controllers/HomeController.php';
 
-        $session = new SessionController;
-        // $session->protect();
-        $controller = new \App\Controllers\HomeController;
-        $controller->index();
+        // $session = new SessionController;
+        // // $session->protect();
+        // $controller = new \App\Controllers\HomeController;
+        // $controller->index();
         break;
 
     case '/login' :
@@ -69,7 +71,7 @@ switch (Controller::requestUrl($baseFolder)) {
     case '/api/login':
         require __DIR__ . '/../app/controllers/UserController.php';
         $controller = new \App\Controllers\UserController;
-        $controller->login($controller);
+        $controller->login();
     
         echo json_encode(['error' => 'Requisicao POST nao realizada.']);
         break;

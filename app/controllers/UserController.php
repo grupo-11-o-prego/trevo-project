@@ -26,11 +26,11 @@ class UserController {
 
     public function viewTrocaVendedor() { include_once('../views/crud-user/modovendedor.html'); }
 
-    public function login($controller) {
+    public function login() {
 
         if (isset($_POST)) {
             header('Content-Type: application/json'); // Define o tipo de resposta como JSON
-            $user = $controller->auth();
+            $user = $this->auth();
             if (isset($user)) {
                 echo json_encode(['sucesso' => true]);
                 $session = new SessionController;
