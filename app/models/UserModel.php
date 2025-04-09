@@ -90,12 +90,14 @@ class UserModel {
                 // Query via email
                 $stmt = $this->conn->prepare("SELECT * FROM usuarios_tb WHERE user_email = :email");
                 $stmt->bindParam(':email', $email);
+            } else {
+                $stmt = $this->conn->prepare("SELECT * FROM usuarios_tb");
             }
 
+            
             $stmt->execute();
 
             $user = $stmt->fetch(\PDO::FETCH_ASSOC);
-
             return $user;
 
         } catch (\Exception $e) {
@@ -113,9 +115,12 @@ class UserModel {
 
             $stmt->execute();
 
-            $user = $stmt->fetch(\PDO::FETCH_ASSOC);
-
-            return $user;
+            $row = $stmt->rowCount();
+            if ($row > 0) {
+                return true;
+            } else {
+                return false;
+            }
 
         } catch (\Exception $e) {
             echo 'Erro ao deletar usuário: ' . $e->getMessage();

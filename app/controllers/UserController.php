@@ -38,7 +38,6 @@ class UserController {
             } else {
                 echo json_encode(['sucesso' => false]);
             }
-            break;
         }
 
     }
@@ -109,8 +108,9 @@ class UserController {
         }
     }
     
-    public function trocaNome($id)
+    public function trocaNome()
     {
+        $id = $_POST['id'];
         $nome = $_POST['nome'];
         $model = new UserModel;
         $result = $model->trocaNome($id, $nome);

@@ -16,7 +16,7 @@ $conn = new DBConnection;
 $con = $conn->getConn();
 
 
-$baseFolder = '/trevo/trevo-project/public';
+$baseFolder = '/trevo-project/public';
 switch (Controller::requestUrl($baseFolder)) {
     case '/' :
         echo "Página inicial";
@@ -82,6 +82,49 @@ switch (Controller::requestUrl($baseFolder)) {
         if (isset($_POST)) {
             header('Content-Type: application/json'); // Define o tipo de resposta como JSON
             $response = $controller->cadastrar();
+            echo json_encode($response);
+            break;
+        }
+        echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
+        break;
+
+    case '/api/getuser':
+        require __DIR__ . '/../app/controllers/UserController.php';
+        $controller = new \App\Controllers\UserController;
+        $params = Controller::queryParams();
+        header('Content-Type: application/json'); // Define o tipo de resposta como JSON
+
+        $response = $controller->getUser($params);
+        echo json_encode(['user' => $response]);
+    
+        if(!isset($response)) {
+            echo json_encode(['error' => 'Requisicao GET nao realizada.']);
+        }
+        break;
+
+
+    case '/api/deleteuser':
+        require __DIR__ . '/../app/controllers/UserController.php';
+        $controller = new \App\Controllers\UserController;
+        $params = Controller::queryParams();
+        header('Content-Type: application/json'); // Define o tipo de resposta como JSON
+
+        $response = $controller->deletar($params['id']);
+    
+        if($response) {
+            echo json_encode(['success' => 'Usuário deletado.']);
+        } else {
+            echo json_encode(['error' => 'Requisicao GET nao realizada.']);
+        }
+        break;
+
+
+    case '/api/alterarnome':
+        require __DIR__ . '/../app/controllers/UserController.php';
+        $controller = new \App\Controllers\UserController;
+        if (isset($_POST)) {
+            header('Content-Type: application/json'); // Define o tipo de resposta como JSON
+            $response = $controller->trocaNome();
             echo json_encode($response);
             break;
         }
