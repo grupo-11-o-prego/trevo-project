@@ -25,6 +25,7 @@ class DBConnection {
             $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch(\Exception $e) {
             echo 'Falha ao conectar: ' . $e->getMessage();
+            exit;
         }
     }
 

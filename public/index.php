@@ -19,14 +19,14 @@ $con = $conn->getConn();
 $baseFolder = '/trevo-project/public';
 switch (Controller::requestUrl($baseFolder)) {
     case '/' :
-        echo "Página inicial";
-        var_dump($baseFolder);
-        // require __DIR__ . '/../app/controllers/HomeController.php';
+        // echo "Página inicial";
+        // var_dump($baseFolder);
+        require __DIR__ . '/../app/controllers/HomeController.php';
 
         // $session = new SessionController;
         // // $session->protect();
-        // $controller = new \App\Controllers\HomeController;
-        // $controller->index();
+        $controller = new \App\Controllers\HomeController;
+        $controller->index();
         break;
 
     case '/login' :

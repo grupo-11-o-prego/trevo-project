@@ -10,7 +10,7 @@ class UserController {
     
     public function index() { include_once('../views/home/login.html'); }
 
-    public function cadastroUsuario() { include_once('../views/home/cadastro.html'); }
+    public function cadastroUsuario() { include_once('../views/index.html'); }
     
     public function usuario() { include_once('../views/home/usuario.html'); }
 
