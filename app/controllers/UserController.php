@@ -8,6 +8,8 @@ use App\Models\UserModel;
 
 class UserController {
     
+    private $tabela = 'usuarios_tb';
+
     public function index() { include_once('../views/home/login.html'); }
 
     public function cadastroUsuario() { include_once('../views/index.html'); }
@@ -47,11 +49,11 @@ class UserController {
         $model = new UserModel;
 
         if (isset($get['id'])) {
-            $result = $model->getUser($get['id']);
+            $result = $model->get(false, $this->tabela, 'user_id', $get['id']);
         } else if (isset($get['email'])) {
-            $result = $model->getUser(false, $get['email']);
+            $result = $model->get(false, $this->tabela, 'user_email', $get['email']);
         } else {
-            $result = $model->getUser($get);
+            $result = $model->get(true, $this->tabela);
         }
 
         return $result;
@@ -64,7 +66,7 @@ class UserController {
 
         $model = new UserModel;
         $userAuth = $model->findLogin($email, $senha);
-        $user = $model->getUser(null, $email);
+        $user = $model->get(false, $this->tabela, 'user_email', $email);
         if ($userAuth) {
             return $user;
         } else {
@@ -87,11 +89,11 @@ class UserController {
 
     public function findUser($id = null, $email = null)
     {
-        $user = new UserModel;
+        $model = new UserModel;
         if (isset($id)){
-            return $user->getUser($id);
+            return $model->get(false, $this->tabela, 'user_id', $id);
         } else if (isset($email)) {
-            return $user->getUser($email);
+            return $model->get(false, $this->tabela, 'user_email', $email);
         }
     }
 

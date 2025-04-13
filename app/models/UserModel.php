@@ -4,17 +4,20 @@ namespace App\Models;
 
 include_once __DIR__ . '/../../config/DBConnection.php';
 include_once __DIR__ . '/../../database/TimeStamp.php';
+include_once __DIR__ . '/Model.php';
 
 use Config\DBConnection;
 use Database\TimeStamp;
+use App\Models\Model;
 
-class UserModel {
+class UserModel extends Model {
     
     private $conn;
 
+    private $tabela = 'usuarios_tb';
+
     public function __construct() {
-        $db = new DBConnection();
-        $this->conn = $db->getConn();
+        parent::__construct();
     }
 
     public function cadastrar($nome, $email, $data_nasc, $contato, $senha) {
@@ -78,34 +81,6 @@ class UserModel {
         }
     }
 
-    public function getUser($id = null, $email = null)
-    {
-        try{
-            if (isset($id)) {
-                // Query via ID
-                $stmt = $this->conn->prepare("SELECT * FROM usuarios_tb WHERE user_id = :id");
-                $stmt->bindParam(':id', $id);
-
-            } else if (isset($email)) {
-                // Query via email
-                $stmt = $this->conn->prepare("SELECT * FROM usuarios_tb WHERE user_email = :email");
-                $stmt->bindParam(':email', $email);
-            } else {
-                $stmt = $this->conn->prepare("SELECT * FROM usuarios_tb");
-            }
-
-            
-            $stmt->execute();
-
-            $user = $stmt->fetch(\PDO::FETCH_ASSOC);
-            return $user;
-
-        } catch (\Exception $e) {
-            echo json_encode(["message" => 'Erro ao buscar usuário: ' . $e->getMessage()]);
-            return null;
-        }
-    }
-
     public function deletar($id)
     {
         try{
@@ -138,7 +113,7 @@ class UserModel {
             $result = $stmt->execute();
 
             if ($result) {
-                $user = $this->getUser($id);
+                $user = $this->get(false, $this->tabela, 'user_id', $id);
                 return ["sucesso" => true, "result" => $user];
             } else {
                 return ["sucesso" => false];
@@ -170,7 +145,7 @@ class UserModel {
                     $result = $stmt->execute();
 
                     if ($result) {
-                        $user = $this->getUser($id);
+                        $user = $this->get(false, $this->tabela, 'user_id', $id);
                         return ["sucesso" => true, "result" => $user];
                     }
                 } else {
@@ -195,7 +170,7 @@ class UserModel {
             $result = $stmt->execute();
 
             if ($result) {
-                $user = $this->getUser($id);
+                $user = $this->get(false, $this->tabela, 'user_id', $id);
                 return ["sucesso" => true, "result" => $user];
             } else {
                 return ["sucesso" => false];
@@ -217,7 +192,7 @@ class UserModel {
             $result = $stmt->execute();
 
             if ($result) {
-                $user = $this->getUser($id);
+                $user = $this->get(false, $this->tabela, 'user_id', $id);
                 return ["sucesso" => true, "result" => $user];
             } else {
                 return ["sucesso" => false];

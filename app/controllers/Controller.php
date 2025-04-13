@@ -4,7 +4,7 @@ namespace App\Controllers;
 
 class Controller {
 
-      /**
+    /**
      * Método estático para retornar o URL PATH da requisição
      * 
      * @param string $baseFolder - Caminho base do projeto
