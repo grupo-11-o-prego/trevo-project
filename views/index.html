@@ -3,13 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Layout com Tailwind</title>
+    <title>Home</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
     <link href="src/output.css" rel="stylesheet" />
+    <link rel="icon" href="#" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="../public/assets/js/home.js"></script>
   </head>
   <body class="h-screen overflow-hidden font-poppins">
     <header
@@ -17,79 +19,71 @@
     >
       <div class="text-xl font-bold">LOGO</div>
       <div class="flex gap-4">
-        <button
+        <a
+          href="/trevo-project/public/cadastro"
           class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 text-[#6F23D9] hover:scale-110 transition duration-300 cursor-pointer font-semibold"
         >
           Cadastrar
-        </button>
-        <button
+        </a>  
+        <a
+        href="/trevo-project/public/login"
           class="px-4 py-2 bg-[#6F23D9] rounded hover:bg-[#4f179c] text-white cursor-pointer hover:scale-110 transition duration-300"
         >
           Login
-        </button>
+        </a>
       </div>
     </header>
     <aside
-      class="fixed top-16 left-0 w-48 h-[calc(100vh-4rem)] bg-gray-100 r p-4 flex flex-col gap-4 shadow"
+      class="fixed top-16 left-0 w-72 h-[calc(100vh-4rem)] bg-gray-100 p-4 flex flex-col gap-4 shadow overflow-y-auto"
     >
       <button
-        class="py-2 px-3 bg-white rounded shadow hover:bg-gray-50 flex justify-center items-center"
+        onclick="functionDescer()"
+        class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-book-fill"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783"
-          />
-        </svg>
+        <object id="bookIcon" data="../public/assets/svg/bookpreto.svg" type="image/svg+xml"></object>
         <span class="ml-2">Livros</span>
       </button>
-      <button
-        class="py-2 px-3 bg-white rounded shadow hover:bg-gray-50 flex justify-center items-center"
+      <ul class="list-disc flex flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0" id="escondido">
+        <li><a href="#" class=" hover:bg-gray-100">Todos os Livros</a></li>
+        <li><a href="#" class=" hover:bg-gray-100">Favoritos</a></li>
+        <li><a href="#" class=" hover:bg-gray-100">Categorias</a></li>
+      </ul>
+      <!-- <div
+        id="escondido"
+        class="flex flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0"
       >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-chat-right-text-fill"
-          viewBox="0 0 16 16"
-        >
-          <path
-            d="M16 2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h9.586a1 1 0 0 1 .707.293l2.853 2.853a.5.5 0 0 0 .854-.353zM3.5 3h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1m0 2.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1 0-1m0 2.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1 0-1"
-          />
-        </svg>
+        <a href="#" class=" hover:bg-gray-100">Todos os Livros</a>
+        <a href="#" class=" hover:bg-gray-100">Favoritos</a>
+        <a href="#" class=" hover:bg-gray-100">Categorias</a>
+      </div> -->
+      <button
+        class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center"
+      >
         <span class="ml-2">Fórum</span>
       </button>
       <button
-        class="py-2 px-3 bg-white rounded shadow hover:bg-gray-50 flex justify-center items-center"
+        class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center"
       >
-        <span class="ml-2">Livros</span>
+        <span class="ml-2">Biblioteca</span>
       </button>
       <button
-        class="py-2 px-3 bg-white rounded shadow hover:bg-gray-50 flex justify-center items-center"
+        class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center"
       >
-        <span class="ml-2">Livros</span>
+        <span class="ml-2">Configurações</span>
       </button>
     </aside>
     <main
-      class="ml-48 mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-6 bg-gray-50"
+      class="ml-72 mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-6 bg-gray-50"
     >
       <div class="mb-6 max-w-md relative">
         <input
           type="text"
           placeholder="Pesquisar..."
-          class="w-full px-4 py-2 pr-10 border rounded shadow-sm focus:outline-none"
+          class="w-full px-4 py-2 pr-10 bg-white rounded shadow-md focus:outline-none"
         />
         <div
           class="absolute inset-y-0 right-3 flex items-center pointer-events-none"
         >
-          <!-- Ícone de lupa SVG -->
           <svg
             xmlns="http://www.w3.org/2000/svg"
             class="h-5 w-5 text-gray-400"
@@ -107,30 +101,39 @@
         </div>
       </div>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
           <div class="h-48 bg-gray-300"></div>
           <div class="p-4">
             <h3 class="text-lg font-semibold mb-1">Título do Post</h3>
+            <span>Theo Otto</span>
             <div class="flex justify-between items-center text-sm">
+              
               <span>R$ 100,00</span>
-              <button>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  class="bi bi-heart"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"
-                  />
-                </svg>
+              <button
+                id="iconBtn"
+                class="cursor-pointer transition duration-300"
+                onclick="mudaCoracao()"
+              >
+                <span id="coracao_cheio">
+                  
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="23"
+                    height="23"
+                    fill="currentColor"
+                    class="bi bi-heart fill-gray-400 hover:fill-red-500 transition duration-300"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"
+                    />
+                  </svg>
+                </span>
               </button>
             </div>
           </div>
         </div>
-        <div class="bg-white rounded-lg shadow overflow-hidden">
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
           <div class="h-48 bg-gray-300"></div>
           <div class="p-4">
             <h3 class="text-lg font-semibold mb-1">Outro Post</h3>

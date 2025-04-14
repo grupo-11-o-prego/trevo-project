@@ -10,9 +10,9 @@ class UserController {
     
     private $tabela = 'usuarios_tb';
 
-    public function index() { include_once('../views/home/login.html'); }
+    public function index() { include_once('../views/login.html'); }
 
-    public function cadastroUsuario() { include_once('../views/index.html'); }
+    public function cadastroUsuario() { include_once('../views/cadastro.html'); }
     
     public function usuario() { include_once('../views/home/usuario.html'); }
 
