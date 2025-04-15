@@ -84,9 +84,9 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
             header('Content-Type: application/json'); // Define o tipo de resposta como JSON
             $response = $controller->cadastrar();
             echo json_encode($response);
-            break;
+        } else {
+            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         }
-        echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         break;
 
     case '/api/getuser':

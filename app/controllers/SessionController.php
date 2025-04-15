@@ -2,9 +2,6 @@
 
 namespace App\Controllers;
 
-use Includes\EnvLoader;
-EnvLoader::load(__DIR__ . '/../../.env');
-
 class SessionController
 {
     public function __construct()
@@ -92,6 +89,6 @@ class SessionController
     {
         session_unset();
         session_destroy();
-        header('Location: ' . getenv('BASE_URL') . '/login');
+        header('Location: /trevo/public/login');
     }
 }

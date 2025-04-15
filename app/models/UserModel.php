@@ -2,17 +2,13 @@
 
 namespace App\Models;
 
-include_once __DIR__ . '/../../config/DBConnection.php';
 include_once __DIR__ . '/../../database/TimeStamp.php';
 include_once __DIR__ . '/Model.php';
 
-use Config\DBConnection;
 use Database\TimeStamp;
 use App\Models\Model;
 
 class UserModel extends Model {
-    
-    private $conn;
 
     private $tabela = 'usuarios_tb';
 
@@ -41,11 +37,8 @@ class UserModel extends Model {
             
                 $result = $stmt->execute();
 
-                if ($result) {
-                    return ["sucesso" => true, "result" => $result];
-                } else {
-                    return ["sucesso" => false, "message" => "Ocorreu um erro cadastrar."];
-                }
+                return $result ?  ["sucesso" => true, "result" => $result] : ["sucesso" => false, "message" => "Ocorreu um erro cadastrar."];
+
             } else {
                 return ["sucesso" => false, "message" => "E-mail já cadastrado!"];
             }
@@ -53,8 +46,7 @@ class UserModel extends Model {
             
 
         } catch (\Exception $e) {
-            echo json_encode(["message" => 'Erro ao cadastrar usuario: ' . $e->getMessage()]);
-            return null;
+            return ["sucesso" => false, "message" => $e->getMessage()];
         }
     }
 

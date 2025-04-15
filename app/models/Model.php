@@ -10,7 +10,7 @@ use Config\DBConnection;
 
 class Model {
 
-    private $conn;
+    protected $conn;
 
     public function __construct() {
         $db = new DBConnection();
