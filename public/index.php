@@ -3,21 +3,20 @@
 include_once('../app/controllers/Controller.php');
 include_once('../app/controllers/SessionController.php');
 include_once('../config/DBConnection.php');
+include_once('../includes/EnvLoader.php');
 
-
+use Includes\EnvLoader;
 use App\Controllers\Controller;
 use Config\DBConnection;
 use App\Controllers\SessionController;
 
-
+EnvLoader::load(__DIR__ . '/../.env');
 Controller::queryParams();
 
 $conn = new DBConnection;
 $con = $conn->getConn();
 
-
-$baseFolder = '/trevo-project/public';
-switch (Controller::requestUrl($baseFolder)) {
+switch (Controller::requestUrl(getenv('BASE_URL'))) {
     case '/' :
         // echo "Página inicial";
         // var_dump($baseFolder);
@@ -48,7 +47,9 @@ switch (Controller::requestUrl($baseFolder)) {
 
 
     //========================== API ==========================
-    
+
+
+    // -------- USUÁRIO --------
     case '/api/logado' :
         require __DIR__ . '/../app/controllers/UserController.php';
         $controller = new \App\Controllers\UserController;
