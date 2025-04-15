@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ERRO 404</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body>
+    <script>
+		swal.fire({
+            title: "Página não encontrada",
+            text: "",
+            icon: "error",
+            button: {
+                text: "Quero ver!"
+            }
+        }).
+        then((value) => {
+            javascript:history.back();
+        });
+	</script>
+</body>
+</html>

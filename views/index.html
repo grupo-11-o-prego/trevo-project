@@ -24,9 +24,9 @@
           class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 text-[#6F23D9] hover:scale-110 transition duration-300 cursor-pointer font-semibold"
         >
           Cadastrar
-        </a>  
+        </a>
         <a
-        href="/trevo-project/public/login"
+          href="/trevo-project/public/login"
           class="px-4 py-2 bg-[#6F23D9] rounded hover:bg-[#4f179c] text-white cursor-pointer hover:scale-110 transition duration-300"
         >
           Login
@@ -40,22 +40,31 @@
         onclick="functionDescer()"
         class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center"
       >
-        <object id="bookIcon" data="../public/assets/svg/bookpreto.svg" type="image/svg+xml"></object>
+        <object
+          id="bookIcon"
+          data="../public/assets/svg/bookpreto.svg"
+          type="image/svg+xml"
+        ></object>
         <span class="ml-2">Livros</span>
       </button>
-      <ul class="list-disc flex flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0" id="escondido">
-        <li><a href="#" class=" hover:bg-gray-100">Todos os Livros</a></li>
-        <li><a href="#" class=" hover:bg-gray-100">Favoritos</a></li>
-        <li><a href="#" class=" hover:bg-gray-100">Categorias</a></li>
-      </ul>
-      <!-- <div
+      <div
         id="escondido"
-        class="flex flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0"
+        class="rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0"
       >
-        <a href="#" class=" hover:bg-gray-100">Todos os Livros</a>
-        <a href="#" class=" hover:bg-gray-100">Favoritos</a>
-        <a href="#" class=" hover:bg-gray-100">Categorias</a>
-      </div> -->
+        <ul
+          class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400"
+        >
+          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200">
+            <a href="#">Todos os Livros</a>
+          </li>
+          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200">
+            <a href="#">Empréstimos</a>
+          </li>
+          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200">
+            <a href="#">Trocas</a>
+          </li>
+        </ul>
+      </div>
       <button
         class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center"
       >
@@ -107,7 +116,6 @@
             <h3 class="text-lg font-semibold mb-1">Título do Post</h3>
             <span>Theo Otto</span>
             <div class="flex justify-between items-center text-sm">
-              
               <span>R$ 100,00</span>
               <button
                 id="iconBtn"
@@ -115,7 +123,6 @@
                 onclick="mudaCoracao()"
               >
                 <span id="coracao_cheio">
-                  
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="23"
