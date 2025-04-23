@@ -88,6 +88,7 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
             echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         }
         break;
+   
 
     case '/api/getuser':
         require __DIR__ . '/../app/controllers/UserController.php';
