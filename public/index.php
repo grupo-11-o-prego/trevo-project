@@ -134,9 +134,72 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         break;
 
     case '/anuncio':
-        require __DIR__ . '/../app/controllers/UserController.php';
-        $controller = new \App\Controllers\UserController;
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
         $controller->anuncio();
+        break;
+    
+    case '/api/criaranuncio':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        if (isset($_POST)) {
+            header('Content-Type: application/json'); // Define o tipo de resposta como JSON
+            $response = $controller->criarAnuncio();
+            echo json_encode($response);
+        } else {
+            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
+        }
+        break;
+    
+    case '/api/deletaranuncio':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        $params = Controller::queryParams();
+        header('Content-Type: application/json'); // Define o tipo de resposta como JSON
+        
+        $response = $controller->deletarAnuncio($params['id']);
+            
+        if($response) {
+            echo json_encode(['success' => 'Anuncio deletado.']);
+        } else {
+            echo json_encode(['error' => 'Requisicao GET nao realizada.']);
+        }
+        break;
+    
+    case '/api/alterartitulo':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        if (isset($_POST)) {
+            header('Content-Type: application/json'); // Define o tipo de resposta como JSON
+            $response = $controller->alterarTitulo();
+            echo json_encode($response);
+            break;
+        }
+        echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
+        break;
+        
+    case '/api/alterardescricao':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        if (isset($_POST)) {
+            header('Content-Type: application/json'); // Define o tipo de resposta como JSON
+            $response = $controller->alterarDescricao();
+            echo json_encode($response);
+            break;
+        }
+        echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
+        break;
+        
+    case '/api/alterarpreco':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        if (isset($_POST)) {
+            header('Content-Type: application/json'); // Define o tipo de resposta como JSON
+            $response = $controller->alterarPreco();
+            echo json_encode($response);
+            break;
+        }
+        echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         break;
     
 
