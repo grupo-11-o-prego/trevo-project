@@ -2,10 +2,20 @@
 
 namespace App\Controllers;
 
+include_once('../includes/EnvLoader.php');
+
+use Includes\EnvLoader;
+
 class SessionController
 {
+
+    private $baseFolder;
+
+
     public function __construct()
     {
+        EnvLoader::load(__DIR__ . '/../../.env');
+
         if (session_status() == PHP_SESSION_NONE) {
             session_start();
         }
@@ -37,20 +47,20 @@ class SessionController
     {
         if ($admin) {
             if (!$this->isAuthenticated(true)) {
-                header('Location: /trevo/public/');
+                header('Location: ' . getenv('BASE_URL'));
                 return;
             } 
         }
 
         if ($vendedor) {
             if (!$this->isAuthenticated(false, true)) {
-                header('Location: /trevo/public/');
+                header('Location: ' . getenv('BASE_URL'));
                 return;
             } 
         }
 
         if (!$this->isAuthenticated()) {
-            header('Location: /trevo/public/login');
+            header('Location: ' . getenv('BASE_URL') . '/login');
             return;
         } 
     }
