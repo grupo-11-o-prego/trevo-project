@@ -133,6 +133,13 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         break;
 
+    case '/anuncio':
+        require __DIR__ . '/../app/controllers/UserController.php';
+        $controller = new \App\Controllers\UserController;
+        $controller->anuncio();
+        break;
+    
+
     default:
         http_response_code(404);
         require __DIR__ . '/../app/controllers/HomeController.php';

@@ -11,7 +11,7 @@
     <link href="src/output.css" rel="stylesheet" />
     <link rel="icon" href="#" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="../public/assets/js/home.js"></script>
+    <script src="../views/assets/js/home.js"></script>
   </head>
   <body class="h-screen overflow-hidden font-poppins">
     <header
@@ -49,7 +49,7 @@
       </button>
       <div
         id="escondido"
-        class="rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0"
+        class="border-l-4 border-gray-500 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0"
       >
         <ul
           class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400"
@@ -165,6 +165,13 @@
           </div>
         </div>
       </div>
+      <button
+      onclick="window.location.href= '/trevo-project/public/anuncio'" 
+      class="fixed bottom-6 right-6 z-50 bg-[#6F23D9] hover:bg-[#4f179c] cursor-pointer p-4 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-plus-lg" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+        </svg>
+      </button>
     </main>
   </body>
 </html>

@@ -14,6 +14,8 @@ class UserController {
 
     public function cadastroUsuario() { include_once('../views/cadastro.html'); }
     
+    public function anuncio() { include_once('../views/anuncio.html'); }
+    
     public function usuario() { include_once('../views/home/usuario.html'); }
 
     public function perfil() { include_once('../views/home/perfil.html'); }
