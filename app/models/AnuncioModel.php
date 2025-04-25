@@ -15,31 +15,28 @@ class AnuncioModel extends Model {
         parent:: __construct();
     }
 
-    public function criarAnuncio($titulo, $descricao, $preco){
+    public function criarAnuncio($id, $titulo, $descricao, $preco){
         try{          
 
            
-                $stmt = $this->conn->prepare('INSERT INTO anuncios_tb (anun_titulo, anun_descricao, anun_preco, anun_data, anun_imagem ) VALUES (:titulo, :descricao, :preco, 0, null)');
+                $stmt = $this->conn->prepare('INSERT INTO anuncios_tb (anun_titulo, anun_descricao, anun_data, anun_user_id, anun_preco ) VALUES (:titulo, :descricao, NOW(), :id, :preco)');
                 $stmt->bindParam(':titulo', $titulo);
                 $stmt->bindParam(':descricao', $descricao); 
+                $stmt->bindParam(':id', $id);            
                 $stmt->bindParam(':preco', $preco);            
-                $stamp = TimeStamp::stamp();  
 
                 $result = $stmt->execute();
-                $id = $this->conn->lastInsertId();
-
-                
-
-                
-                $stmt = $this->conn->prepare("SELECT * FROM anuncios_tb WHERE anun_id = :id");
-                $stmt->bindParam(':id', $id);
-                $stmt->execute();
-
-                
-                $anuncioCriado = $stmt->fetch(PDO::FETCH_ASSOC);
-
-                return ["sucesso" => true, "anuncio" => $anuncioCriado];
-            
+                // $id = $this->conn->lastInsertId();
+                // $stmt = $this->conn->prepare("SELECT * FROM anuncios_tb WHERE anun_id = :id");
+                // $stmt->bindParam(':id', $id);
+                // $stmt->execute();
+                // $anuncioCriado = $stmt->fetch(\PDO::FETCH_ASSOC);
+                // return ["sucesso" => true, "anuncio" => $anuncioCriado];
+                if ($result) {
+                    return ["sucesso" => true, "result" => $result];
+                } else {
+                    return ["sucesso" => false, "message" => "Ocorreu um erro ao criar anúncio."];
+                }
             
         }
 

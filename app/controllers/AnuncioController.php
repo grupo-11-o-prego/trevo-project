@@ -34,24 +34,25 @@ class AnuncioController {
         $titulo = $_POST['titulo'];
         $descricao = $_POST['descricao'];
         $preco = $_POST['preco'];
-
+        $id = 6;
+        
         $model = new AnuncioModel;
-        $result = $model->criarAnuncio($titulo, $descricao, $preco);
+        $result = $model->criarAnuncio($id, $titulo, $descricao, $preco);
         return $result;
     }
 
-    public function deletarAnuncio($id)
-    {
-        $anuncio = new AnuncioModel;
+    // public function deletarAnuncio($id)
+    // {
+    //     $anuncio = new AnuncioModel;
 
-        $result = $anuncio->deletarAnuncio($id);
+    //     $result = $anuncio->deletarAnuncio($id);
 
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+    //     if ($result) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+    // }
 
     public function alterarTitulo()
     {

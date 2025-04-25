@@ -3,13 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Home</title>
-    <link href="src/output.css" rel="stylesheet" />
+    <title>Anuncios</title>
+    <link rel="stylesheet" href="../views/src/output.css">
     <link rel="icon" href="#" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="../views/assets/js/home.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="../views/assets/css/style.css">
   </head>
   <body class="h-screen overflow-hidden font-poppins">
     <header
@@ -102,7 +102,7 @@
               name="preco" 
               id="preco" 
               onkeyup="mascara(this)"
-              type="text"
+              type="number"
               placeholder="R$ 0,00"
               class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
@@ -124,5 +124,7 @@
         </div>
       </form>
     </main>    
+    <script src="../app/api/api.js"></script>
+    <script src="../app/api/auth/anuncio.js"></script>
   </body>
 </html>

@@ -51,6 +51,5 @@ let isCoracao = true;
     precoAlterado = precoAlterado.replace(/\D/g, ""); // Remove todos os não dígitos
     precoAlterado = precoAlterado.replace(/(\d+)(\d{2})$/, "$1,$2"); // Adiciona a parte de centavos
     precoAlterado = precoAlterado.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // Adiciona pontos a cada três dígitos
-    precoAlterado = "R$" + precoAlterado;
     preco.value = precoAlterado;
   }
