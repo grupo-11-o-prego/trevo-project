@@ -71,10 +71,20 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         
     case '/api/login':
         require __DIR__ . '/../app/controllers/UserController.php';
+        // header('Content-Type: application/json'); // Define o tipo de resposta como JSON
         $controller = new \App\Controllers\UserController;
-        $controller->login();
-    
-        echo json_encode(['error' => 'Requisicao POST nao realizada.']);
+        if (isset($_POST)) {
+            $user = $controller->auth();
+            if (isset($user)) {
+                $session = new SessionController;
+                $login = $session->login($user);
+                echo json_encode(['sucesso' => $login]);
+            } else {
+                echo json_encode(['sucesso' => false]);
+            }
+        } else {
+            echo json_encode(['error' => 'Requisicao POST nao realizada.']);
+        }
         break;
         
     case '/api/cadastro':
@@ -82,8 +92,7 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         $controller = new \App\Controllers\UserController;
         if (isset($_POST)) {
             header('Content-Type: application/json'); // Define o tipo de resposta como JSON
-            $response = $controller->cadastrar();
-            echo json_encode($response);
+            echo json_encode($controller->cadastrar());
         } else {
             echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         }
@@ -133,6 +142,8 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         break;
 
+
+    // -------- USUÁRIO --------
     case '/anuncio':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;

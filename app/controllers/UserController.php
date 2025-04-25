@@ -63,14 +63,20 @@ class UserController {
 
     public function auth()
     {
-        $email = $_POST['email'];
-        $senha = $_POST['senha'];
-
+        if (isset($_POST['email']) && isset($_POST['senha'])) {
+            $email = $_POST['email'];
+            $senha = $_POST['senha'];
+        } else {
+            return null;
+        }
+       
         $model = new UserModel;
         $userAuth = $model->findLogin($email, $senha);
-        $user = $model->get(false, $this->tabela, 'user_email', $email);
         if ($userAuth) {
-            return $user;
+            $user = $model->get(false, $this->tabela, 'user_email', $email);
+            if ($user['sucesso']) {
+                return $user['result'];
+            }
         } else {
             return null;
         }

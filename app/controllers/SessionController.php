@@ -9,9 +9,6 @@ use Includes\EnvLoader;
 class SessionController
 {
 
-    private $baseFolder;
-
-
     public function __construct()
     {
         EnvLoader::load(__DIR__ . '/../../.env');
@@ -30,6 +27,8 @@ class SessionController
             'admin' => $userData['user_moderador'],
             'vendedor' => $userData['user_vendedor']
         ];
+
+        return isset($_SESSION['user']['id']) ? true : false; 
     }
 
     public function isAuthenticated($admin = false, $vendedor = false)
