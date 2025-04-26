@@ -212,7 +212,8 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         }
         echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         break;
-    
+
+        
 
     default:
         http_response_code(404);
