@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Criar Post</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="src/output.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="bg-white min-h-screen flex items-center justify-center">
+  <div class="w-full max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+    <a href="../views/index.html" class="absolute top-4 left-4 z-50 text-black-600 hover:text-purple-600 transition">
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+      </svg>
+    </a>
+
+    <div>
+      <h1 class="text-4xl font-bold mb-8">Criar Post no Fórum</h1>
+      <form class="space-y-5" id="post-form" action="/trevo-project/public/post/cadastrar" method="POST">
+        
+        <div>
+          <label class="block font-medium mb-1">Título do Post</label>
+          <input name="titulo" type="text" placeholder="Digite o título do post" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+        </div>
+
+        <div>
+          <label class="block font-medium mb-1">Conteúdo</label>
+          <textarea name="conteudo" placeholder="Digite o conteúdo do post" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 cursor-pointer transition duration-300">
+          Criar Post
+        </button>
+      </form>
+
+      <p class="text-sm mt-4 text-center">
+        Deseja voltar? <a href="/trevo-project/views/index.html" class="text-blue-600 hover:underline">Home</a>
+      </p>
+    </div>
+
+    <div class="h-full w-full flex items-center justify-center p-8 rounded-lg">
+      <img src="../views/assets/svg/undraw_fingerprint-login_19qv.svg" alt="post" />
+    </div>
+  </div>
+
+</body>
+</html>
