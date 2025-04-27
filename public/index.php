@@ -213,6 +213,74 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         }
         break;
 
+    case '/denuncia' :
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $controller = new \App\Controllers\DenunciaController;
+        // $session = new SessionController;
+        // $session->protect(true);
+        $controller->index();
+        break;
+
+    case '/api/denunciar':
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $denuncia = new \App\Controllers\DenunciaController;
+        $controller = new Controller;
+        $id = 6;
+
+        $result = $denuncia->denunciar($id);
+        if ($result) {
+            echo json_encode(['sucesso' => true]);
+        } else {
+            echo json_encode(['sucesso' => false]);
+        }
+        break;
+
+    case '/api/denuncia/listar':
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $denuncia = new \App\Controllers\DenunciaController;
+    
+        $id = 6;
+        
+        if (isset($id)) {
+            $result = $denuncia->listar($id);
+        } else {
+            $result = $denuncia->listar();
+        }
+        echo json_encode($result);
+        break;
+    
+    case '/api/denuncia/revisar' :
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $denuncia = new \App\Controllers\DenunciaController;
+        
+
+        $controller = new Controller;
+        $id = 6; 
+        
+        $result = $denuncia->revisar($id);
+
+        if ($result) {
+            echo json_encode(['sucesso' => true]);
+        } else {
+            echo json_encode(['sucesso' => false]);
+        }
+        break;
+
+    case '/api/denuncia/deletar':
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $denuncia = new \App\Controllers\DenunciaController;
+
+        $controller = new Controller;
+        $id = 6;
+        
+        $result = $denuncia->deletar($id);
+        
+        if ($result) {
+            echo json_encode(['sucesso' => true]);
+        } else {
+            echo json_encode(['sucesso' => false]);
+        }
+        break;
         
     case '/forum':
         require __DIR__ . '/../app/controllers/PostController.php';
