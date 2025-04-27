@@ -26,6 +26,7 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         // // $session->protect();
         $controller = new \App\Controllers\HomeController;
         $controller->index();
+        
         break;
 
     case '/login' :
@@ -85,6 +86,11 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         } else {
             echo json_encode(['error' => 'Requisicao POST nao realizada.']);
         }
+        break;
+
+    case '/logout' :
+        $session = new SessionController;
+        $session->logout();
         break;
         
     case '/api/cadastro':
