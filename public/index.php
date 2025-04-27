@@ -143,7 +143,7 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         break;
 
 
-    // -------- USUÁRIO --------
+    // -------- ANÚNCIO --------
     case '/anuncio':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
@@ -184,9 +184,9 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
             header('Content-Type: application/json'); // Define o tipo de resposta como JSON
             $response = $controller->alterarTitulo();
             echo json_encode($response);
-            break;
+        } else {
+            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         }
-        echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         break;
         
     case '/api/alterardescricao':
@@ -196,9 +196,9 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
             header('Content-Type: application/json'); // Define o tipo de resposta como JSON
             $response = $controller->alterarDescricao();
             echo json_encode($response);
-            break;
+        } else {
+            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         }
-        echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         break;
         
     case '/api/alterarpreco':
@@ -208,9 +208,9 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
             header('Content-Type: application/json'); // Define o tipo de resposta como JSON
             $response = $controller->alterarPreco();
             echo json_encode($response);
-            break;
+        } else {
+            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         }
-        echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         break;
 
         
