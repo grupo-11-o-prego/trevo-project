@@ -1,12 +1,7 @@
 document.getElementById('anuncio-form').addEventListener('submit', function(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    var titulo = formData.get('titulo');
-    var descricao = formData.get('descricao');
-    var precoTexto = formData.get('preco');
-    // var preco = parseInt(precoTexto);
-    alert(precoTexto)
-    
+    // var preco = parseInt(precoTexto);    
     var ok = "";
     // Faz a requisição POST com os dados capturados do formulário
     requisitar('POST', '/trevo-project/public/api/criaranuncio', formData, 'formdata')

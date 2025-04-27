@@ -214,6 +214,17 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         break;
 
         
+    case '/forum':
+        require __DIR__ . '/../app/controllers/PostController.php';
+        $controller = new \App\Controllers\PostController;
+        $controller->form();
+        break;
+
+    case '/post/cadastrar':
+        require __DIR__ . '/../app/controllers/PostController.php';
+        $controller = new \App\Controllers\PostController;
+        $controller->cadastrar();
+        break;
 
     default:
         http_response_code(404);
