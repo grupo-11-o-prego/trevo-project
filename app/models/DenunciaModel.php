@@ -111,12 +111,11 @@ class DenunciaModel {
             if ($result) {
                 return ["sucesso" => true, "result" => $result];
             } else {
-                return ["sucesso" => false, "message" => "Ocorreu um erro ao listar denúncias."];
+                return ["sucesso" => true, "message" => "Não foram encontradas denúncias."];
             }
 
         } catch (\Exception $e) {
-            echo 'Erro ao denunciar usuário: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => 'Erro ao denunciar usuário: ' . $e->getMessage()];
         }
     }
     

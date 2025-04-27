@@ -238,8 +238,8 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
     case '/api/denuncia/listar':
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
-        
-        $id = 14;
+    
+        // $id = 14;
         
         if (isset($id)) {
             $result = $denuncia->listar($id);
