@@ -111,6 +111,28 @@ class AnuncioModel extends Model {
             return null;
         }
     }
+
+    public function deletarAnuncio($id)
+    {
+        try{
+            
+            $stmt = $this->conn->prepare("DELETE FROM anuncios_tb WHERE anun_id = :id");
+            $stmt->bindParam(':id', $id);
+
+            $stmt->execute();
+
+            $row = $stmt->rowCount();
+            if ($row > 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (\Exception $e) {
+            echo 'Erro ao deletar anuncio: ' . $e->getMessage();
+            return null;
+        }
+    }
 }
      
 

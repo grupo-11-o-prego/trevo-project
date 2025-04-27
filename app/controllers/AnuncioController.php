@@ -41,18 +41,17 @@ class AnuncioController {
         return $result;
     }
 
-    // public function deletarAnuncio($id)
-    // {
-    //     $anuncio = new AnuncioModel;
+    public function deletarAnuncio($id){
+        $anuncio = new AnuncioModel;
 
-    //     $result = $anuncio->deletarAnuncio($id);
+        $result = $anuncio->deletarAnuncio($id);
 
-    //     if ($result) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-    // }
+        if ($result) {
+            return true;
+        }else {
+            return false;
+        }
+    }
 
     public function alterarTitulo()
     {
