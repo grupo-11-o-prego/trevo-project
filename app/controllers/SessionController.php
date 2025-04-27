@@ -98,6 +98,6 @@ class SessionController
     {
         session_unset();
         session_destroy();
-        header('Location: /trevo/public/login');
+        header('Location: '.  getenv('BASE_URL') . '/login');
     }
 }
