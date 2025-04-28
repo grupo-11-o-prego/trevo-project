@@ -81,4 +81,16 @@ class AnuncioController {
         return $result;
     }
 
+    public function listar($id = false)
+    {
+        $model = new AnuncioModel;
+        if ($id) {
+            $result = $model->listar($id);
+        }else {    
+            $result = $model->listar();
+        }
+
+        return $result;
+    }
+
 }

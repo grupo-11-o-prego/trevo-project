@@ -4,16 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home</title>
-<<<<<<< Updated upstream
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link href="src/output.css" rel="stylesheet" />
-=======
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
     <link href="../views/src/output.css" rel="stylesheet" />
->>>>>>> Stashed changes
     <link rel="icon" href="#" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="../views/assets/js/home.js"></script>
@@ -71,7 +63,7 @@
     </aside>
 
     <main class="ml-72 mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-6 bg-gray-50">
-      <div class="mb-6 max-w-md relative">
+      <div class="mb-6 max-w-md relative" id="body-anuncios">
         <input type="text" placeholder="Pesquisar..." class="w-full px-4 py-2 pr-10 bg-white rounded shadow-md focus:outline-none" />
         <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -80,7 +72,7 @@
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div id="posts-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-white rounded-lg shadow-lg overflow-hidden">
           <div class="h-48 bg-gray-300"></div>
           <div class="p-4">
@@ -118,5 +110,7 @@
         escondidoForum.style.maxHeight = escondidoForum.style.maxHeight && escondidoForum.style.maxHeight !== "0px" ? "0px" : escondidoForum.scrollHeight + "px";
       }
     </script>
+    <script src="../app/api/api.js"></script>
+    <script src="../app/api/tela/anuncio_tela.js"></script>
   </body>
 </html>

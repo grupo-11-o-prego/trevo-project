@@ -8,7 +8,7 @@ window.onload = async function () {
                 } else {
                     const body = document.getElementById('body-denuncias');
                     console.log(result.dados);
-
+                    
                     if (result.dados.sucesso && result.dados.result) {
                         result.dados.result.forEach(denuncia => {
                     

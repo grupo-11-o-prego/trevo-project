@@ -213,6 +213,22 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         }
         break;
 
+    case '/api/anuncio/listar':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        // $session = new SessionController;
+        // $session->protectAPI();
+
+        // $id = 6;
+        
+        if (isset($id)) {
+            $result = $controller->listar($id);
+        } else {
+            $result = $controller->listar();
+        }
+        echo json_encode($result);
+        break;
+
     case '/denuncia' :
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $controller = new \App\Controllers\DenunciaController;
@@ -239,7 +255,7 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
         
-        $id = 14;
+        // $id = 14;
         
         if (isset($id)) {
             $result = $denuncia->listar($id);

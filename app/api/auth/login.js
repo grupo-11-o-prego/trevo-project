@@ -7,7 +7,7 @@ document.getElementById('login-form').addEventListener('submit', function(event)
 
     var ok = "";
     
-    requisitar('POST', '/api/login', formData, 'formdata')
+    requisitar('POST', '/trevo-project/public/api/login', formData, 'formdata') 
         .then(result => {
             if (result.erro) {
                 console.log(result);
