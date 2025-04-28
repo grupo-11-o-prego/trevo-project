@@ -26,6 +26,7 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         // // $session->protect();
         $controller = new \App\Controllers\HomeController;
         $controller->index();
+        
         break;
 
     case '/login' :
@@ -85,6 +86,11 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         } else {
             echo json_encode(['error' => 'Requisicao POST nao realizada.']);
         }
+        break;
+
+    case '/logout' :
+        $session = new SessionController;
+        $session->logout();
         break;
         
     case '/api/cadastro':
@@ -162,20 +168,19 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         }
         break;
     
-    // case '/api/deletaranuncio':
-    //     require __DIR__ . '/../app/controllers/AnuncioController.php';
-    //     $controller = new \App\Controllers\AnuncioController;
-    //     $params = Controller::queryParams();
-    //     header('Content-Type: application/json'); // Define o tipo de resposta como JSON
-        
-    //     $response = $controller->deletarAnuncio($params['id']);
+    case '/api/deletaranuncio':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        $params = Controller::queryParams();
+        header('Content-Type: application/json'); // Define o tipo de resposta como JSON        
+        $response = $controller->deletarAnuncio($params['id']);
             
-    //     if($response) {
-    //         echo json_encode(['success' => 'Anuncio deletado.']);
-    //     } else {
-    //         echo json_encode(['error' => 'Requisicao GET nao realizada.']);
-    //     }
-    //     break;
+       if($response) {
+            echo json_encode(['success' => 'Anuncio deletado.']);
+        }else {
+            echo json_encode(['error' => 'Requisicao GET nao realizada.']);
+        }
+        break;
     
     case '/api/alterartitulo':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
