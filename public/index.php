@@ -158,7 +158,17 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
 
         $controller->perfil();
         break;
-    
+
+    case '/api/perfil':
+        require __DIR__ . '/../app/controllers/PerfilController.php';
+        $controller = new \App\Controllers\PerfilController;
+        header('Content-Type: application/json');
+        $params = Controller::queryParams();
+        if (isset($params['user'])) {
+            $result = $controller->getPerfil($params['user']);
+            echo json_encode($result);
+        }
+        break;
 
 
     // -------- ANÚNCIO --------
