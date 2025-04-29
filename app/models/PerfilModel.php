@@ -22,7 +22,7 @@ class PerfilModel extends Model {
             if ($user) {
                 return ['sucesso' => true, 'result' => $user];
             } else {
-                return ['sucesso' => false, 'result' => null];
+                return ['sucesso' => false, 'message' => 'Não foi encontrado o usuário.'];
             }
 
             return false;

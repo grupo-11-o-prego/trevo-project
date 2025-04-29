@@ -19,9 +19,9 @@ class PerfilController {
             $result = $model->getPerfil($user);
 
             if ($result['sucesso']) {
-                return $result;
+                return $result['result'];
             } else {
-                return null;
+                return $result;
             }
         }
     }
