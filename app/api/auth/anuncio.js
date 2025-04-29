@@ -1,9 +1,8 @@
 document.getElementById('anuncio-form').addEventListener('submit', function(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-    // var preco = parseInt(precoTexto);    
+
     var ok = "";
-    // Faz a requisição POST com os dados capturados do formulário
     requisitar('POST', '/trevo-project/public/api/criaranuncio', formData, 'formdata')
         .then(result => {
             console.log(result)
@@ -22,7 +21,7 @@ document.getElementById('anuncio-form').addEventListener('submit', function(even
                         timer: 1500,
                         timerProgressBar: true,
                         willClose: () => {
-                          window.location.href = "/trevo-project/views/login"; // URL desejada para redirecionamento
+                          window.location.href = "/trevo-project/public/anuncio"; 
                         }
                       });
                 } else {

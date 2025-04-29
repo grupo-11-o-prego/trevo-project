@@ -42,7 +42,7 @@ document.getElementById('cadastro-form').addEventListener('submit', function(eve
                         timer: 1500,
                         timerProgressBar: true,
                         willClose: () => {
-                          window.location.href = "/trevo-project/views/login"; // URL desejada para redirecionamento
+                          window.location.href = "/trevo-project/public/login"; // URL desejada para redirecionamento
                         }
                       });
                 } else {
