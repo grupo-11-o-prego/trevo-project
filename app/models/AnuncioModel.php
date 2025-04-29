@@ -156,7 +156,7 @@ class AnuncioModel extends Model {
             if ($result) {
                 return ["sucesso" => true, "result" => $result];
             } else {
-                return ["sucesso" => false, "message" => "Ocorreu um erro ao listar anúncios.", "stmt" => $stmt];
+                return ["sucesso" => true, "message" => "Ocorreu um erro ao listar anúncios."];
             }
         }catch (\Exception $e) {
             echo 'Erro ao denunciar usuário: ' . $e->getMessage();

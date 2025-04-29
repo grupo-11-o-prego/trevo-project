@@ -221,6 +221,7 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
     case '/api/anuncio/listar':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
+        header('Content-Type: application/json');
         // $session = new SessionController;
         // $session->protectAPI();
 
