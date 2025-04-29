@@ -218,6 +218,7 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         }
         break;
 
+<<<<<<< Updated upstream
     case '/api/anuncio/listar':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
@@ -226,6 +227,76 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         // $session->protectAPI();
 
         // $id = 6;
+=======
+    case '/denuncia' :
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $controller = new \App\Controllers\DenunciaController;
+        // $session = new SessionController;
+        // $session->protect(true);
+        $controller->index();
+        break;
+
+    case '/api/denunciar':
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $denuncia = new \App\Controllers\DenunciaController;
+        $controller = new Controller;
+        $id = 6;
+
+        $result = $denuncia->denunciar($id);
+        if ($result) {
+            echo json_encode(['sucesso' => true]);
+        } else {
+            echo json_encode(['sucesso' => false]);
+        }
+        break;
+
+    case '/api/denuncia/listar':
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $denuncia = new \App\Controllers\DenunciaController;
+    
+        $id = 6;
+        
+        if (isset($id)) {
+            $result = $denuncia->listar($id);
+        } else {
+            $result = $denuncia->listar();
+        }
+        echo json_encode($result);
+        break;
+    
+    case '/api/denuncia/revisar' :
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $denuncia = new \App\Controllers\DenunciaController;
+        
+
+        $controller = new Controller;
+        $id = 6; 
+        
+        $result = $denuncia->revisar($id);
+
+        if ($result) {
+            echo json_encode(['sucesso' => true]);
+        } else {
+            echo json_encode(['sucesso' => false]);
+        }
+        break;
+
+    case '/api/denuncia/deletar':
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $denuncia = new \App\Controllers\DenunciaController;
+
+        $controller = new Controller;
+        $id = 6;
+        
+        $result = $denuncia->deletar($id);
+        
+        if ($result) {
+            echo json_encode(['sucesso' => true]);
+        } else {
+            echo json_encode(['sucesso' => false]);
+        }
+        break;
+>>>>>>> Stashed changes
         
         if (isset($id)) {
             $result = $controller->listar($id);
