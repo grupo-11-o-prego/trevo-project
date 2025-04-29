@@ -149,6 +149,17 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         break;
 
+    case '/perfil':
+        require __DIR__ . '/../app/controllers/PerfilController.php';
+        $controller = new \App\Controllers\PerfilController;
+
+        // $session = new SessionController;
+        // $session->protect(false, false);
+
+        $controller->perfil();
+        break;
+    
+
 
     // -------- ANÚNCIO --------
     case '/criar-anuncio':
@@ -248,8 +259,8 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         // $session = new SessionController;
         // $session->protectAPI();
 
-        $params = Controller::queryParams();
-        $id = $params['id'];
+        // $params = Controller::queryParams();
+        // $id = $params['id'];
         
         if (isset($id)) {
             $result = $controller->listar($id);
