@@ -17,7 +17,16 @@ document.getElementById('login-form').addEventListener('submit', function(event)
             } else {
                 console.log(result);
                 if (result.dados.sucesso) {
-                    window.location = './';
+                    Swal.fire({
+                        icon: "success",
+                        title: "Login feito com sucesso!",
+                        showConfirmButton: false,
+                        timer: 1100,
+                        timerProgressBar: true,
+                        willClose: () => {
+                          window.location.href = "/trevo-project/public"; // URL desejada para redirecionamento
+                        }
+                      });
                 } else {
                     alert("Usuário inválido!");
                 }

@@ -16,12 +16,12 @@ document.getElementById('anuncio-form').addEventListener('submit', function(even
                 if (result.dados.sucesso) {
                     Swal.fire({
                         icon: "success",
-                        title: "Cadastro realizado!",
+                        title: "Anúncio postado!",
                         showConfirmButton: false,
                         timer: 1500,
                         timerProgressBar: true,
                         willClose: () => {
-                          window.location.href = "/trevo-project/public/anuncio"; 
+                          window.location.href = "/trevo-project/public/criar-anuncio"; 
                         }
                       });
                 } else {
