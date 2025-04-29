@@ -248,7 +248,8 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         // $session = new SessionController;
         // $session->protectAPI();
 
-        // $id = 6;
+        $params = Controller::queryParams();
+        $id = $params['id'];
         
         if (isset($id)) {
             $result = $controller->listar($id);
@@ -270,7 +271,9 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
         $controller = new Controller;
-        $id = 6;
+
+        $params = Controller::queryParams();
+        $id = $params['id'];
 
         $result = $denuncia->denunciar($id);
         if ($result) {
@@ -287,7 +290,8 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         $session = new SessionController;
         $session->protectAPI(true);
 
-        // $id = 14;
+        $params = Controller::queryParams();
+        $id = $params['id'];
         
         if (isset($id)) {
             $result = $denuncia->listar($id);
@@ -303,10 +307,10 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         
         $session = new SessionController;
         $session->protectAPI(true);
-
-        $controller = new Controller;
-        $id = 6; 
         
+        $params = Controller::queryParams();
+        $id = $params['id'];
+
         $result = $denuncia->revisar($id);
 
         if ($result) {
@@ -324,7 +328,9 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         $session->protectAPI(true);
 
         $controller = new Controller;
-        $id = 6;
+        
+        $params = Controller::queryParams();
+        $id = $params['id'];
         
         $result = $denuncia->deletar($id);
         
