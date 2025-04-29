@@ -151,9 +151,13 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
 
 
     // -------- ANÚNCIO --------
-    case '/anuncio':
+    case '/criar-anuncio':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
+
+        $session = new SessionController;
+        $session->protect(false, true);
+
         $controller->anuncio();
         break;
     
