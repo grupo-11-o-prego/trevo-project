@@ -90,6 +90,7 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
 
     case '/logout' :
         $session = new SessionController;
+        $session->protect();
         $session->logout();
         break;
         
@@ -159,6 +160,8 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
     case '/api/criaranuncio':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
+        $session = new SessionController;
+        $session->protectAPI(false, true);
         if (isset($_POST)) {
             header('Content-Type: application/json'); // Define o tipo de resposta como JSON
             $response = $controller->criarAnuncio();
@@ -171,6 +174,10 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
     case '/api/deletaranuncio':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
+
+        $session = new SessionController;
+        $session->protectAPI(false, true);
+
         $params = Controller::queryParams();
         header('Content-Type: application/json'); // Define o tipo de resposta como JSON        
         $response = $controller->deletarAnuncio($params['id']);
@@ -185,6 +192,10 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
     case '/api/alterartitulo':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
+
+        $session = new SessionController;
+        $session->protectAPI(false, true);
+
         if (isset($_POST)) {
             header('Content-Type: application/json'); // Define o tipo de resposta como JSON
             $response = $controller->alterarTitulo();
@@ -197,6 +208,10 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
     case '/api/alterardescricao':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
+
+        $session = new SessionController;
+        $session->protectAPI(false, true);
+
         if (isset($_POST)) {
             header('Content-Type: application/json'); // Define o tipo de resposta como JSON
             $response = $controller->alterarDescricao();
@@ -209,6 +224,10 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
     case '/api/alterarpreco':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
+
+        $session = new SessionController;
+        $session->protectAPI(false, true);
+
         if (isset($_POST)) {
             header('Content-Type: application/json'); // Define o tipo de resposta como JSON
             $response = $controller->alterarPreco();
@@ -238,8 +257,8 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
     case '/denuncia' :
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $controller = new \App\Controllers\DenunciaController;
-        // $session = new SessionController;
-        // $session->protect(true);
+        $session = new SessionController;
+        $session->protect(true);
         $controller->index();
         break;
 
@@ -261,6 +280,9 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
         
+        $session = new SessionController;
+        $session->protectAPI(true);
+
         // $id = 14;
         
         if (isset($id)) {
@@ -275,6 +297,8 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
         
+        $session = new SessionController;
+        $session->protectAPI(true);
 
         $controller = new Controller;
         $id = 6; 
@@ -292,6 +316,9 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
 
+        $session = new SessionController;
+        $session->protectAPI(true);
+
         $controller = new Controller;
         $id = 6;
         
@@ -308,11 +335,19 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         require __DIR__ . '/../app/controllers/PostController.php';
         $controller = new \App\Controllers\PostController;
         $controller->form();
+
+        $session = new SessionController;
+        $session->protect();
+
         break;
 
     case '/post/cadastrar':
         require __DIR__ . '/../app/controllers/PostController.php';
         $controller = new \App\Controllers\PostController;
+
+        $session = new SessionController;
+        $session->protect();
+
         $controller->cadastrar();
         break;
 
