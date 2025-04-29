@@ -13,7 +13,7 @@ class PerfilModel extends Model {
     public function getPerfil($user) {
         try{
             // Pega o Hash da senha a partir do e-mail digitado.
-            $stmt = $this->conn->prepare("SELECT * FROM usuarios_tb WHERE user_nome = :nome");
+            $stmt = $this->conn->prepare("SELECT * FROM usuarios_tb WHERE user_id = :nome");
             $stmt->bindParam(':nome', $user);
 
             $stmt->execute();

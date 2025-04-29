@@ -163,12 +163,17 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         require __DIR__ . '/../app/controllers/PerfilController.php';
         $controller = new \App\Controllers\PerfilController;
         header('Content-Type: application/json');
-        $params = Controller::queryParams();
-        if (isset($params['user'])) {
-            $result = $controller->getPerfil($params['user']);
-            echo json_encode($result);
+        
+        $id = 6;
+        $result = $controller->getPerfil($id);
+
+        if ($result) {
+            echo json_encode(['user' => $result]);
+        } else {
+            echo json_encode(['error' => 'Requisicao GET nao realizada.']);
         }
         break;
+        
 
 
     // -------- ANÚNCIO --------
