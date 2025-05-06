@@ -1,7 +1,7 @@
 window.onload = async function () {
   if (document.getElementById('posts-container')) {
     await requisitar('GET', 'api/perfil')
-      .then(result => {
+      .then(result => { 
         if (result.erro) {
           console.error('Erro:', result.erro);
           alert('Ocorreu um erro ao buscar os anúncios. Tente novamente.');

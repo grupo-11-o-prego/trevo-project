@@ -100,4 +100,11 @@ class SessionController
         session_destroy();
         header('Location: '.  getenv('BASE_URL') . '/login');
     }
+
+    public function apiLogout()
+    {
+        session_unset();
+        session_destroy();
+        echo json_encode(["sucesso" => true, "message" => "Sessão encerrada."]);
+    }
 }

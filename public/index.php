@@ -52,40 +52,22 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
 
     // -------- USUÁRIO --------
     case '/api/logado' :
-        require __DIR__ . '/../app/controllers/UserController.php';
-        $controller = new \App\Controllers\UserController;
         $session = new SessionController;
-        // $session->protectAPI();
-        $get = Controller::queryParams();
-
-        if (isset($get['admin'])) {
-            $result = $session->isAuthenticated(true);
-        } else if (isset($get['vendedor'])) {
-            $result = $session->isAuthenticated(false, true);
-        } else {
-            $result = $session->isAuthenticated();
-        }
-        
-        echo json_encode(['sucesso' => $result]);
+        echo json_encode(
+            isset($_SESSION['user']) 
+            ? 
+            ["sucesso" => true, "user" => $_SESSION['user']] 
+            :
+            ["sucesso" => false, "message" => "Usuário não logado."]
+        );
         
         break;
         
     case '/api/login':
         require __DIR__ . '/../app/controllers/UserController.php';
-        // header('Content-Type: application/json'); // Define o tipo de resposta como JSON
+        header('Content-Type: application/json'); // Define o tipo de resposta como JSON
         $controller = new \App\Controllers\UserController;
-        if (isset($_POST)) {
-            $user = $controller->auth();
-            if (isset($user)) {
-                $session = new SessionController;
-                $login = $session->login($user);
-                echo json_encode(['sucesso' => $login]);
-            } else {
-                echo json_encode(['sucesso' => false]);
-            }
-        } else {
-            echo json_encode(['error' => 'Requisicao POST nao realizada.']);
-        }
+        $controller->login();
         break;
 
     case '/logout' :
@@ -97,12 +79,7 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
     case '/api/cadastro':
         require __DIR__ . '/../app/controllers/UserController.php';
         $controller = new \App\Controllers\UserController;
-        if (isset($_POST)) {
-            header('Content-Type: application/json'); // Define o tipo de resposta como JSON
-            echo json_encode($controller->cadastrar());
-        } else {
-            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
-        }
+        $controller->cadastro();
         break;
    
 
@@ -125,28 +102,46 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         require __DIR__ . '/../app/controllers/UserController.php';
         $controller = new \App\Controllers\UserController;
         $params = Controller::queryParams();
-        header('Content-Type: application/json'); // Define o tipo de resposta como JSON
-
-        $response = $controller->deletar($params['id']);
-    
-        if($response) {
-            echo json_encode(['success' => 'Usuário deletado.']);
-        } else {
-            echo json_encode(['error' => 'Requisicao GET nao realizada.']);
-        }
+        header('Content-Type: application/json');
+        echo json_encode($controller->deletar((int) $params['id']));
         break;
 
-
+    // POST (user_id: id, user_nome: nome)
     case '/api/alterarnome':
         require __DIR__ . '/../app/controllers/UserController.php';
         $controller = new \App\Controllers\UserController;
-        if (isset($_POST)) {
-            header('Content-Type: application/json'); // Define o tipo de resposta como JSON
-            $response = $controller->trocaNome();
-            echo json_encode($response);
-            break;
+        $session = new SessionController;
+        header('Content-Type: application/json');
+        echo json_encode($controller->trocaNome($_SESSION['user']['id']));
+        break;
+
+    case '/api/alterarsenha':
+        require __DIR__ . '/../app/controllers/UserController.php';
+        $controller = new \App\Controllers\UserController;
+        $session = new SessionController;
+        header('Content-Type: application/json');
+        $result = $controller->trocaSenha($_SESSION['user']['id']);
+        echo json_encode($result);
+
+        if ($result['sucesso']) {
+            $session->apiLogout();
         }
-        echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
+        break;
+
+    case '/api/alterarcontato':
+        require __DIR__ . '/../app/controllers/UserController.php';
+        $controller = new \App\Controllers\UserController;
+        $session = new SessionController;
+        header('Content-Type: application/json');
+        echo json_encode($controller->trocaContato($_SESSION['user']['id']));
+        break;
+
+    case '/api/alterardatanasc':
+        require __DIR__ . '/../app/controllers/UserController.php';
+        $controller = new \App\Controllers\UserController;
+        $session = new SessionController;
+        header('Content-Type: application/json');
+        echo json_encode($controller->trocaDataNascimento($_SESSION['user']['id']));
         break;
 
     case '/perfil':

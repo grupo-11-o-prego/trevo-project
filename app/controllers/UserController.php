@@ -3,7 +3,9 @@
 namespace App\Controllers;
 
 include_once __DIR__ . '/../models/UserModel.php';
+include_once __DIR__ . '/SessionController.php';
 
+use App\Controllers\SessionController;
 use App\Models\UserModel;
 
 class UserController {
@@ -30,20 +32,20 @@ class UserController {
 
     public function viewTrocaVendedor() { include_once('../views/crud-user/modovendedor.html'); }
 
-    public function login() {
-
+    public function login() 
+    {
         if (isset($_POST)) {
-            header('Content-Type: application/json'); // Define o tipo de resposta como JSON
             $user = $this->auth();
             if (isset($user)) {
-                echo json_encode(['sucesso' => true]);
                 $session = new SessionController;
-                $session->login($user);
+                $login = $session->login($user);
+                echo json_encode(['sucesso' => $login]);
             } else {
                 echo json_encode(['sucesso' => false]);
             }
+        } else {
+            echo json_encode(['error' => 'Requisição POST nao realizada.']);
         }
-
     }
 
     public function getUser($get)
@@ -82,6 +84,16 @@ class UserController {
         }
     }
 
+    public function cadastro()
+    {
+        if (isset($_POST)) {
+            header('Content-Type: application/json'); // Define o tipo de resposta como JSON
+            echo json_encode($this->cadastrar());
+        } else {
+            echo json_encode(['sucesso' => false, 'error' => 'Requisição POST nao realizada.']);
+        }
+    }
+
     public function cadastrar()
     {
         $nome = $_POST['nome'];
@@ -108,40 +120,54 @@ class UserController {
     public function deletar($id)
     {
         $user = new UserModel;
-
-        $result = $user->deletar($id);
-
-        if ($result) {
-            return true;
-        } else {
-            return false;
-        }
+        return $user->deletar($id);
     }
     
-    public function trocaNome()
+    public function trocaNome($id)
     {
-        $id = $_POST['id'];
-        $nome = $_POST['nome'];
-        $model = new UserModel;
-        $result = $model->trocaNome($id, $nome);
-        return $result;
+        if (isset($_POST)) {
+            $nome = $_POST['nome'];
+            $model = new UserModel;
+            return $model->trocaNome($id, $nome);   
+        } else {
+            return ['sucesso' => false, 'error' => 'Requisição POST nao realizada.'];
+        }
     }
 
     public function trocaSenha($id)
     {
-        $senha = $_POST['senha'];
-        $novaSenha = $_POST['nova-senha'];
-        $model = new UserModel;
-        $result = $model->trocaSenha($id, $senha, $novaSenha);
-        return $result;
+        if (isset($_POST)) {
+            $senha = $_POST['senha'];
+            $novaSenha = $_POST['nova-senha'];
+            $model = new UserModel;
+            return $model->trocaSenha($id, $senha, $novaSenha);
+        } else {
+            return ['sucesso' => false, 'error' => 'Requisição POST nao realizada.'];
+        }
     }
 
     public function trocaContato($id)
     {
-        $contato = $_POST['contato'];
-        $model = new UserModel;
-        $result = $model->trocaContato($id, $contato);
-        return $result;
+        if (isset($_POST)) {
+            $contato = $_POST['contato'];
+            $model = new UserModel;
+            $result = $model->trocaContato($id, $contato);
+            return $result;
+        } else {
+            return ['sucesso' => false, 'error' => 'Requisição POST nao realizada.'];
+        }
+    }
+
+    public function trocaDataNascimento($id)
+    {
+        if (isset($_POST)) {
+            $dataNasc = $_POST['data-nasc'];
+            $model = new UserModel;
+            $result = $model->trocaDataNascimento($id, $dataNasc);
+            return $result;
+        } else {
+            return ['sucesso' => false, 'error' => 'Requisição POST nao realizada.'];
+        }
     }
 
     public function modoVendedor($id)

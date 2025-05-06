@@ -84,14 +84,13 @@ class UserModel extends Model {
 
             $row = $stmt->rowCount();
             if ($row > 0) {
-                return true;
+                return ["sucesso" => true, "message" => "Usuário deletado."];
             } else {
-                return false;
+                return ["sucesso" => false, "message" => "Usuário não encontrado."];
             }
 
         } catch (\Exception $e) {
-            echo 'Erro ao deletar usuário: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => "Erro ao deletar usuário: " . $e->getMessage()];
         }
     }
 
@@ -106,14 +105,13 @@ class UserModel extends Model {
 
             if ($result) {
                 $user = $this->get(false, $this->tabela, 'user_id', $id);
-                return ["sucesso" => true, "result" => $user];
+                return ["sucesso" => true, "result" => ["user_id" => $user['result']['user_id'], "user_nome" => $user['result']['user_nome']]];
             } else {
-                return ["sucesso" => false];
+                return ["sucesso" => false, "message" => "Usuário não encontrado."];
             }
 
         }  catch (\Exception $e) {
-            echo 'Erro ao atualizar usuário: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => "Erro ao trocar nome: " . $e->getMessage()];
         }
     }
 
@@ -137,18 +135,17 @@ class UserModel extends Model {
                     $result = $stmt->execute();
 
                     if ($result) {
-                        $user = $this->get(false, $this->tabela, 'user_id', $id);
-                        return ["sucesso" => true, "result" => $user];
+                        return ["sucesso" => true, "result" => "Senha atualizada!"];
                     }
                 } else {
                     return ["sucesso" => false, "message" => "Senha atual incorreta!"];
                 }
+            } else {
+                return ["sucesso" => false, "message" => "Usuário não encontrado."];
             }
-            return ["sucesso" => false];
 
         } catch (\Exception $e) {
-            echo 'Erro ao atualizar usuário: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => "Erro ao atualizar usuário: " . $e->getMessage()];
         }
     }
 
@@ -163,14 +160,34 @@ class UserModel extends Model {
 
             if ($result) {
                 $user = $this->get(false, $this->tabela, 'user_id', $id);
-                return ["sucesso" => true, "result" => $user];
+                return ["sucesso" => true, "result" => ["user_id" => $user['result']['user_id'], "user_contato" => $user['result']['user_contato']]];
             } else {
-                return ["sucesso" => false];
+                return ["sucesso" => false, "message" => "Usuário não encontrado."];
             }
 
         }  catch (\Exception $e) {
-            echo 'Erro ao atualizar usuário: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => "Erro ao trocar contato: " . $e->getMessage()];
+        }
+    }
+
+    public function trocaDataNascimento($id, $dataNasc)
+    {
+        try{
+            $stmt = $this->conn->prepare('UPDATE usuarios_tb SET user_data_nasc = :dataNasc WHERE user_id = :id');
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':dataNasc', $dataNasc);
+
+            $result = $stmt->execute();
+
+            if ($result) {
+                $user = $this->get(false, $this->tabela, 'user_id', $id);
+                return ["sucesso" => true, "result" => ["user_id" => $user['result']['user_id'], "user_data_nasc" => $user['result']['user_data_nasc']]];
+            } else {
+                return ["sucesso" => false, "message" => "Usuário não encontrado."];
+            }
+
+        }  catch (\Exception $e) {
+            return ["sucesso" => false, "message" => "Erro ao trocar data de nascimento: " . $e->getMessage()];
         }
     }
 
