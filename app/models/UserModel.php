@@ -68,8 +68,7 @@ class UserModel extends Model {
             return false;
 
         } catch (\Exception $e) {
-            echo json_encode(["message" => 'Erro ao buscar login: ' . $e->getMessage()]);
-            return null;
+            return ["sucesso" => false, "message" => $e->getMessage()];
         }
     }
 

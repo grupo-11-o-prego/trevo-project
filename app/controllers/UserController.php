@@ -35,19 +35,42 @@ class UserController {
     public function login() 
     {
         if (isset($_POST)) {
-            $user = $this->auth();
-            if (isset($user)) {
+            $result = $this->auth();
+            if ($result['sucesso']) {
                 $session = new SessionController;
-                $login = $session->login($user);
-                echo json_encode(['sucesso' => $login]);
+                $login = $session->login($result['result']);
+                return ['sucesso' => $login];
             } else {
-                echo json_encode(['sucesso' => false]);
+                return $result;
             }
         } else {
-            echo json_encode(['error' => 'Requisição POST nao realizada.']);
+            return ['error' => 'Requisição POST nao realizada.'];
         }
     }
+    
+    public function auth()
+    {
+        if (isset($_POST['email']) && isset($_POST['senha'])) {
+            $email = $_POST['email'];
+            $senha = $_POST['senha'];
 
+            $model = new UserModel;
+            $userAuth = $model->findLogin($email, $senha);
+
+            if ($userAuth) {
+                $user = $model->get(false, $this->tabela, 'user_email', $email);
+                if ($user['sucesso']) {
+                    return $user;
+                }
+            } else {
+                return ["sucesso" => false, "message" => "E-mail ou senha incorretos."];
+            }
+        } else {
+            return ["sucesso" => false, "message" => "Requisição POST não realizada."];
+        }
+       
+    }
+    
     public function getUser($get)
     {
         $model = new UserModel;
@@ -63,48 +86,22 @@ class UserController {
         return $result;
     }
 
-    public function auth()
-    {
-        if (isset($_POST['email']) && isset($_POST['senha'])) {
-            $email = $_POST['email'];
-            $senha = $_POST['senha'];
-        } else {
-            return null;
-        }
-       
-        $model = new UserModel;
-        $userAuth = $model->findLogin($email, $senha);
-        if ($userAuth) {
-            $user = $model->get(false, $this->tabela, 'user_email', $email);
-            if ($user['sucesso']) {
-                return $user['result'];
-            }
-        } else {
-            return null;
-        }
-    }
-
-    public function cadastro()
-    {
-        if (isset($_POST)) {
-            header('Content-Type: application/json'); // Define o tipo de resposta como JSON
-            echo json_encode($this->cadastrar());
-        } else {
-            echo json_encode(['sucesso' => false, 'error' => 'Requisição POST nao realizada.']);
-        }
-    }
 
     public function cadastrar()
     {
-        $nome = $_POST['nome'];
-        $email = $_POST['email'];
-        $data_nasc = $_POST['data_nasc'];
-        $contato = $_POST['contato'];
-        $senha = $_POST['senha'];
-
-        $model = new UserModel;
-        $result = $model->cadastrar($nome, $email, $data_nasc, $contato, $senha);
-        return $result;
+        if (isset($_POST)) {
+            $nome = $_POST['nome'];
+            $email = $_POST['email'];
+            $data_nasc = $_POST['data_nasc'];
+            $contato = $_POST['contato'];
+            $senha = $_POST['senha'];
+    
+            $model = new UserModel;
+            $result = $model->cadastrar($nome, $email, $data_nasc, $contato, $senha);
+            return $result;
+        } else {
+            return ['sucesso' => false, 'error' => 'Requisição POST nao realizada.'];
+        }
     }
 
     public function findUser($id = null, $email = null)

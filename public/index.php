@@ -18,12 +18,10 @@ $con = $conn->getConn();
 
 switch (Controller::requestUrl(getenv('BASE_URL'))) {
     case '/' :
-        // echo "Página inicial";
-        // var_dump($baseFolder);
         require __DIR__ . '/../app/controllers/HomeController.php';
 
-        // $session = new SessionController;
-        // // $session->protect();
+        $session = new SessionController;
+        
         $controller = new \App\Controllers\HomeController;
         $controller->index();
         
@@ -65,9 +63,9 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         
     case '/api/login':
         require __DIR__ . '/../app/controllers/UserController.php';
-        header('Content-Type: application/json'); // Define o tipo de resposta como JSON
+        header('Content-Type: application/json');   
         $controller = new \App\Controllers\UserController;
-        $controller->login();
+        echo json_encode($controller->login());
         break;
 
     case '/logout' :
@@ -79,10 +77,11 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
     case '/api/cadastro':
         require __DIR__ . '/../app/controllers/UserController.php';
         $controller = new \App\Controllers\UserController;
-        $controller->cadastro();
+        header('Content-Type: application/json');
+        echo json_encode($controller->cadastrar());
         break;
    
-
+        
     case '/api/getuser':
         require __DIR__ . '/../app/controllers/UserController.php';
         $controller = new \App\Controllers\UserController;
@@ -209,7 +208,7 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
             
        if($response) {
             echo json_encode(['success' => 'Anuncio deletado.']);
-        }else {
+        } else {
             echo json_encode(['error' => 'Requisicao GET nao realizada.']);
         }
         break;
@@ -280,6 +279,8 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         echo json_encode($result);
         break;
 
+
+    // -------- DEÚNCIA --------
     case '/denuncia' :
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $controller = new \App\Controllers\DenunciaController;
@@ -362,6 +363,7 @@ switch (Controller::requestUrl(getenv('BASE_URL'))) {
         }
         break;
         
+    // -------- FÓRUM --------
     case '/forum':
         require __DIR__ . '/../app/controllers/PostController.php';
         $controller = new \App\Controllers\PostController;
