@@ -164,20 +164,19 @@ switch (Controller::requestUrl($baseFolder)) {
     case '/api/perfil':
         require __DIR__ . '/../app/controllers/PerfilController.php';
         $controller = new \App\Controllers\PerfilController;
+        // $params = Controller::queryParams(); 
+        $session = new SessionController;  
+        // $id = 6;
+        $result = $controller->getPerfil( $_SESSION['user']['id']);
         header('Content-Type: application/json');
-        
-        $id = 6;
-        $result = $controller->getPerfil($id);
 
         if ($result) {
-            echo json_encode(['user' => $result]);
+            echo json_encode(['users' => $result]);
         } else {
             echo json_encode(['error' => 'Requisicao GET nao realizada.']);
         }
         break;
         
-
-
     // -------- ANÚNCIO --------
     case '/criar-anuncio':
         require __DIR__ . '/../app/controllers/AnuncioController.php';

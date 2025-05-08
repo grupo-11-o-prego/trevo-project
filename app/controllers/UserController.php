@@ -134,8 +134,8 @@ class UserController {
     public function trocaSenha($id)
     {
         if (isset($_POST)) {
-            $senha = $_POST['senha'];
-            $novaSenha = $_POST['nova-senha'];
+            $senha = $_POST['senha_atual'];
+            $novaSenha = $_POST['senha_nova'];
             $model = new UserModel;
             return $model->trocaSenha($id, $senha, $novaSenha);
         } else {

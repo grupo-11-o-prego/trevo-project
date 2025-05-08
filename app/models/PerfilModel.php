@@ -13,8 +13,8 @@ class PerfilModel extends Model {
     public function getPerfil($user) {
         try{
             // Pega o Hash da senha a partir do e-mail digitado.
-            $stmt = $this->conn->prepare("SELECT * FROM usuarios_tb WHERE user_id = :nome");
-            $stmt->bindParam(':nome', $user);
+            $stmt = $this->conn->prepare("SELECT * FROM usuarios_tb WHERE user_id = :id");
+            $stmt->bindParam(':id', $user);
 
             $stmt->execute();
             $user = $stmt->fetch(\PDO::FETCH_ASSOC);
@@ -22,7 +22,7 @@ class PerfilModel extends Model {
             if ($user) {
                 return ['sucesso' => true, 'result' => $user];
             } else {
-                return ['sucesso' => false, 'message' => 'Não foi encontrado o usuário.'];
+                return ['sucesso' => false, 'message' => 'Nao foi encontrado o usuario.'];
             }
 
             return false;
