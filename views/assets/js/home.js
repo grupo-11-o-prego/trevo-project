@@ -26,7 +26,8 @@ let isCoracao = true;
     const content = document.getElementById("escondido");
     const botao = document.getElementById("botaoLivros");
     const livrosvg = document.getElementById("bookIcon");
-  
+    var escondido = document.getElementById("escondido");
+    escondido.style.maxHeight = escondido.style.maxHeight && escondido.style.maxHeight !== "0px" ? "0px" : escondido.scrollHeight + "px";
     if (isDesceu) {
       content.classList.remove("max-h-40");
       content.classList.add("max-h-0");
@@ -46,10 +47,65 @@ let isCoracao = true;
   }
 
 
-  function mascara(preco) {
-    var precoAlterado = preco.value;
-    precoAlterado = precoAlterado.replace(/\D/g, ""); // Remove todos os não dígitos
-    precoAlterado = precoAlterado.replace(/(\d+)(\d{2})$/, "$1,$2"); // Adiciona a parte de centavos
-    precoAlterado = precoAlterado.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."); // Adiciona pontos a cada três dígitos
-    preco.value = precoAlterado;
+  function functionDescerForum() {
+    var escondidoForum = document.getElementById("escondidoForum");
+    escondidoForum.style.maxHeight = escondidoForum.style.maxHeight && escondidoForum.style.maxHeight !== "0px" ? "0px" : escondidoForum.scrollHeight + "px";
   }
+
+
+  function mascara(preco) {
+    let valor = preco.value.replace(/\D/g, "");
+
+  if (valor.length > 11) valor = valor.slice(0, 11);
+
+  // Formata para centavos e separadores
+  valor = (Number(valor) / 100).toFixed(2).replace('.', ',');
+
+  valor = valor.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  preco.value = 'R$ ' + valor;
+  }
+
+
+  let isDesceuConfiguracoes = false;
+
+function functionDescerConfiguracoes() {
+  const content = document.getElementById("escondidoConfiguracoes");
+  const botao = document.getElementById("botaoConfiguracoes");
+
+  if (isDesceuConfiguracoes) {
+    content.classList.remove("max-h-40");
+    content.classList.add("max-h-0");
+    botao.classList.remove("bg-[#6F23D9]", "text-white");
+    botao.classList.add("bg-white", "text-black");
+  } else {
+    content.classList.remove("max-h-0");
+    content.classList.add("max-h-40");
+    botao.classList.remove("bg-white", "text-black");
+    botao.classList.add("bg-[#6F23D9]", "text-white");
+    botao.classList.remove("hover:bg-gray-50");
+  }
+
+  isDesceuConfiguracoes = !isDesceuConfiguracoes;
+}
+
+window.addEventListener('DOMContentLoaded', async () => {
+  try {
+    const response = await fetch('/trevo-project/public/api/logado');
+    const data = await response.json();
+
+    if (data.sucesso && data.user) {
+      const authDiv = document.getElementById('auth-buttons');
+      authDiv.innerHTML = `
+        <a href="/trevo-project/public/perfil" class="w-10 h-10 rounded-full bg-[#6F23D9] text-white flex items-center justify-center hover:bg-[#4f179c] transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M5.121 17.804A11.954 11.954 0 0112 15c2.21 0 4.254.636 5.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z" />
+          </svg>
+        </a>
+      `;
+    }
+  } catch (error) {
+    console.error("Erro ao verificar sessão:", error);
+  }
+});

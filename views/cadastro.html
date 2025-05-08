@@ -25,32 +25,32 @@
       <form class="space-y-5" id="cadastro-form">
         <div>
           <label class="block font-medium mb-1">Nome</label>
-          <input name="nome" type="text" placeholder="Digite seu nome" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+          <input name="nome" type="text" placeholder="Digite seu nome" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
         </div>
 
         <div>
           <label class="block font-medium mb-1">Data de nascimento</label>
-          <input name="data_nasc" type="date" placeholder="dd/mm/aaaa" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+          <input name="data_nasc" type="date" placeholder="dd/mm/aaaa" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
         </div>
 
         <div>
           <label class="block font-medium mb-1">Senha</label>
-          <input name="senha" type="password" placeholder="Digite sua senha" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+          <input name="senha" type="password" minlength="8" placeholder="Digite sua senha" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
         </div>
 
         <div>
           <label class="block font-medium mb-1">Confirmação de senha</label>
-          <input name="senha_confirmation" type="password" placeholder="Digite sua senha novamente" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+          <input name="senha_confirmation" type="password" minlength="8" placeholder="Digite sua senha novamente" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
         </div>
 
         <div>
           <label class="block font-medium mb-1">Email</label>
-          <input name="email" type="email" placeholder="Digite seu email" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+          <input name="email" type="email" placeholder="Digite seu email" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
         </div>
 
         <div>
           <label class="block font-medium mb-1">Contato</label>
-          <input name="contato" type="tel" placeholder="(xx) xxxxx-xxxx" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+          <input name="contato" type="tel" minlength="14" placeholder="(xx) xxxxx-xxxx" required class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
         </div>
 
         <button type="submit" class="w-full bg-purple-600 text-white py-2 rounded-md hover:bg-purple-700 cursor-pointer transition duration-300">
@@ -67,5 +67,27 @@
   </div>
   <script src="../app/api/api.js"></script>
   <script src="../app/api/auth/cadastro.js"></script>
+  <script>
+    const telefoneInput = document.querySelector('input[name="contato"]');
+    const form = document.getElementById('cadastro-form');
+  
+    telefoneInput.addEventListener('input', function (e) {
+      let value = e.target.value.replace(/\D/g, '');
+  
+      if (value.length > 11) value = value.slice(0, 11);
+  
+      if (value.length > 6) {
+        value = `(${value.slice(0, 2)}) ${value.slice(2, 7)}-${value.slice(7)}`;
+      } else if (value.length > 2) {
+        value = `(${value.slice(0, 2)}) ${value.slice(2)}`;
+      } else if (value.length > 0) {
+        value = `(${value}`;
+      }
+  
+      e.target.value = value;
+    });
+  
+  </script>
+  
 </body>
 </html>

@@ -1,71 +1,125 @@
 window.onload = async function () {
-  if (document.getElementById('posts-container')) {
-    await requisitar('GET', 'api/perfil')
-      .then(result => { 
-        if (result.erro) {
-          console.error('Erro:', result.erro);
-          alert('Ocorreu um erro ao buscar os anúncios. Tente novamente.');
-        } else {
-          const container = document.getElementById('posts-container');
-          console.log(result.dados);
+  const container = document.getElementById('posts-container');
 
-          if (result.dados.user && result.dados.user.sucesso && result.dados.user.result) {
-            const post = result.dados.user.result; // <<--- pegando apenas 1 usuário, sem forEach
+  if (!container) return;
 
-            const card = document.createElement('div');
-            card.className = 'max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md mb-6';
+  try {
+    const result = await requisitar('GET', 'api/perfil');
 
-            const infoDiv = document.createElement('div');
-            infoDiv.className = 'flex items-center gap-6 mb-6';
+    if (result.erro) {
+      const aviso = document.createElement('div');
+      aviso.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center mt-8';
+      aviso.innerHTML = `
+        <strong class="font-bold">Você não está logado.</strong>
+        <span class="block sm:inline">
+          Por favor, <a href="trevo-project/public/login" class="text-purple-600 underline hover:text-purple-800">faça login</a> para acessar seu perfil.
+        </span>
+      `;
+      container.appendChild(aviso);
+      return;
+    }
 
-            const imagem = document.createElement('img');
-            imagem.className = 'w-24 h-24 rounded-full object-cover border-4 border-purple-500';
-            imagem.alt = 'Foto do usuário';
-            // imagem.src = post.user_img_id || '../views/assets/img/user-default.png';
+    const post = result.dados.users;
+    if (!post) return;
 
-            const dadosDiv = document.createElement('div');
+    const card = document.createElement('div');
+    card.className = 'bg-white rounded-2xl shadow-xl p-8 flex flex-col gap-6';
 
-            const nome = document.createElement('h2');
-            nome.className = 'text-2xl font-bold';
-            nome.textContent = post.user_nome;
+    const header = document.createElement('div');
+    header.className = 'flex items-center gap-6';
 
-            const email = document.createElement('p');
-            email.className = 'text-gray-600';
-            email.textContent = post.user_email || 'E-mail não informado';
+    const imagem = document.createElement('div');
+    imagem.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16"
+        class="w-24 h-24 text-purple-500 bg-purple-100 rounded-full p-4">
+        <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"/>
+      </svg>
+    `;
 
-            const telefone = document.createElement('p');
-            telefone.className = 'text-gray-600';
-            telefone.textContent = post.user_contato || 'Telefone não informado';
+    const nome = document.createElement('h2');
+    nome.className = 'text-3xl font-semibold text-gray-800';
+    nome.textContent = post.user_nome;
 
-            const dataNascimento = document.createElement('p');
-            dataNascimento.className = 'text-gray-600';
-            dataNascimento.textContent = post.user_data_nasc || 'Data de nascimento não informada';
+    header.appendChild(imagem);
+    header.appendChild(nome);
 
-            dadosDiv.appendChild(nome);
-            dadosDiv.appendChild(email);
-            dadosDiv.appendChild(telefone);
-            dadosDiv.appendChild(dataNascimento);
+    const fields = document.createElement('div');
+    fields.className = 'grid grid-cols-1 md:grid-cols-2 gap-6';
 
-            infoDiv.appendChild(imagem);
-            infoDiv.appendChild(dadosDiv);
+    const criarCampo = (label, valor, campo, tipo = 'text') => {
+      const wrapper = document.createElement('div');
+      wrapper.className = 'flex justify-between items-start border-b border-gray-200 pb-3';
 
-            const botoesDiv = document.createElement('div');
-            botoesDiv.className = 'flex justify-end';
+      const textContainer = document.createElement('div');
 
-            const editarBtn = document.createElement('button');
-            editarBtn.className = 'bg-[#6F23D9] hover:bg-[#4f179c] cursor-pointer text-white font-semibold px-6 py-2 rounded-lg transition duration-300';
-            editarBtn.textContent = 'Editar Perfil';
+      const labelEl = document.createElement('p');
+      labelEl.className = 'text-sm text-gray-500';
+      labelEl.textContent = label;
 
-            botoesDiv.appendChild(editarBtn);
+      const valorEl = document.createElement('p');
+      valorEl.className = 'text-lg text-gray-800 font-medium';
+      valorEl.textContent = valor;
 
-            card.appendChild(infoDiv);
-            card.appendChild(botoesDiv);
+      textContainer.appendChild(labelEl);
+      textContainer.appendChild(valorEl);
 
-            container.appendChild(card);
-          } else {
-            console.error("Erro: Não há dados de perfil disponíveis.");
+      const btn = document.createElement('button');
+      btn.className = 'text-gray-500 hover:text-purple-600 transition cursor-pointer';
+      btn.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mt-1" fill="none" viewBox="0 0 25 20" stroke="currentColor" width="20" height="20">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 11l6.364-6.364a1.5 1.5 0 112.121 2.121L11.121 13.5H9v-2.5z"/>
+        </svg>`;
+
+      btn.onclick = () => {
+        Swal.fire({
+          title: `Editar ${label}`,
+          html: `
+            <form id="alterarsenha-form">
+              <input type="password" name="senha_atual" id="senha-atual" class="swal2-input" placeholder="Senha Atual">
+              <input type="password" name="senha_nova" id="nova-senha" class="swal2-input" placeholder="Nova Senha">
+            </form>
+          `,
+          showCancelButton: true,
+          confirmButtonText: 'Salvar',
+          cancelButtonText: 'Cancelar',
+          confirmButtonColor: '#6F23D9',
+          preConfirm: () => {
+            const senhaAtual = Swal.getPopup().querySelector('#senha-atual').value;
+            const novaSenha = Swal.getPopup().querySelector('#nova-senha').value;
+            if (!senhaAtual || !novaSenha) {
+              Swal.showValidationMessage('Por favor, preencha ambos os campos');
+            }
+            return { senhaAtual, novaSenha };
           }
-        }
-      });
+        }).then(async (res) => {
+          if (res.isConfirmed) {
+            handleSubmit();
+            //document.getElementById("alterarsenha-form")?.submit();
+            // Atualizar a senha no backend
+            // await requisitar('POST', 'api/atualizarPerfil', { campo, valor: res.value });
+            console.log('Senha Atual:', res.value.senhaAtual);
+            console.log('Nova Senha:', res.value.novaSenha);
+          }
+        });
+      };
+
+      wrapper.appendChild(textContainer);
+      wrapper.appendChild(btn);
+
+      return wrapper;
+    };
+
+    fields.appendChild(criarCampo('Email', post.user_email, 'user_email'));
+    fields.appendChild(criarCampo('Telefone', post.user_contato, 'user_contato'));
+    fields.appendChild(criarCampo('Data de Nascimento', post.user_data_nasc, 'user_data_nasc'));
+    fields.appendChild(criarCampo('Senha', '********', 'user_senha', 'password'));
+
+    card.appendChild(header);
+    card.appendChild(fields);
+    container.appendChild(card);
+
+  } catch (e) {
+    console.error('Erro inesperado:', e);
+    alert('Erro ao carregar o perfil.');
   }
-}
+};

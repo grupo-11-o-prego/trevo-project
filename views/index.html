@@ -13,14 +13,14 @@
 
   <body class="h-screen overflow-hidden font-poppins">
     <header class="fixed top-0 left-0 right-0 h-16 bg-white shadow flex items-center justify-between px-6 z-10">
-      <a href="/trevo-project/public" class="text-xl font-bold">LOGO</a>
-      <div class="flex gap-4">
+      <a href="/trevo-project/public" class="text-xl font-bold"><img src="../views/assets/img/logo.png" alt="LOGO" width="55px"></a>
+      <div id="auth-buttons" class="flex gap-4">
         <a href="/trevo-project/public/cadastro" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 text-[#6F23D9] hover:scale-110 transition duration-300 cursor-pointer font-semibold">
           Cadastrar
         </a>
         <a href="/trevo-project/public/login" class="px-4 py-2 bg-[#6F23D9] rounded hover:bg-[#4f179c] text-white cursor-pointer hover:scale-110 transition duration-300">
           Login
-        </a>
+        </a>''
       </div>
     </header>
 
@@ -49,7 +49,7 @@
       <div id="escondidoForum" class="border-l-4 border-gray-500 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0">
         <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400">
           <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200"><a href="#">Todos os Fóruns</a></li>
-          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200"><a href="/trevo-project/public/perfil">Perfil</a></li>
+          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200"><a href="#">Todos os Fóruns</a></li>
         </ul>
       </div>
 
@@ -57,9 +57,16 @@
       <button class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center">
         <span class="ml-2">Biblioteca</span>
       </button>
-      <button class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center">
+      <button id="botaoConfiguracoes" onclick="functionDescerConfiguracoes()" class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center">
         <span class="ml-2">Configurações</span>
       </button>
+      <div id="escondidoConfiguracoes" class="border-l-4 border-gray-500 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0">
+        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400">
+          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200"><a href="/trevo-project/public/perfil">Perfil</a></li>
+          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200"><a href="#">Segurança</a></li>
+          <li class="py-2 px-6 w-full rounded-lg text-red-400 hover:bg-gray-200"><a href="/trevo-project/public/logout">Sair</a></li>
+        </ul>
+      </div>
     </aside>
 
     <main class="ml-72 mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-6 bg-gray-50">
@@ -98,19 +105,5 @@
         </svg>
       </button>
     </main>
-
-    <script>
-      function functionDescer() {
-        var escondido = document.getElementById("escondido");
-        escondido.style.maxHeight = escondido.style.maxHeight && escondido.style.maxHeight !== "0px" ? "0px" : escondido.scrollHeight + "px";
-      }
-
-      function functionDescerForum() {
-        var escondidoForum = document.getElementById("escondidoForum");
-        escondidoForum.style.maxHeight = escondidoForum.style.maxHeight && escondidoForum.style.maxHeight !== "0px" ? "0px" : escondidoForum.scrollHeight + "px";
-      }
-    </script>
-    <script src="../app/api/api.js"></script>
-    <script src="../app/api/tela/anuncio_tela.js"></script>
   </body>
 </html>
