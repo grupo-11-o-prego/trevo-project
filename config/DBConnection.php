@@ -15,10 +15,11 @@ class DBConnection {
         EnvLoader::load(__DIR__ . '/../.env');
 
         // Pega os dados do banco de dados do arquivo .env
-        $dbHostname = getenv('DB_HOST');
-        $dbName = getenv('DB_NAME');
-        $dbUsername = getenv('DB_USER');
-        $dbPassword = getenv('DB_PASSWORD');
+        $dbHostname = $_ENV['DB_HOST'];
+        $dbName     = $_ENV['DB_NAME'];
+        $dbUsername = $_ENV['DB_USER'];
+        $dbPassword = $_ENV['DB_PASSWORD'];
+
 
         try {
             $this->conn = new \PDO("mysql:host=$dbHostname; dbname=$dbName;", $dbUsername, $dbPassword);

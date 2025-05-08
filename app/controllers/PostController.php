@@ -21,7 +21,7 @@ class PostController
             $postModel = new PostModel();
             $postModel->salvar($titulo, $conteudo);
 
-            header('Location: ' . getenv('BASE_URL') . '/');
+            header('Location: ' . $_ENV['BASE_URL'] . '/');
             exit;
         }
     }

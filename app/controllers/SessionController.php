@@ -46,20 +46,20 @@ class SessionController
     {
         if ($admin) {
             if (!$this->isAuthenticated(true)) {
-                header('Location: ' . getenv('BASE_URL'));
+                header('Location: ' . $_ENV['BASE_URL']);
                 return;
             } 
         }
 
         if ($vendedor) {
             if (!$this->isAuthenticated(false, true)) {
-                header('Location: ' . getenv('BASE_URL'));
+                header('Location: ' . $_ENV['BASE_URL']);
                 return;
             } 
         }
 
         if (!$this->isAuthenticated()) {
-            header('Location: ' . getenv('BASE_URL') . '/login');
+            header('Location: ' . $_ENV['BASE_URL'] . '/login');
             return;
         } 
     }
@@ -98,7 +98,7 @@ class SessionController
     {
         session_unset();
         session_destroy();
-        header('Location: '.  getenv('BASE_URL') . '/login');
+        header('Location: '.  $_ENV['BASE_URL'] . '/login');
     }
 
     public function apiLogout()

@@ -1,22 +1,27 @@
 <?php
 
+include_once('../includes/EnvLoader.php');
 include_once('../app/controllers/Controller.php');
 include_once('../app/controllers/SessionController.php');
 include_once('../config/DBConnection.php');
-include_once('../includes/EnvLoader.php');
 
 use Includes\EnvLoader;
 use App\Controllers\Controller;
 use Config\DBConnection;
 use App\Controllers\SessionController;
 
+
 EnvLoader::load(__DIR__ . '/../.env');
-Controller::queryParams();
 
 $conn = new DBConnection;
 $con = $conn->getConn();
 
-switch (Controller::requestUrl(getenv('BASE_URL'))) {
+$baseFolder = $_ENV['BASE_URL'];
+if(!($baseFolder)) {
+    var_dump("variaveis env nao carregadas.");
+}
+
+switch (Controller::requestUrl($baseFolder)) {
     case '/' :
         require __DIR__ . '/../app/controllers/HomeController.php';
 
