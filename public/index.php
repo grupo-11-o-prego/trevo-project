@@ -123,13 +123,16 @@ switch (Controller::requestUrl($baseFolder)) {
         require __DIR__ . '/../app/controllers/UserController.php';
         $controller = new \App\Controllers\UserController;
         $session = new SessionController;
-        header('Content-Type: application/json');
+        // header('Content-Type: application/json');
         $result = $controller->trocaSenha($_SESSION['user']['id']);
+        if ($result['sucesso']) {
+            $logout = $session->apiLogout();
+            if ($logout['sucesso']) {
+                $result['logout'] = true;
+            }
+        }
         echo json_encode($result);
 
-        if ($result['sucesso']) {
-            $session->apiLogout();
-        }
         break;
 
     case '/api/alterarcontato':
@@ -199,10 +202,10 @@ switch (Controller::requestUrl($baseFolder)) {
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
         $session = new SessionController;
-        // header('Content-Type: application/json'); // Define o tipo de resposta como JSON        
+        header('Content-Type: application/json'); // Define o tipo de resposta como JSON        
         $session->protectAPI(false, true);
         $params = Controller::queryParams();
-        echo json_encode($controller->deletarAnuncio($params['id']));
+        echo json_encode($controller->deletarAnuncio($params['id'], $_SESSION['user']));
         break;
     
     case '/api/alterartitulo':

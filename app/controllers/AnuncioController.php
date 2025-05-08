@@ -40,16 +40,16 @@ class AnuncioController {
             $model = new AnuncioModel;
             return $model->criarAnuncio($id, $titulo, $descricao, $preco, $estado);
         } else {
-            echo json_encode(['sucesso' => false, 'message' => 'Requisição POST nao realizada.']);
+            return ['sucesso' => false, 'message' => 'Requisição POST nao realizada.'];
         }
     }
 
-    public function deletarAnuncio($id){
+    public function deletarAnuncio($id, $user){
         if (isset($id)) {
             $anuncio = new AnuncioModel;
-            return $anuncio->deletarAnuncio($id);
+            return $anuncio->deletarAnuncio($id, $user);
         } else {
-            echo json_encode(['sucesso' => false, 'message' => 'ID do anúncio não enviado.']);
+            return ['sucesso' => false, 'message' => 'ID do anúncio não enviado.'];
         }
     }
 

@@ -148,16 +148,24 @@ class AnuncioModel extends Model {
         }
     }  
 
-    public function deletarAnuncio($id)
+    public function deletarAnuncio($id, $user)
     {
         try{
-            $stmt = $this->conn->prepare("DELETE FROM anuncios_tb WHERE anun_id = :id");
-            $stmt->bindParam(':id', $id);
+            $anunUser = $this->get(false, $this->tabela, 'anun_user_id', $id);
+            
+            // verifica se quem está deletando o anúncio é o usuário que o criou ou se é administrador
+            if ($anunUser['result']['anun_user_id'] == $user['id'] || $user['admin'] > 0) {
+                $stmt = $this->conn->prepare("DELETE FROM anuncios_tb WHERE anun_id = :id");
+                $stmt->bindParam(':id', $id);
+    
+                $stmt->execute();
+    
+                $row = $stmt->rowCount();
+                return $row > 0 ? ["sucesso" => true, "message" => "Anúncio deletado."] : ["sucesso" => false, "message" => "Anúncio não encontrado."];
+            } else {
+                return ["sucesso" => false, "message" => "Sem permissão para excluir anúncio."];
+            }
 
-            $stmt->execute();
-
-            $row = $stmt->rowCount();
-            return $row > 0 ? ["sucesso" => true, "message" => "Anúncio deletado."] : ["sucesso" => false, "message" => "Ocorreu um erro ao deletar anúncio."];
 
         } catch (\Exception $e) {
             return ["sucesso" => false, "message" => $e->getMessage()];

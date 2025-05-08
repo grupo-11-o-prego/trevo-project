@@ -105,6 +105,6 @@ class SessionController
     {
         session_unset();
         session_destroy();
-        echo json_encode(["sucesso" => true, "message" => "Sessão encerrada."]);
+        return ["sucesso" => true, "message" => "Sessão encerrada."];
     }
 }

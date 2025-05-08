@@ -134,7 +134,7 @@ class UserModel extends Model {
                     $result = $stmt->execute();
 
                     if ($result) {
-                        return ["sucesso" => true, "result" => "Senha atualizada!"];
+                        return ["sucesso" => true, "result" => "Senha atualizada!", "logout" => false];
                     }
                 } else {
                     return ["sucesso" => false, "message" => "Senha atual incorreta!"];
