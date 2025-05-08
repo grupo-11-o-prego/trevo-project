@@ -15,29 +15,17 @@ class AnuncioModel extends Model {
         parent:: __construct();
     }
 
-    public function criarAnuncio($id, $titulo, $descricao, $preco){
+    public function criarAnuncio($id, $titulo, $descricao, $preco, $estado){
         try{          
+            $stmt = $this->conn->prepare('INSERT INTO anuncios_tb (anun_titulo, anun_descricao, anun_data, anun_user_id, anun_preco, anun_estado, anun_status) VALUES (:titulo, :descricao, NOW(), :id, :preco, :estado, "DISPONÍVEL")');
+            $stmt->bindParam(':titulo', $titulo);
+            $stmt->bindParam(':descricao', $descricao);
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':preco', $preco);
+            $stmt->bindParam(':estado', $estado);
 
-           
-                $stmt = $this->conn->prepare('INSERT INTO anuncios_tb (anun_titulo, anun_descricao, anun_data, anun_user_id, anun_preco ) VALUES (:titulo, :descricao, NOW(), :id, :preco)');
-                $stmt->bindParam(':titulo', $titulo);
-                $stmt->bindParam(':descricao', $descricao); 
-                $stmt->bindParam(':id', $id);            
-                $stmt->bindParam(':preco', $preco);            
-
-                $result = $stmt->execute();
-                // $id = $this->conn->lastInsertId();
-                // $stmt = $this->conn->prepare("SELECT * FROM anuncios_tb WHERE anun_id = :id");
-                // $stmt->bindParam(':id', $id);
-                // $stmt->execute();
-                // $anuncioCriado = $stmt->fetch(\PDO::FETCH_ASSOC);
-                // return ["sucesso" => true, "anuncio" => $anuncioCriado];
-                if ($result) {
-                    return ["sucesso" => true, "result" => $result];
-                } else {
-                    return ["sucesso" => false, "message" => "Ocorreu um erro ao criar anúncio."];
-                }
-            
+            $result = $stmt->execute();
+            return $result ?  ["sucesso" => true, "result" => "Anúncio criado!"] : ["sucesso" => false, "message" => "Ocorreu um erro ao criar anúncio."];
         }
 
         catch (\Exception $e) {
@@ -63,8 +51,7 @@ class AnuncioModel extends Model {
             }
 
         }  catch (\Exception $e) {
-            echo 'Erro ao atualizar usuário: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => $e->getMessage()];
         }
     }
 
@@ -85,8 +72,7 @@ class AnuncioModel extends Model {
             }
 
         }  catch (\Exception $e) {
-            echo 'Erro ao atualizar usuário: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => $e->getMessage()];
         }
     }
 
@@ -107,8 +93,7 @@ class AnuncioModel extends Model {
             }
 
         }  catch (\Exception $e) {
-            echo 'Erro ao atualizar usuário: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => $e->getMessage()];
         }
     }
 
@@ -159,29 +144,23 @@ class AnuncioModel extends Model {
                 return ["sucesso" => true, "message" => "Ocorreu um erro ao listar anúncios."];
             }
         }catch (\Exception $e) {
-            echo 'Erro ao denunciar usuário: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => $e->getMessage()];
         }
     }  
+
     public function deletarAnuncio($id)
     {
         try{
-            
             $stmt = $this->conn->prepare("DELETE FROM anuncios_tb WHERE anun_id = :id");
             $stmt->bindParam(':id', $id);
 
             $stmt->execute();
 
             $row = $stmt->rowCount();
-            if ($row > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return $row > 0 ? ["sucesso" => true, "message" => "Anúncio deletado."] : ["sucesso" => false, "message" => "Ocorreu um erro ao deletar anúncio."];
 
         } catch (\Exception $e) {
-            echo 'Erro ao deletar anuncio: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => $e->getMessage()];
         }
     }
 }

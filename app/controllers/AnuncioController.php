@@ -30,26 +30,26 @@ class AnuncioController {
         return $result;
     }
 
-    public function criarAnuncio(){
-        $titulo = $_POST['titulo'];
-        $descricao = $_POST['descricao'];
-        $preco = $_POST['preco'];
-        $id = 6;
-        
-        $model = new AnuncioModel;
-        $result = $model->criarAnuncio($id, $titulo, $descricao, $preco);
-        return $result;
+    public function criarAnuncio($id){
+        if (isset($_POST)) {
+            $titulo = $_POST['titulo'];
+            $descricao = $_POST['descricao'];
+            $preco = $_POST['preco'];
+            $estado = $_POST['estado'];
+            
+            $model = new AnuncioModel;
+            return $model->criarAnuncio($id, $titulo, $descricao, $preco, $estado);
+        } else {
+            echo json_encode(['sucesso' => false, 'message' => 'Requisição POST nao realizada.']);
+        }
     }
 
     public function deletarAnuncio($id){
-        $anuncio = new AnuncioModel;
-
-        $result = $anuncio->deletarAnuncio($id);
-
-        if ($result) {
-            return true;
-        }else {
-            return false;
+        if (isset($id)) {
+            $anuncio = new AnuncioModel;
+            return $anuncio->deletarAnuncio($id);
+        } else {
+            echo json_encode(['sucesso' => false, 'message' => 'ID do anúncio não enviado.']);
         }
     }
 

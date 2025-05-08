@@ -37,7 +37,7 @@ class UserModel extends Model {
             
                 $result = $stmt->execute();
 
-                return $result ?  ["sucesso" => true, "result" => "Usuário cadastrado!"] : ["sucesso" => false, "message" => "Ocorreu um erro cadastrar."];
+                return $result ?  ["sucesso" => true, "result" => "Usuário cadastrado!"] : ["sucesso" => false, "message" => "Ocorreu um erro ao cadastrar."];
 
             } else {
                 return ["sucesso" => false, "message" => "E-mail já cadastrado!"];

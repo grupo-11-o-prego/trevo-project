@@ -190,32 +190,19 @@ switch (Controller::requestUrl($baseFolder)) {
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
         $session = new SessionController;
+        header('Content-Type: application/json');
         $session->protectAPI(false, true);
-        if (isset($_POST)) {
-            header('Content-Type: application/json'); // Define o tipo de resposta como JSON
-            $response = $controller->criarAnuncio();
-            echo json_encode($response);
-        } else {
-            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
-        }
+        echo json_encode($controller->criarAnuncio($_SESSION['user']['id']));
         break;
     
     case '/api/deletaranuncio':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
-
         $session = new SessionController;
+        // header('Content-Type: application/json'); // Define o tipo de resposta como JSON        
         $session->protectAPI(false, true);
-
         $params = Controller::queryParams();
-        header('Content-Type: application/json'); // Define o tipo de resposta como JSON        
-        $response = $controller->deletarAnuncio($params['id']);
-            
-       if($response) {
-            echo json_encode(['success' => 'Anuncio deletado.']);
-        } else {
-            echo json_encode(['error' => 'Requisicao GET nao realizada.']);
-        }
+        echo json_encode($controller->deletarAnuncio($params['id']));
         break;
     
     case '/api/alterartitulo':
