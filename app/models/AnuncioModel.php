@@ -34,20 +34,24 @@ class AnuncioModel extends Model {
 
     }
 
-    public function alterarTitulo($id, $titulo)
+    public function alterarTitulo($id, $titulo, $user)
     {
         try{
-            $stmt = $this->conn->prepare('UPDATE anuncios_tb SET anun_titulo = :titulo WHERE anun_id = :id');
-            $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':titulo', $titulo);
-
-            $result = $stmt->execute();
-
-            if ($result) {
-                $anuncio = $this->get(false, $this->tabela, 'anun_id', $id);
-                return ["sucesso" => true, "result" => $anuncio];
+            if ($this->validaPermissaoAnuncio($id, $user)) {
+                $stmt = $this->conn->prepare('UPDATE anuncios_tb SET anun_titulo = :titulo WHERE anun_id = :id');
+                $stmt->bindParam(':id', $id);
+                $stmt->bindParam(':titulo', $titulo);
+    
+                $result = $stmt->execute();
+    
+                if ($result) {
+                    $anuncio = $this->get(false, $this->tabela, 'anun_id', $id);
+                    return ["sucesso" => true, "result" => ["anun_id" => $anuncio['result']['anun_id'], "anun_titulo" => $anuncio['result']['anun_titulo']]];
+                } else {
+                    return ["sucesso" => false];
+                }
             } else {
-                return ["sucesso" => false];
+                return ["sucesso" => false, "message" => "Sem permissão para editar anúncio."];
             }
 
         }  catch (\Exception $e) {
@@ -55,20 +59,24 @@ class AnuncioModel extends Model {
         }
     }
 
-    public function alterarDescricao($id, $descricao)
+    public function alterarDescricao($id, $descricao, $user)
     {
         try{
-            $stmt = $this->conn->prepare('UPDATE anuncios_tb SET anun_descricao = :descricao WHERE anun_id = :id');
-            $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':descricao', $descricao);
-
-            $result = $stmt->execute();
-
-            if ($result) {
-                $anuncio = $this->get(false, $this->tabela, 'anun_id', $id);
-                return ["sucesso" => true, "result" => $descricao];
+            if ($this->validaPermissaoAnuncio($id, $user)) {
+                $stmt = $this->conn->prepare('UPDATE anuncios_tb SET anun_descricao = :descricao WHERE anun_id = :id');
+                $stmt->bindParam(':id', $id);
+                $stmt->bindParam(':descricao', $descricao);
+    
+                $result = $stmt->execute();
+    
+                if ($result) {
+                    $anuncio = $this->get(false, $this->tabela, 'anun_id', $id);
+                    return ["sucesso" => true, "result" => ["anun_id" => $anuncio['result']['anun_id'], "anun_descricao" => $anuncio['result']['anun_descricao']]];
+                } else {
+                    return ["sucesso" => false];
+                }
             } else {
-                return ["sucesso" => false];
+                return ["sucesso" => false, "message" => "Sem permissão para editar anúncio."];
             }
 
         }  catch (\Exception $e) {
@@ -76,20 +84,24 @@ class AnuncioModel extends Model {
         }
     }
 
-    public function alterarPreco($id, $preco)
+    public function alterarPreco($id, $preco, $user)
     {
         try{
-            $stmt = $this->conn->prepare('UPDATE anuncios_tb SET anun_preco = :preco WHERE anun_id = :id');
-            $stmt->bindParam(':id', $id);
-            $stmt->bindParam(':preco', $preco);
-
-            $result = $stmt->execute();
-
-            if ($result) {
-                $anuncio = $this->get(false, $this->tabela, 'anun_id', $id);
-                return ["sucesso" => true, "result" => $preco];
+            if ($this->validaPermissaoAnuncio($id, $user)) {
+                 $stmt = $this->conn->prepare('UPDATE anuncios_tb SET anun_preco = :preco WHERE anun_id = :id');
+                 $stmt->bindParam(':id', $id);
+                 $stmt->bindParam(':preco', $preco);
+     
+                 $result = $stmt->execute();
+     
+                 if ($result) {
+                     $anuncio = $this->get(false, $this->tabela, 'anun_id', $id);
+                     return ["sucesso" => true, "result" => ["anun_id" => $anuncio['result']['anun_id'], "anun_preco" => $anuncio['result']['anun_preco']]];
+                 } else {
+                     return ["sucesso" => false];
+                 }
             } else {
-                return ["sucesso" => false];
+                return ["sucesso" => false, "message" => "Sem permissão para editar anúncio."];
             }
 
         }  catch (\Exception $e) {
@@ -137,12 +149,9 @@ class AnuncioModel extends Model {
             $stmt->execute();
         
             $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        
-            if ($result) {
-                return ["sucesso" => true, "result" => $result];
-            } else {
-                return ["sucesso" => true, "message" => "Ocorreu um erro ao listar anúncios."];
-            }
+
+            return $result ? ["sucesso" => true, "result" => $result] : ["sucesso" => true, "message" => "Ocorreu um erro ao listar anúncios."];
+
         }catch (\Exception $e) {
             return ["sucesso" => false, "message" => $e->getMessage()];
         }
@@ -151,10 +160,7 @@ class AnuncioModel extends Model {
     public function deletarAnuncio($id, $user)
     {
         try{
-            $anunUser = $this->get(false, $this->tabela, 'anun_user_id', $id);
-            
-            // verifica se quem está deletando o anúncio é o usuário que o criou ou se é administrador
-            if ($anunUser['result']['anun_user_id'] == $user['id'] || $user['admin'] > 0) {
+            if ($this->validaPermissaoAnuncio($id, $user)) {
                 $stmt = $this->conn->prepare("DELETE FROM anuncios_tb WHERE anun_id = :id");
                 $stmt->bindParam(':id', $id);
     
@@ -166,9 +172,18 @@ class AnuncioModel extends Model {
                 return ["sucesso" => false, "message" => "Sem permissão para excluir anúncio."];
             }
 
-
         } catch (\Exception $e) {
             return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function validaPermissaoAnuncio($idAnun, $user){
+        $anunUser = $this->get(false, $this->tabela, 'anun_id', $idAnun);
+        // verifica se quem está deletando o anúncio é o usuário que o criou ou se é administrador
+        if ($anunUser['result']['anun_user_id'] == $user['id'] || $user['admin'] > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 }

@@ -53,43 +53,46 @@ class AnuncioController {
         }
     }
 
-    public function alterarTitulo()
+    public function alterarTitulo($user)
     {
-        $id = $_POST['id'];
-        $titulo = $_POST['titulo'];
-        $model = new AnuncioModel;
-        $result = $model->alterarTitulo($id, $titulo);
-        return $result;
+        if (isset($_POST)) {
+            $id = $_POST['id'];
+            $titulo = $_POST['titulo'];
+            $model = new AnuncioModel;
+            return $model->alterarTitulo($id, $titulo, $user);
+        } else {
+            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
+        }
     }
 
-    public function  alterarDescricao()
+    public function  alterarDescricao($user)
     {
-        $id = $_POST['id'];
-        $descricao = $_POST['descricao'];
-        $model = new AnuncioModel;
-        $result = $model->alterarDescricao($id, $descricao);
-        return $result;
+        if (isset($_POST)) {
+            $id = $_POST['id'];
+            $descricao = $_POST['descricao'];
+            $model = new AnuncioModel;
+            return $model->alterarDescricao($id, $descricao, $user);
+        } else {
+            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
+        }
     }
 
-    public function  alterarPreco()
+    public function  alterarPreco($user)
     {
-        $id = $_POST['id'];
-        $preco = $_POST['preco'];
-        $model = new AnuncioModel;
-        $result = $model->alterarPreco($id, $preco);
-        return $result;
+        if (isset($_POST)) {
+            $id = $_POST['id'];
+            $preco = $_POST['preco'];
+            $model = new AnuncioModel;
+            return $model->alterarPreco($id, $preco, $user);
+        } else {
+            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
+        }
     }
 
     public function listar($id = false)
     {
         $model = new AnuncioModel;
-        if ($id) {
-            $result = $model->listar($id);
-        }else {    
-            $result = $model->listar();
-        }
-
-        return $result;
+        return isset($id) ? $model->listar($id) : $model->listar();
     }
 
 }
