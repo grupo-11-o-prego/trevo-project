@@ -109,6 +109,56 @@ class AnuncioModel extends Model {
         }
     }
 
+    public function alterarStatus($id, $status, $user)
+    {
+        try{
+            if ($this->validaPermissaoAnuncio($id, $user)) {
+                 $stmt = $this->conn->prepare('UPDATE anuncios_tb SET anun_status = :status WHERE anun_id = :id');
+                 $stmt->bindParam(':id', $id);
+                 $stmt->bindParam(':status', $status);
+     
+                 $result = $stmt->execute();
+     
+                 if ($result) {
+                     $anuncio = $this->get(false, $this->tabela, 'anun_id', $id);
+                     return ["sucesso" => true, "result" => ["anun_id" => $anuncio['result']['anun_id'], "anun_status" => $anuncio['result']['anun_status']]];
+                 } else {
+                     return ["sucesso" => false];
+                 }
+            } else {
+                return ["sucesso" => false, "message" => "Sem permissão para editar anúncio."];
+            }
+
+        }  catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function alterarEstado($id, $estado, $user)
+    {
+        try{
+            if ($this->validaPermissaoAnuncio($id, $user)) {
+                 $stmt = $this->conn->prepare('UPDATE anuncios_tb SET anun_estado = :estado WHERE anun_id = :id');
+                 $stmt->bindParam(':id', $id);
+                 $stmt->bindParam(':estado', $estado);
+     
+                 $result = $stmt->execute();
+     
+                 if ($result) {
+                     $anuncio = $this->get(false, $this->tabela, 'anun_id', $id);
+                     return ["sucesso" => true, "result" => ["anun_id" => $anuncio['result']['anun_id'], "anun_estado" => $anuncio['result']['anun_estado']]];
+                 } else {
+                     return ["sucesso" => false];
+                 }
+            } else {
+                return ["sucesso" => false, "message" => "Sem permissão para editar anúncio."];
+            }
+
+        }  catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
     public function listar($id = false)
     {
         try{

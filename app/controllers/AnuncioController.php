@@ -65,7 +65,7 @@ class AnuncioController {
         }
     }
 
-    public function  alterarDescricao($user)
+    public function alterarDescricao($user)
     {
         if (isset($_POST)) {
             $id = $_POST['id'];
@@ -77,13 +77,37 @@ class AnuncioController {
         }
     }
 
-    public function  alterarPreco($user)
+    public function alterarPreco($user)
     {
         if (isset($_POST)) {
             $id = $_POST['id'];
             $preco = $_POST['preco'];
             $model = new AnuncioModel;
             return $model->alterarPreco($id, $preco, $user);
+        } else {
+            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
+        }
+    }
+
+    public function alterarStatus($user)
+    {
+        if (isset($_POST)) {
+            $id = $_POST['id'];
+            $status = $_POST['status'];
+            $model = new AnuncioModel;
+            return $model->alterarStatus($id, $status, $user);
+        } else {
+            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
+        }
+    }
+
+    public function alterarEstado($user)
+    {
+        if (isset($_POST)) {
+            $id = $_POST['id'];
+            $estado = $_POST['estado'];
+            $model = new AnuncioModel;
+            return $model->alterarEstado($id, $estado, $user);
         } else {
             echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         }

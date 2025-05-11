@@ -214,13 +214,32 @@ switch (Controller::requestUrl($baseFolder)) {
         $session->protectAPI(false, true);
         echo json_encode($controller->alterarPreco($_SESSION['user']));
         break;
+    
+    case '/api/anuncio/alterarstatus':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        $session = new SessionController;
+        header('Content-Type: application/json');
+        $session->protectAPI(false, true);
+        echo json_encode($controller->alterarStatus($_SESSION['user']));
+        break;
+    
+    case '/api/anuncio/alterarestado':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        $session = new SessionController;
+        header('Content-Type: application/json');
+        $session->protectAPI(false, true);
+        echo json_encode($controller->alterarEstado($_SESSION['user']));
+        break;
+
 
     case '/api/anuncio/listar':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
         header('Content-Type: application/json');
         $session = new SessionController;
-        $session->protectAPI();
+        // $session->protectAPI();
         $params = Controller::queryParams();
         if (isset($params['id'])) { $id = $params['id']; }
         echo json_encode(isset($id) ? $controller->listar($id) : $controller->listar());
