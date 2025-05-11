@@ -20,12 +20,12 @@ class DBConnection {
         $dbUsername = $_ENV['DB_USER'];
         $dbPassword = $_ENV['DB_PASSWORD'];
 
-
         try {
             $this->conn = new \PDO("mysql:host=$dbHostname; dbname=$dbName;", $dbUsername, $dbPassword);
             $this->conn->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         } catch(\Exception $e) {
-            echo 'Falha ao conectar: ' . $e->getMessage();
+            header('Content-Type: application/json');
+            echo json_encode(["Conectado" => false, "Mensagem" => $e->getMessage()]);
             exit;
         }
     }
