@@ -9,69 +9,72 @@
     <link rel="icon" href="#" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <script src="../views/assets/js/home.js"></script>
+    <script src="https://kit.fontawesome.com/c227e3363b.js" crossorigin="anonymous"></script>
   </head>
 
-  <body class="h-screen overflow-hidden font-poppins">
-    <header class="fixed top-0 left-0 right-0 h-16 bg-white shadow flex items-center justify-between px-6 z-10">
-      <a href="/trevo-project/public" class="text-xl font-bold"><img src="../views/assets/img/logo.png" alt="LOGO" width="55px"></a>
-      <div id="auth-buttons" class="flex gap-4">
-        <a href="/trevo-project/public/cadastro" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 text-[#6F23D9] hover:scale-110 transition duration-300 cursor-pointer font-semibold">
+  <body class="h-screen overflow-hidden font-poppins bg-gradient-to-br from-gray-100 to-white text-gray-800">
+
+    <header class="fixed top-0 left-0 right-0 h-16 bg-white shadow-md flex items-center justify-between px-6 z-10">
+      <a href="/trevo-project/public" class="flex items-center gap-2 text-xl font-bold text-[#6F23D9] hover:opacity-90 transition">
+        <img src="../views/assets/img/logo.png" alt="LOGO" class="w-10 h-10 object-contain" />
+        Trevo
+      </a>
+      <div id="auth-buttons" class="flex gap-3">
+        <a href="/trevo-project/public/cadastro" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 text-[#6F23D9] hover:scale-105 transition duration-300 font-medium shadow-sm">
           Cadastrar
         </a>
-        <a href="/trevo-project/public/login" class="px-4 py-2 bg-[#6F23D9] rounded hover:bg-[#4f179c] text-white cursor-pointer hover:scale-110 transition duration-300">
+        <a href="/trevo-project/public/login" class="px-4 py-2 bg-[#6F23D9] rounded-lg hover:bg-[#4f179c] text-white hover:scale-105 transition duration-300 font-medium shadow-sm">
           Login
-        </a>''
+        </a>
       </div>
     </header>
 
-    <aside class="fixed top-16 left-0 w-72 h-[calc(100vh-4rem)] bg-gray-100 p-4 flex flex-col gap-4 shadow overflow-y-auto">
-      <!-- Botão Livros -->
-      <button onclick="functionDescer()" class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center">
-        <object id="bookIcon" data="../views/assets/svg/bookpreto.svg" type="image/svg+xml"></object>
-        <span class="ml-2">Livros</span>
+    <aside class="fixed top-16 left-0 w-72 h-[calc(100vh-4rem)] bg-white p-4 shadow-lg border-r border-gray-200 overflow-y-auto flex flex-col gap-6">
+      <button  onclick="functionDescer()" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
+        <!-- <object id="bookIcon" data="../views/assets/svg/bookpreto.svg" type="image/svg+xml"></object>
+          -->
+        <i class="fa-solid fa-book"></i>
+        <span>Livros</span>
       </button>
-
-      <!-- Submenu Livros -->
-      <div id="escondido" class="border-l-4 border-gray-500 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0">
-        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400">
-          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200"><a href="#">Todos os Livros</a></li>
-          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200"><a href="#">Empréstimos</a></li>
-          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200"><a href="#">Trocas</a></li>
+      <div id="escondido" class=" border-l-4 border-purple-400 bg-gray-50 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 w-full">
+        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400 w-full">
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Todos os Livros</a></li>
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Empréstimos</a></li>
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Trocas</a></li>
         </ul>
       </div>
 
-      <!-- Botão Fórum -->
-      <button onclick="functionDescerForum()" class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center">
-        <span class="ml-2">Fórum</span>
+      <button onclick="functionDescerForum()" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
+        <i class="fa-solid fa-comment"></i>
+        <span>Fórum</span>
       </button>
-
-      <!-- Submenu Fórum -->
-      <div id="escondidoForum" class="border-l-4 border-gray-500 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0">
-        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400">
-          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200"><a href="#">Todos os Fóruns</a></li>
-          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200"><a href="#">Todos os Fóruns</a></li>
+      <div id="escondidoForum" class="border-l-4 border-purple-400 bg-gray-50 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0 px-0">
+        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400 w-full">
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Todos os Fóruns</a></li>
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Discussões</a></li>
         </ul>
       </div>
 
-      <!-- Outros botões -->
-      <button class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center">
-        <span class="ml-2">Biblioteca</span>
+      <!-- <button class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
+        <span>Biblioteca</span>
+      </button> -->
+
+      <button id="botaoConfiguracoes" onclick="functionDescerConfiguracoes()" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
+        <i class="fa-solid fa-gear"></i>
+        <span>Configurações</span>
       </button>
-      <button id="botaoConfiguracoes" onclick="functionDescerConfiguracoes()" class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center">
-        <span class="ml-2">Configurações</span>
-      </button>
-      <div id="escondidoConfiguracoes" class="border-l-4 border-gray-500 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0">
-        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400">
-          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200"><a href="/trevo-project/public/perfil">Perfil</a></li>
-          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200"><a href="#">Segurança</a></li>
-          <li class="py-2 px-6 w-full rounded-lg text-red-400 hover:bg-gray-200"><a href="/trevo-project/public/logout">Sair</a></li>
+      <div id="escondidoConfiguracoes" class="border-l-4 border-purple-400 bg-gray-50 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0 px-2 py-2">
+        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400 w-full">
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="/trevo-project/public/perfil">Perfil</a></li>
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Segurança</a></li>
+          <li class="py-2 px-4 w-full rounded-md text-red-400 hover:bg-red-100 transition"><a href="/trevo-project/public/logout">Sair</a></li>
         </ul>
       </div>
     </aside>
 
-    <main class="ml-72 mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-6 bg-gray-50">
-      <div class="mb-6 max-w-md relative" id="body-anuncios">
-        <input type="text" placeholder="Pesquisar..." class="w-full px-4 py-2 pr-10 bg-white rounded shadow-md focus:outline-none" />
+    <main class="ml-72 mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-8 bg-gray-50 space-y-6">
+      <div class="relative max-w-lg mx-auto">
+        <input type="text" placeholder="Pesquisar anúncios..." class="w-full px-4 py-3 pl-4 pr-12 rounded-lg shadow focus:outline-none focus:ring-2 focus:ring-[#6F23D9] bg-white text-sm" />
         <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m1.85-4.65a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -79,31 +82,33 @@
         </div>
       </div>
 
-      <div id="posts-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-          <div class="h-48 bg-gray-300"></div>
-          <div class="p-4">
-            <h3 class="text-lg font-semibold mb-1">Título do Post</h3>
-            <span>Theo Otto</span>
-            <div class="flex justify-between items-center text-sm">
-              <span>R$ 100,00</span>
-              <button id="iconBtn" class="cursor-pointer transition duration-300" onclick="mudaCoracao()">
-                <span id="coracao_cheio">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-heart fill-gray-400 hover:fill-red-500 transition duration-300" viewBox="0 0 16 16">
-                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
-                  </svg>
-                </span>
+      <div id="posts-container" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex flex-col">
+          <div class="h-44 bg-gradient-to-tr from-purple-200 to-purple-300 flex items-center justify-center text-white text-xl font-bold">
+            Imagem
+          </div>
+          <div class="p-4 space-y-2">
+            <h3 class="text-lg font-semibold">Título do Post</h3>
+            <p class="text-sm text-gray-500">Theo Otto</p>
+            <div class="flex justify-between items-center text-sm pt-2">
+              <span class="font-semibold text-[#6F23D9]">R$ 100,00</span>
+              <button id="iconBtn" class="transition hover:scale-110" onclick="mudaCoracao()">
+                <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor" class="bi bi-heart fill-gray-400 hover:fill-red-500 transition duration-300" viewBox="0 0 16 16">
+                  <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15" />
+                </svg>
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      <button onclick="window.location.href= '/trevo-project/public/criar-anuncio'" class="fixed bottom-6 right-6 z-50 bg-[#6F23D9] hover:bg-[#4f179c] cursor-pointer p-4 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300">
+      <button onclick="window.location.href= '/trevo-project/public/criar-anuncio'"
+        class="fixed bottom-6 right-6 z-50 bg-[#6F23D9] hover:bg-[#4f179c] p-4 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-purple-300 shadow-lg">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="white" class="bi bi-plus-lg" viewBox="0 0 16 16">
           <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
         </svg>
       </button>
     </main>
+
   </body>
 </html>

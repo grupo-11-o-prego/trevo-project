@@ -28,7 +28,16 @@ document.getElementById('login-form').addEventListener('submit', function(event)
                         }
                       });
                 } else {
-                    alert("Usuário inválido!");
+                    Swal.fire({
+                        icon: "error",
+                        title: "Dados Inválidos!",
+                        showConfirmButton: false,
+                        timer: 1100,
+                        timerProgressBar: true,
+                        // willClose: () => {
+                        //   window.location.href = "/trevo-project/public"; // URL desejada para redirecionamento
+                        // }
+                      });
                 }
             }
             // window.location.reload();

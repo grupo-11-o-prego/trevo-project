@@ -47,10 +47,24 @@ let isCoracao = true;
   }
 
 
-  function functionDescerForum() {
-    var escondidoForum = document.getElementById("escondidoForum");
-    escondidoForum.style.maxHeight = escondidoForum.style.maxHeight && escondidoForum.style.maxHeight !== "0px" ? "0px" : escondidoForum.scrollHeight + "px";
+  let isDesceuForum = false;
+
+function functionDescerForum() {
+  const escondidoForum = document.getElementById("escondidoForum");
+  const ul = escondidoForum.querySelector("ul");
+
+  if (isDesceuForum) {
+    escondidoForum.style.maxHeight = "0px";
+    escondidoForum.style.padding = "0px";
+    ul.style.padding = "0px";
+  } else {
+    escondidoForum.style.maxHeight = escondidoForum.scrollHeight + "px";
+    escondidoForum.style.padding = "0.5rem"; // padding 2 (Tailwind: py-2 px-2)
+    ul.style.padding = "0.5rem";
   }
+
+  isDesceuForum = !isDesceuForum;
+}
 
 
   function mascara(preco) {

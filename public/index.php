@@ -130,7 +130,7 @@ switch (Controller::requestUrl($baseFolder)) {
         require __DIR__ . '/../app/controllers/UserController.php';
         $controller = new \App\Controllers\UserController;
         $session = new SessionController;
-        header('Content-Type: application/json');
+        // header('Content-Type: application/json');
         echo json_encode($controller->trocaDataNascimento($_SESSION['user']['id']));
         break;
 
@@ -274,15 +274,15 @@ switch (Controller::requestUrl($baseFolder)) {
     case '/api/denuncia/listar':
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
-        
+        header('Content-Type: application/json');
         $session = new SessionController;
-        $session->protectAPI(true);
+        $session->protect(true, false);
 
         $params = Controller::queryParams();
-        $id = $params['id'];
+        
         
         if (isset($id)) {
-            $result = $denuncia->listar($id);
+            $result = $denuncia->listar($params['id'], $_SESSION['user']);
         } else {
             $result = $denuncia->listar();
         }
