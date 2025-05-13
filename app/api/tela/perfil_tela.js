@@ -201,17 +201,27 @@ window.onload = async function () {
     btnVendedor.textContent = 'Virar Vendedor';
     btnVendedor.className = 'bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2 rounded-lg transition duration-300';
     btnVendedor.onclick = async () => {
-      try {
-        const res = await requisitar('POST', 'api/usuario/virar-vendedor');
-        if (res.sucesso) {
-          Swal.fire('Parabéns!', 'Agora você é um vendedor.', 'success');
-        } else {
-          Swal.fire('Erro', 'Não foi possível atualizar o status.', 'error');
-        }
-      } catch (e) {
-        console.error(e);
-        Swal.fire('Erro', 'Erro ao conectar com o servidor.', 'error');
-      }
+      Swal.fire({
+        title: 'Tem certeza?',
+        html: `<form id="modo-vendedor-form">
+              <input type="text" name="cpf" id="vendedor-cpf" class="swal2-input" placeholder="Digite seu CPF">
+            </form>`,
+        showCancelButton: true,
+        confirmButtonColor: '#e3342f',
+        cancelButtonColor: '#aaa',
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+        preConfirm: () => {
+            if (campo === 'user_cpf') {
+              const cpfVendedor = Swal.getPopup().querySelector('#vendedor-cpf').value;
+              return { cpfVendedor };
+            }
+          }
+      }).then(async (res) => {
+          if (res.isConfirmed) {
+            handleSubmitModoVendedor();
+          }
+        })
     };
 
     acoesExtras.appendChild(btnVendedor);
