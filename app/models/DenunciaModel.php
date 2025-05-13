@@ -22,11 +22,23 @@ class DenunciaModel {
         try{
             $stmt = $this->conn->prepare('INSERT INTO denuncias_tb (den_user_id, den_data, den_revisao) VALUES (:id, :dia, 0)');
             $stmt->bindParam(':id', $id);
-
             $data = TimeStamp::stamp();
-
             $stmt->bindParam(':dia', $data);
+            $result = $stmt->execute();
+            return $result ? ["sucesso" => true, "result" => "Denuncia ao usuário realizado!"] : ["sucesso" => false, "result" => "Denuncia não realizada!"]
 
+        } catch (\Exception $e) {            
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function denunciarAnuncio($id)
+    {
+        try{
+            $stmt = $this->conn->prepare('INSERT INTO denuncias_tb (den_anun_id, den_data, den_revisao) VALUES (:id, :dia, 0)');
+            $stmt->bindParam(':id', $id);
+            $data = TimeStamp::stamp();
+            $stmt->bindParam(':dia', $data);
             $result = $stmt->execute();
 
             return $result;
@@ -45,7 +57,7 @@ class DenunciaModel {
 
             $result = $stmt->execute();
 
-            return $result;
+            return $result ? ["sucesso" => true, "result" => "Denuncia revisada!"] : ["sucesso" => false, "result" => "Denuncia não revisada!"]
 
         }  catch (\Exception $e) {
             echo 'Erro ao denunciar usuário: ' . $e->getMessage();
@@ -61,7 +73,7 @@ class DenunciaModel {
 
             $result = $stmt->execute();
 
-            return $result;
+            return $result ? ["sucesso" => true, "result" => "Denuncia deletada!"] : ["sucesso" => false, "result" => "Denuncia não deletada!"]
 
         } catch (\Exception $e) {
             echo 'Erro ao denunciar usuário: ' . $e->getMessage();

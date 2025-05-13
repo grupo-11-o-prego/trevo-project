@@ -14,11 +14,20 @@ class DenunciaController {
         include_once('../views/denuncia.html');
     }
 
-    public static function denunciar($id)
+    public static function denunciarUsuario($id)
     {
         $model = new DenunciaModel;
 
-        $result = $model->denunciarUsuario($id);
+        return model->denunciarUsuario($id);
+
+       
+    }
+
+    public static function denunciarAnuncio($id)
+    {
+        $model = new DenunciaModel;
+
+        $result = $model->denunciarAnuncio($id);
 
         if($result) {
             return true;

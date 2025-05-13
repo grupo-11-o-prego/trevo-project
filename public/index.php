@@ -264,15 +264,21 @@ switch (Controller::requestUrl($baseFolder)) {
         $controller->index();
         break;
 
-    case '/api/denunciar':
+    case '/api/denunciarusuario':
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
-        $controller = new Controller;
-
         $params = Controller::queryParams();
         $id = $params['id'];
+        echo json_encode($denuncia->denunciarUsuario($id));
+        break;
 
-        $result = $denuncia->denunciar($id);
+    case '/api/denunciaranuncio':
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $denuncia = new \App\Controllers\DenunciaController;
+        $controller = new Controller;    
+        $params = Controller::queryParams();
+        $id = $params['id'];    
+        $result = $denuncia->denunciarAnuncio($id);
         if ($result) {
             echo json_encode(['sucesso' => true]);
         } else {
