@@ -3,10 +3,12 @@
 namespace App\Models;
 
 include_once __DIR__ . '/../../database/TimeStamp.php';
+include_once __DIR__ . '/../../includes/ValidadorCPF.php';
 include_once __DIR__ . '/Model.php';
 
 use Database\TimeStamp;
 use App\Models\Model;
+use Includes\ValidadorCPF;
 
 class UserModel extends Model {
 
@@ -190,27 +192,29 @@ class UserModel extends Model {
         }
     }
 
-    public function modoVendedor($id, $cpf)
+    public function modoVendedor($user, $cpf)
     {
         try{
-            $stmt = $this->conn->prepare("UPDATE usuarios_tb SET user_vendedor = 1, user_cpf = :cpf WHERE user_id = :id");
-            $stmt->bindParam(':cpf', $cpf);
-            $stmt->bindParam(':id', $id);
-
-            $result = $stmt->execute();
-
-            if ($result) {
-                $user = $this->get(false, $this->tabela, 'user_id', $id);
-                return ["sucesso" => true, "result" => $user];
+            if (ValidadorCPF::validar($cpf)) {
+                $stmt = $this->conn->prepare("UPDATE usuarios_tb SET user_vendedor = 1, user_cpf = :cpf WHERE user_id = :id");
+                $stmt->bindParam(':cpf', $cpf);
+                $stmt->bindParam(':id', $user['id']);
+    
+                $result = $stmt->execute();
+    
+                if ($result) {
+                    $result = $this->get(false, $this->tabela, 'user_id', $user['id']);
+                    return ["sucesso" => true, "result" => ["user_id" => $result['result']['user_id'], "user_cpf" => $result['result']['user_cpf'], "user_vendedor" => $result['result']['user_vendedor']]];
+                } else {
+                    return ["sucesso" => false];
+                }
             } else {
-                return ["sucesso" => false];
+                return ["sucesso" => false, "message" => "CPF Inválido!"];
             }
 
         } catch (\Exception $e) {
-            echo 'Erro ao deletar usuário: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => "Erro ao trocar para vendedor: " . $e->getMessage()];
         }
     }
     
-    // Outros métodos como update, delete etc.
 }

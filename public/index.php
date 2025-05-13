@@ -118,6 +118,15 @@ switch (Controller::requestUrl($baseFolder)) {
         echo json_encode($result);
         break;
 
+    
+    case '/api/user/modovendedor':
+        require __DIR__ . '/../app/controllers/UserController.php';
+        $controller = new \App\Controllers\UserController;
+        $session = new SessionController;
+        // header('Content-Type: application/json');
+        echo json_encode($controller->modoVendedor($_SESSION['user']));
+        break;
+
     case '/api/alterarcontato':
         require __DIR__ . '/../app/controllers/UserController.php';
         $controller = new \App\Controllers\UserController;

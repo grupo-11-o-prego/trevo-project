@@ -167,14 +167,15 @@ class UserController {
         }
     }
 
-    public function modoVendedor($id)
+    public function modoVendedor($user)
     {
-        $cpf = $_POST['cpf'];
-
-        $model = new UserModel;
-        $result = $model->modoVendedor($id, $cpf);
-
-        return $result;
+        if (isset($_POST)) {
+            $cpf = $_POST['cpf'];
+            $model = new UserModel;
+            return $model->modoVendedor($user, $cpf);
+        } else {
+            return ['sucesso' => false, 'error' => 'Requisição POST nao realizada.'];
+        }
     }
     
 }
