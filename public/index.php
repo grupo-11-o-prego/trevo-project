@@ -275,6 +275,7 @@ switch (Controller::requestUrl($baseFolder)) {
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
         header('Content-Type: application/json');
+
         $session = new SessionController;
         $session->protect(true, false);
 

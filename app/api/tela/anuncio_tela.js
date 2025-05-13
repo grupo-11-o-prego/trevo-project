@@ -1,11 +1,11 @@
 window.onload = async function () {
     if (document.getElementById('posts-container')) {
-        await requisitar('GET', 'api/anuncio/listar')
+        await requisitar('GET', '/trevo-project/public/api/anuncio/listar')
             .then(result => {
                 console.log(result)
                 if (result.erro) {
                     console.error('Erro:', result.erro);
-                    alert('Ocorreu um erro ao buscar os anúncios. Tente novamente.');
+                    alert('Ocorreu um erro ao buscar os anúncios. Tente novamnte.');
                 } else {
                     const container = document.getElementById('posts-container');
                     console.log(result.dados);
