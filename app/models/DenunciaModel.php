@@ -4,48 +4,31 @@ namespace App\Models;
 
 include_once __DIR__ . '/../../config/DBConnection.php';
 include_once __DIR__ . '/../../database/TimeStamp.php';
+include_once __DIR__ . '/Model.php';
 
+use App\Models\Model;
 use Config\DBConnection;
 use Database\TimeStamp;
 
-class DenunciaModel {
-    
-    private $conn;
+class DenunciaModel extends Model {
 
-    public function __construct() {
-        $db = new DBConnection();
-        $this->conn = $db->getConn();
-    }
-
-    public function denunciarUsuario($id)
+    public function denunciar($id, $tipo)
     {
-        try{
-            $stmt = $this->conn->prepare('INSERT INTO denuncias_tb (den_user_id, den_data, den_revisao) VALUES (:id, :dia, 0)');
-            $stmt->bindParam(':id', $id);
-            $data = TimeStamp::stamp();
-            $stmt->bindParam(':dia', $data);
+       try{
+            if ($tipo == 'user') {
+                $stmt = $this->conn->prepare("INSERT INTO denuncias_tb (den_data, den_user_id) VALUES (now(), :id)");
+            } else if ($tipo = 'anun') {
+                $stmt = $this->conn->prepare("INSERT INTO denuncias_tb (den_data, den_anun_id) VALUES (now(), :id)");
+            } else {
+                return ["sucesso" => false, "message" => "Tipo inválido."];
+            }
+            $stmt->bindParam(":id", $id);
             $result = $stmt->execute();
-            return $result ? ["sucesso" => true, "result" => "Denuncia ao usuário realizado!"] : ["sucesso" => false, "result" => "Denuncia não realizada!"]
 
-        } catch (\Exception $e) {            
+            return $result ? ["sucesso" => true, "message" => "Denúncia realizada!"] : ["sucesso" => false, "message" => "Ocorreu um erro ao denunciar!"];
+
+        }  catch (\Exception $e) {
             return ["sucesso" => false, "message" => $e->getMessage()];
-        }
-    }
-
-    public function denunciarAnuncio($id)
-    {
-        try{
-            $stmt = $this->conn->prepare('INSERT INTO denuncias_tb (den_anun_id, den_data, den_revisao) VALUES (:id, :dia, 0)');
-            $stmt->bindParam(':id', $id);
-            $data = TimeStamp::stamp();
-            $stmt->bindParam(':dia', $data);
-            $result = $stmt->execute();
-
-            return $result;
-
-        } catch (\Exception $e) {
-            echo 'Erro ao denunciar usuário: ' . $e->getMessage();
-            return null;
         }
     }
 
@@ -57,7 +40,7 @@ class DenunciaModel {
 
             $result = $stmt->execute();
 
-            return $result ? ["sucesso" => true, "result" => "Denuncia revisada!"] : ["sucesso" => false, "result" => "Denuncia não revisada!"]
+            return $result ? ["sucesso" => true, "result" => "Denuncia revisada!"] : ["sucesso" => false, "result" => "Denuncia não revisada!"];
 
         }  catch (\Exception $e) {
             echo 'Erro ao denunciar usuário: ' . $e->getMessage();
@@ -73,7 +56,7 @@ class DenunciaModel {
 
             $result = $stmt->execute();
 
-            return $result ? ["sucesso" => true, "result" => "Denuncia deletada!"] : ["sucesso" => false, "result" => "Denuncia não deletada!"]
+            return $result ? ["sucesso" => true, "result" => "Denuncia deletada!"] : ["sucesso" => false, "result" => "Denuncia não deletada!"];
 
         } catch (\Exception $e) {
             echo 'Erro ao denunciar usuário: ' . $e->getMessage();
