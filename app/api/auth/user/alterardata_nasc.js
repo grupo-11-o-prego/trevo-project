@@ -5,6 +5,7 @@ function handleSubmitDataNasc() {
     var data_nasc = formData.get('data-nasc');
     
     var ok = "";
+    console.log(data_nasc);
     requisitar('POST', '/trevo-project/public/api/alterardatanasc', formData, 'formdata')
         .then(result => {
             console.log(result)

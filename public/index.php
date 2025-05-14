@@ -185,8 +185,8 @@ switch (Controller::requestUrl($baseFolder)) {
         header('Content-Type: application/json');
         $session->protectAPI(false, true);
         echo json_encode($controller->criarAnuncio($_SESSION['user']['id']));
-        break;
-    
+        break;  
+
     case '/api/deletaranuncio':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
@@ -264,26 +264,14 @@ switch (Controller::requestUrl($baseFolder)) {
         $controller->index();
         break;
 
-    case '/api/denunciarusuario':
+    case '/api/denuncia/denunciar':
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
         $params = Controller::queryParams();
-        $id = $params['id'];
-        echo json_encode($denuncia->denunciarUsuario($id));
-        break;
-
-    case '/api/denunciaranuncio':
-        require __DIR__ . '/../app/controllers/DenunciaController.php';
-        $denuncia = new \App\Controllers\DenunciaController;
-        $controller = new Controller;    
-        $params = Controller::queryParams();
-        $id = $params['id'];    
-        $result = $denuncia->denunciarAnuncio($id);
-        if ($result) {
-            echo json_encode(['sucesso' => true]);
-        } else {
-            echo json_encode(['sucesso' => false]);
-        }
+        echo json_encode($denuncia->denunciar($params));
         break;
 
     case '/api/denuncia/listar':

@@ -94,7 +94,7 @@ window.onload = async function () {
         } else if (campo === 'user_data_nasc') {
           inputHTML = `
             <form id="alterardata_nasc-form">
-              <input type="date" name="data_nasc-novo" id="data_nasc-novo" class="swal2-input" placeholder="Nova">
+              <input type="date" name="data-nasc" id="data_nasc-novo" class="swal2-input" placeholder="Nova">
             </form>
           `;
         }
