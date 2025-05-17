@@ -2,12 +2,10 @@
 
 namespace App\Models;
 
-include_once __DIR__ . '/../../config/DBConnection.php';
 include_once __DIR__ . '/../../database/TimeStamp.php';
 include_once __DIR__ . '/Model.php';
 
 use App\Models\Model;
-use Config\DBConnection;
 use Database\TimeStamp;
 
 class DenunciaModel extends Model {
@@ -43,8 +41,7 @@ class DenunciaModel extends Model {
             return $result ? ["sucesso" => true, "result" => "Denuncia revisada!"] : ["sucesso" => false, "result" => "Denuncia não revisada!"];
 
         }  catch (\Exception $e) {
-            echo 'Erro ao denunciar usuário: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => $e->getMessage()];
         }
     }
 
@@ -59,8 +56,7 @@ class DenunciaModel extends Model {
             return $result ? ["sucesso" => true, "result" => "Denuncia deletada!"] : ["sucesso" => false, "result" => "Denuncia não deletada!"];
 
         } catch (\Exception $e) {
-            echo 'Erro ao denunciar usuário: ' . $e->getMessage();
-            return null;
+            return ["sucesso" => false, "message" => $e->getMessage()];
         }
     }
 
@@ -98,16 +94,11 @@ class DenunciaModel extends Model {
                 JOIN usuarios_tb as u ON u.user_id = d.den_user_id
                 ');
             }
-            
+        
             $stmt->execute();
-
             $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-            if ($result) {
-                return ["sucesso" => true, "result" => $result];
-            } else {
-                return ["sucesso" => true, "message" => "Não foram encontradas denúncias."];
-            }
+            return $result ? ["sucesso" => true, "result" => $result] : ["sucesso" => false, "message" => "Náo foram encontradas denúncias"];
 
         } catch (\Exception $e) {
             return ["sucesso" => false, "message" => 'Erro ao denunciar usuário: ' . $e->getMessage()];

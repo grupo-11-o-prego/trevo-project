@@ -278,59 +278,34 @@ switch (Controller::requestUrl($baseFolder)) {
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
         header('Content-Type: application/json');
-
         $session = new SessionController;
-        $session->protect(true, false);
-
+        $session->protectAPI(true);
         $params = Controller::queryParams();
-        
-        
-        if (isset($id)) {
-            $result = $denuncia->listar($params['id'], $_SESSION['user']);
-        } else {
-            $result = $denuncia->listar();
-        }
-        echo json_encode($result);
+        if (isset($params['id'])) { $id = $params['id']; }
+        echo json_encode(isset($id) ? $denuncia->listar($id) : $denuncia->listar());
         break;
     
     case '/api/denuncia/revisar' :
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
-        
         $session = new SessionController;
+        header('Content-Type: application/json');
         $session->protectAPI(true);
-        
         $params = Controller::queryParams();
-        $id = $params['id'];
-
-        $result = $denuncia->revisar($id);
-
-        if ($result) {
-            echo json_encode(['sucesso' => true]);
-        } else {
-            echo json_encode(['sucesso' => false]);
-        }
+        $id = isset($params['id']) ? $params['id'] : null;
+        echo json_encode($denuncia->revisar($id));
         break;
 
     case '/api/denuncia/deletar':
         require __DIR__ . '/../app/controllers/DenunciaController.php';
         $denuncia = new \App\Controllers\DenunciaController;
-
         $session = new SessionController;
+        header('Content-Type: application/json');
         $session->protectAPI(true);
-
         $controller = new Controller;
-        
         $params = Controller::queryParams();
-        $id = $params['id'];
-        
-        $result = $denuncia->deletar($id);
-        
-        if ($result) {
-            echo json_encode(['sucesso' => true]);
-        } else {
-            echo json_encode(['sucesso' => false]);
-        }
+        $id = isset($params['id']) ? $params['id'] : null;
+        echo json_encode($denuncia->deletar($id));
         break;
         
     // -------- FÓRUM --------

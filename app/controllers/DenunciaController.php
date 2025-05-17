@@ -26,38 +26,27 @@ class DenunciaController {
 
     public function revisar($id)
     {
-        $model = new DenunciaModel;
-
-        $result = $model->revisarDenuncia($id);
-
-        if($result){
-            return true;
+        if (isset($id)) {
+            $model = new DenunciaModel;
+            return $model->revisarDenuncia($id);
         } else {
-            return false;
+            return ["sucesso" => false, "message" => "Requisição GET incompleta"];
         }
     }
 
     public function deletar($id)
     {
-        $model = new DenunciaModel;
-        
-        $result = $model->deletarDenuncia($id);
-
-        if($result){
-            return true;
+        if (isset($id)) {
+            $model = new DenunciaModel;
+            return $model->deletarDenuncia($id);
         } else {
-            return false;
+            return ["sucesso" => false, "message" => "Requisição GET incompleta"];
         }
     }
 
     public function listar($id = false)
     {
         $model = new DenunciaModel;
-        if ($id) {
-            $result = $model->listarDenuncia($id);
-        } else {
-            $result = $model->listarDenuncia();
-        }
-        return $result;
+        return isset($id) ? $model->listarDenuncia($id) : $model->listarDenuncia();
     }
 }
