@@ -184,6 +184,14 @@ switch (Controller::requestUrl($baseFolder)) {
         $session->protect(false, false);
         $controller->anuncioDetalhes();
         break;
+
+    case '/anuncio-detalhes-atualizar':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        $session = new SessionController;
+        $session->protect(false, false);
+        $controller->anuncioDetalhesAtualizar();
+        break;
     
     case '/api/criaranuncio':
         require __DIR__ . '/../app/controllers/AnuncioController.php';

@@ -12,6 +12,8 @@ class AnuncioController {
 
     public function anuncioDetalhes() { include_once('../views/anuncio_detalhe.html');}
 
+    public function anuncioDetalhesAtualizar() { include_once('../views/anuncio_detalhe_atualizar.html');}
+
     public function viewAlterarTitulo() { include_once('../views/crud-anuncio/alterartitulo.html'); }
 
     public function viewAlterarDescricao() { include_once('../views/crud-anuncio/alterardescricao.html'); }

@@ -4,7 +4,7 @@ document.getElementById('anuncio-form').addEventListener('submit', function(even
     // var senha = formData.get('tipo');
     // alert(senha)
     var ok = "";
-    requisitar('POST', '/trevo-project/public/api/criaranuncio', formData, 'formdata')
+    requisitar('POST', '/trevo-project/public/api/anuncio/criaranuncio', formData, 'formdata')
         .then(result => {
             console.log(result)
             if (result.erro) {
