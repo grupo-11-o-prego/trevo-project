@@ -297,7 +297,7 @@ window.onload = async function () {
             }
 
             const imagemDiv = document.createElement('div');
-            imagemDiv.className = 'h-44 bg-gradient-to-r from-[#6F23D9] to-indigo-600 flex items-center justify-center text-white text-xl font-bold';
+            imagemDiv.className = 'h-44 bg-gradient-to-tr from-purple-200 to-purple-300 flex items-center justify-center text-white text-xl font-bold';
             imagemDiv.textContent = 'Imagem';
 
             const conteudo = document.createElement('div');
