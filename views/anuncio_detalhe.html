@@ -33,6 +33,27 @@
           href="/trevo-project/public/login"
           class="px-4 py-2 bg-[#6F23D9] rounded hover:bg-[#4f179c] text-white cursor-pointer hover:scale-110 transition duration-300"
         >
+    <title>Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link href="../views/src/output.css" rel="stylesheet" />
+    <link rel="icon" href="#" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="../views/assets/js/home.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  </head>
+
+  <body class="h-screen overflow-hidden font-poppins bg-gradient-to-br from-gray-100 to-white text-gray-800">
+
+    <header class="fixed top-0 left-0 right-0 h-16 bg-white shadow-md flex items-center justify-between px-6 z-10">
+      <a href="/trevo-project/public" class="flex items-center gap-2 text-xl font-bold text-[#6F23D9] hover:opacity-90 transition">
+        <img src="../views/assets/img/logo.png" alt="LOGO" class="w-10 h-10 object-contain" />
+        Trevo
+      </a>
+      <div id="auth-buttons" class="flex gap-3">
+        <a href="/trevo-project/public/cadastro" class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 text-[#6F23D9] hover:scale-105 transition duration-300 font-medium shadow-sm">
+          Cadastrar
+        </a>
+        <a href="/trevo-project/public/login" class="px-4 py-2 bg-[#6F23D9] rounded-lg hover:bg-[#4f179c] text-white hover:scale-105 transition duration-300 font-medium shadow-sm">
           Login
         </a>
       </div>
@@ -152,5 +173,94 @@
     </main>
     <script src="../app/api/api.js"></script>
     <script src="../app/api/auth/anuncio_detalhe.js"></script>
+    <aside class="fixed top-16 left-0 w-72 h-[calc(100vh-4rem)] bg-white p-4 shadow-lg border-r border-gray-200 overflow-y-auto flex flex-col gap-6">
+      <button  onclick="functionDescer()" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
+        <object id="bookIcon" data="../views/assets/svg/bookpreto.svg" type="image/svg+xml"></object>
+        <span>Livros</span>
+      </button>
+      <div id="escondido" class=" border-l-4 border-purple-400 bg-gray-50 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 w-full">
+        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400 w-full">
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Todos os Livros</a></li>
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Empréstimos</a></li>
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Trocas</a></li>
+        </ul>
+      </div>
+
+      <button onclick="functionDescerForum()" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
+        <span>Fórum</span>
+      </button>
+      <div id="escondidoForum" class="border-l-4 border-purple-400 bg-gray-50 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0 px-0">
+        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400 w-full">
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Todos os Fóruns</a></li>
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Discussões</a></li>
+        </ul>
+      </div>
+
+      <!-- <button class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
+        <span>Biblioteca</span>
+      </button> -->
+
+      <button id="botaoConfiguracoes" onclick="functionDescerConfiguracoes()" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
+        <span>Configurações</span>
+      </button>
+      <div id="escondidoConfiguracoes" class="border-l-4 border-purple-400 bg-gray-50 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0 px-2 py-2">
+        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400 w-full">
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="/trevo-project/public/perfil">Perfil</a></li>
+          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Segurança</a></li>
+          <li class="py-2 px-4 w-full rounded-md text-red-400 hover:bg-red-100 transition"><a href="/trevo-project/public/logout">Sair</a></li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="ml-72 mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-6 bg-gray-50">
+        <div id="anuncio-detalhado" class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg space-y-6">
+            
+            <!-- Imagem do Anúncio
+            <div class="w-full h-64 bg-gray-200 rounded-xl overflow-hidden flex items-center justify-center">
+            <span class="text-gray-500 text-lg">Imagem do Anúncio</span>
+            </div>
+
+            <div class="flex justify-between items-center">
+            <h1 class="text-3xl font-bold text-gray-800">Título do Anúncio</h1>
+            <span class="px-4 py-1 bg-green-100 text-green-700 text-sm rounded-full font-semibold">Disponível</span>
+            </div>
+
+            <div class="flex gap-4 text-sm text-gray-600">
+            <p><strong>Tipo:</strong> Troca</p>
+            <p><strong>Estado:</strong> Usado</p>
+            </div>
+
+            <di>
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Descrição</h2>
+            <p class="text-gray-700 leading-relaxed">
+                Aqui vai uma descrição detalhada do anúncio, incluindo as características do item, condições e qualquer outra informação importante que o anunciante queira fornecer.
+            </p>
+            </di
+            <div class="pt-4 border-t border-gray-200">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2">Informações do Vendedor</h3>
+            <p class="text-gray-700"><strong>Nome:</strong> João da Silva</p>
+            <p class="text-gray-700"><strong>Status:</strong> Vendedor Verificado</p>
+            <p class="text-gray-700"><strong>Data de Criação:</strong> 18/05/2025</p>
+            </div>
+
+            <div class="flex justify-end mt-6">
+            <button class="bg-[#6F23D9] hover:bg-[#4f179c] text-white font-semibold px-6 py-2 rounded-lg transition duration-300">
+                Entrar em Contato
+            </button>
+            </div> -->
+
+        </div>
+    </main>
+
+        
+
+    <script src="../app/api/api.js"></script>
+    <script src="../app/api/auth/user/alterarsenha.js"></script>
+    <script src="../app/api/auth/user/alterarnome.js"></script>
+    <script src="../app/api/auth/user/alterardata_nasc.js"></script>
+    <script src="../app/api/auth/user/alterarcontato.js"></script>
+    <script src="../app/api/auth/user/alterarmodo.js"></script>
+    <script src="../app/api/tela/anuncio_detalhes_tela.js"></script>
+    <script src="../app/api/tela/perfil_tela.js"></script>
   </body>
 </html>

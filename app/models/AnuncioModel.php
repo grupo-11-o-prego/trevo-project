@@ -15,11 +15,12 @@ class AnuncioModel extends Model {
         parent:: __construct();
     }
 
-    public function criarAnuncio($id, $titulo, $descricao, $preco, $estado){
+    public function criarAnuncio($id, $titulo, $descricao, $tipo, $preco, $estado){
         try{          
-            $stmt = $this->conn->prepare('INSERT INTO anuncios_tb (anun_titulo, anun_descricao, anun_data, anun_user_id, anun_preco, anun_estado, anun_status) VALUES (:titulo, :descricao, NOW(), :id, :preco, :estado, "DISPONÍVEL")');
+            $stmt = $this->conn->prepare('INSERT INTO anuncios_tb (anun_titulo, anun_descricao, anun_data, anun_tipo, anun_user_id, anun_preco, anun_estado, anun_status) VALUES (:titulo, :descricao, NOW(),:tipo, :id, :preco, :estado, "DISPONÍVEL")');
             $stmt->bindParam(':titulo', $titulo);
             $stmt->bindParam(':descricao', $descricao);
+            $stmt->bindParam(':tipo', $tipo);
             $stmt->bindParam(':id', $id);
             $stmt->bindParam(':preco', $preco);
             $stmt->bindParam(':estado', $estado);

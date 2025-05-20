@@ -4,28 +4,28 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Login</title>
-  <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link href="../views/src/output.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link href="../views/src/output.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
-<body class="bg-white min-h-screen flex items-center justify-center">
+<body class="bg-white min-h-screen flex items-center justify-center relative">
+
   <a href="/trevo-project/public" class="absolute top-4 left-4 z-50 text-black-600 hover:text-purple-600 transition">
-      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
-        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
-      </svg>
-    </a>
-  <div class="w-full max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-arrow-left" viewBox="0 0 16 16">
+      <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+    </svg>
+  </a>
+
+  <div class="w-full max-w-6xl mx-auto p-6 grid grid-cols-1 md:grid-cols-2 gap-8 items-center justify-center">
+    
     <form id="login-form">
       <h1 class="text-4xl font-bold mb-8">Login</h1>
-      <div class="space-y-5" >
+      <div class="space-y-5">
         <div>
-            <label class="block font-medium mb-1">Email</label>
-            <input name="email" type="email" placeholder="Digite seu email" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
-          </div>
+          <label class="block font-medium mb-1">Email</label>
+          <input name="email" type="email" placeholder="Digite seu email" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
+        </div>
         <div>
           <label class="block font-medium mb-1">Senha</label>
           <input name="senha" type="password" placeholder="Digite sua senha" class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" />
@@ -38,10 +38,13 @@
         Não possui conta? <a href="/trevo-project/public/cadastro" class="text-blue-600 hover:underline">Cadastre-se</a>
       </p>
     </form>
+
+    <div class=" hidden md:flex items-center justify-center">
+      <img src="../views/assets/svg/undraw_my-password_iyga.svg" alt="login" class="max-w-full h-auto" />
+    </div>
+
   </div>
-  <div class="h-full w-full flex items-center justify-center p-8 rounded-lg">
-      <img src="../views/assets/svg/undraw_my-password_iyga.svg" alt="login" />
-  </div>
+
   <script src="../app/api/api.js"></script>
   <script src="../app/api/auth/login.js"></script>
 </body>

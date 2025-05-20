@@ -177,6 +177,13 @@ switch (Controller::requestUrl($baseFolder)) {
         $session->protect(false, true);
         $controller->anuncio();
         break;
+    case '/anuncio-detalhes':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        $session = new SessionController;
+        $session->protect(false, false);
+        $controller->anuncioDetalhes();
+        break;
     
     case '/api/criaranuncio':
         require __DIR__ . '/../app/controllers/AnuncioController.php';

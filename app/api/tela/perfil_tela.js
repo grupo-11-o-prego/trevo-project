@@ -25,7 +25,10 @@ window.onload = async function () {
     card.className = 'bg-white rounded-2xl shadow-xl p-8 flex flex-col gap-6';
 
     const header = document.createElement('div');
-    header.className = 'flex items-center gap-6';
+    header.className = 'flex justify-between items-center'; // espaço entre os filhos
+
+    const nomeContainer = document.createElement('div');
+    nomeContainer.className = 'flex items-center gap-6';
 
     const imagem = document.createElement('div');
     imagem.innerHTML = `
@@ -39,34 +42,44 @@ window.onload = async function () {
     nome.className = 'text-3xl font-semibold text-gray-800';
     nome.textContent = post.user_nome;
 
-    header.appendChild(imagem);
-    header.appendChild(nome);
+    nomeContainer.appendChild(imagem);
+    nomeContainer.appendChild(nome);
+
+    header.appendChild(nomeContainer);
+
+    if (post.user_vendedor) {
+      const status = document.createElement('span');
+      status.className = 'text-sm bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-medium';
+      status.textContent = 'Vendedor';
+      header.appendChild(status); 
+    }
 
     const fields = document.createElement('div');
     fields.className = 'grid grid-cols-1 md:grid-cols-2 gap-6';
 
     const criarCampo = (label, valor, campo, tipo = 'text') => {
       const wrapper = document.createElement('div');
-      wrapper.className = 'flex justify-between items-start border-b border-gray-200 pb-3';
+      wrapper.className = 'flex justify-between items-center border-b border-gray-200 py-2'; // padding menor
 
       const textContainer = document.createElement('div');
 
       const labelEl = document.createElement('p');
-      labelEl.className = 'text-sm text-gray-500';
+      labelEl.className = 'text-xs text-gray-500'; // fonte menor
       labelEl.textContent = label;
 
       const valorEl = document.createElement('p');
-      valorEl.className = 'text-lg text-gray-800 font-medium';
+      valorEl.className = 'text-base text-gray-800'; // um pouco menor
       valorEl.textContent = valor;
 
       textContainer.appendChild(labelEl);
       textContainer.appendChild(valorEl);
 
       const btn = document.createElement('button');
-      btn.className = 'text-gray-500 hover:text-purple-600 transition cursor-pointer';
+      btn.className = 'text-gray-400 hover:text-purple-600 transition cursor-pointer p-1'; // ícone menor com menos espaço
       btn.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mt-1" fill="none" viewBox="0 0 25 20" stroke="currentColor" width="20" height="20">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 11l6.364-6.364a1.5 1.5 0 112.121 2.121L11.121 13.5H9v-2.5z"/>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M15.232 5.232l3.536 3.536M9 11l6.364-6.364a1.5 1.5 0 112.121 2.121L11.121 13.5H9v-2.5z"/>
         </svg>`;
 
       btn.onclick = () => {
@@ -94,7 +107,7 @@ window.onload = async function () {
         } else if (campo === 'user_data_nasc') {
           inputHTML = `
             <form id="alterardata_nasc-form">
-              <input type="date" name="data-nasc" id="data_nasc-novo" class="swal2-input" placeholder="Nova">
+              <input type="date" name="data-nasc" id="data_nasc-novo" class="swal2-input">
             </form>
           `;
         }
@@ -162,73 +175,95 @@ window.onload = async function () {
     card.appendChild(header);
     card.appendChild(fields);
 
-    // Botões adicionais
     const acoesExtras = document.createElement('div');
     acoesExtras.className = 'flex gap-4 mt-6';
 
     const btnDeletarConta = document.createElement('button');
     btnDeletarConta.textContent = 'Deletar Conta';
-    btnDeletarConta.className = 'bg-red-500 hover:bg-red-600 text-white font-semibold px-6 py-2 rounded-lg transition duration-300';
-    btnDeletarConta.onclick = async () => {
-      const confirm = await Swal.fire({
-        title: 'Tem certeza?',
-        text: "Essa ação não pode ser desfeita.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#e3342f',
-        cancelButtonColor: '#aaa',
-        confirmButtonText: 'Sim, deletar!',
-        cancelButtonText: 'Cancelar'
-      });
-
-      if (confirm.isConfirmed) {
-        try {
-          const res = await requisitar('DELETE', 'api/usuario/deletar');
-          if (res.sucesso) {
-            Swal.fire('Deletado!', 'Sua conta foi excluída.', 'success');
-            setTimeout(() => window.location.href = '/trevo-project/public/login', 2000);
-          } else {
-            Swal.fire('Erro', 'Não foi possível deletar a conta.', 'error');
-          }
-        } catch (e) {
-          console.error(e);
-          Swal.fire('Erro', 'Erro ao conectar com o servidor.', 'error');
-        }
-      }
-    };
-
-    const btnVendedor = document.createElement('button');
-    btnVendedor.textContent = 'Virar Vendedor';
-    btnVendedor.className = 'bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2 rounded-lg transition duration-300';
-    btnVendedor.onclick = async () => {
+    btnDeletarConta.className = 'bg-red-500 hover:bg-red-600 text-white font-semibold px-3 py-2 rounded-lg transition duration-300 cursor-pointer';
+    btnDeletarConta.onclick = () => {
       Swal.fire({
-        title: 'Tem certeza?',
-        html: `<form id="modo-vendedor-form">
-              <input type="text" name="cpf" id="vendedor-cpf" class="swal2-input" placeholder="Digite seu CPF">
-            </form>`,
-        showCancelButton: true,
-        confirmButtonColor: '#e3342f',
-        cancelButtonColor: '#aaa',
-        confirmButtonText: 'Confirmar',
-        cancelButtonText: 'Cancelar',
-        preConfirm: () => {
-            if (campo === 'user_cpf') {
-              const cpfVendedor = Swal.getPopup().querySelector('#vendedor-cpf').value;
-              return { cpfVendedor };
+          title: "Você tem certeza?",
+          text: "Você não poderá reverter isso!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sim, deletar!",
+          cancelButtonText: 'Cancelar',
+        }).then(async (res) => {
+          if (res.isConfirmed) {
+            try {
+              const resposta = await requisitar('GET', '/trevo-project/public/api/deleteuser', { id: post.user_id });
+              console.log(resposta);
+              if (resposta.sucesso) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Erro',
+                  text: resposta.mensagem || 'Não foi possível deletar sua conta.',
+                });
+              } else {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Conta deletada!',
+                  text: 'Sua conta foi removida com sucesso.',
+                  confirmButtonColor: '#6F23D9'
+                }).then(() => {
+                  window.location.href = '/trevo-project/public/login';
+                });
+              }
+            } catch (erro) {
+              console.error('Erro ao deletar conta:', erro);
+              Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao deletar sua conta.',
+              });
             }
           }
-      }).then(async (res) => {
+
+        });
+    }
+
+    if (!post.user_vendedor) {
+      const btnVendedor = document.createElement('button');
+      btnVendedor.textContent = 'Virar Vendedor';
+      btnVendedor.className = 'bg-purple-600 hover:bg-purple-700 text-white font-semibold px-6 py-2 rounded-lg transition duration-300 cursor-pointer';
+      btnVendedor.onclick = async () => {
+        let inputHTMLcpf = `
+          <form id="modo-vendedor-form">
+            <input type="text" name="cpf" id="vendedor-cpf" class="swal2-input" placeholder="Digite seu CPF">
+          </form>
+        `;
+        Swal.fire({
+          title: 'Tem certeza?',
+          html: inputHTMLcpf,
+          showCancelButton: true,
+          confirmButtonColor: '#6F23D9',
+          cancelButtonColor: '#aaa',
+          confirmButtonText: 'Confirmar',
+          cancelButtonText: 'Cancelar',
+          preConfirm: () => {
+            const cpf = Swal.getPopup().querySelector('#vendedor-cpf').value;
+            if (!cpf) {
+              Swal.showValidationMessage('Por favor, preencha o campo!');
+            }
+            return { cpf };
+          }
+        }).then(async (res) => {
           if (res.isConfirmed) {
             handleSubmitModoVendedor();
+            btnVendedor.remove(); 
           }
-        })
-    };
+        });
+      };
 
-    acoesExtras.appendChild(btnVendedor);
+      acoesExtras.appendChild(btnVendedor);
+    }
+
     acoesExtras.appendChild(btnDeletarConta);
     card.appendChild(acoesExtras);
 
-    // Seção de Posts
     const postsSection = document.createElement('div');
     postsSection.className = 'mt-8';
     postsSection.innerHTML = `
@@ -239,8 +274,77 @@ window.onload = async function () {
     `;
 
     card.appendChild(postsSection);
-
     container.appendChild(card);
+
+    // Lógica para mostrar anúncios
+    try {
+      const anunciosResult = await requisitar('GET', '/trevo-project/public/api/anuncio/listar');
+      const userPostsContainer = document.getElementById('user-posts');
+
+      if (anunciosResult.dados && anunciosResult.dados.result) {
+        const anunciosDoUsuario = anunciosResult.dados.result.filter(anuncio => anuncio.anun_user_id === post.user_id);
+
+        if (anunciosDoUsuario.length > 0) {
+          userPostsContainer.innerHTML = '';
+          userPostsContainer.className = 'grid grid-cols-1 md:grid-cols-2 gap-4';
+
+          anunciosDoUsuario.forEach(anuncio => {
+            const card = document.createElement('div');
+            card.className = 'bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex flex-col h-full';
+
+            card.onclick = () => {
+              window.location.href = `/trevo-project/public/anuncio-detalhes?id=${anuncio.anun_id}`;
+            }
+
+            const imagemDiv = document.createElement('div');
+            imagemDiv.className = 'h-44 bg-gradient-to-tr from-purple-200 to-purple-300 flex items-center justify-center text-white text-xl font-bold';
+            imagemDiv.textContent = 'Imagem';
+
+            const conteudo = document.createElement('div');
+            conteudo.className = 'p-4 space-y-2 flex flex-col flex-grow';
+
+            const titulo = document.createElement('h3');
+            titulo.className = 'text-lg font-semibold';
+            titulo.textContent = anuncio.anun_titulo;
+
+            const autor = document.createElement('p');
+            autor.className = 'text-sm text-gray-500';
+            autor.textContent = post.user_nome;
+
+            const footer = document.createElement('div');
+            footer.className = 'flex justify-between items-center text-sm pt-2 mt-auto';
+
+            const preco = document.createElement('span');
+            preco.className = 'font-semibold text-[#6F23D9]';
+            preco.textContent = `R$ ${anuncio.anun_preco}`;
+
+            const botaoCoracao = document.createElement('button');
+            botaoCoracao.className = 'transition hover:scale-110';
+            botaoCoracao.innerHTML = `
+              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" fill="currentColor"
+                class="bi bi-heart fill-gray-400 hover:fill-red-500 transition duration-300"
+                viewBox="0 0 16 16">
+                <path d="..."/>
+              </svg>
+            `;
+
+            footer.appendChild(preco);
+            footer.appendChild(botaoCoracao);
+
+            conteudo.appendChild(titulo);
+            conteudo.appendChild(autor);
+            conteudo.appendChild(footer);
+
+            card.appendChild(imagemDiv);
+            card.appendChild(conteudo);
+
+            userPostsContainer.appendChild(card);
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Erro ao buscar os posts do usuário:', error);
+    }
 
   } catch (e) {
     console.error('Erro inesperado:', e);

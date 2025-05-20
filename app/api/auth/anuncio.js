@@ -1,7 +1,8 @@
 document.getElementById('anuncio-form').addEventListener('submit', function(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
-
+    // var senha = formData.get('tipo');
+    // alert(senha)
     var ok = "";
     requisitar('POST', '/trevo-project/public/api/criaranuncio', formData, 'formdata')
         .then(result => {
@@ -21,7 +22,7 @@ document.getElementById('anuncio-form').addEventListener('submit', function(even
                         timer: 1500,
                         timerProgressBar: true,
                         willClose: () => {
-                          window.location.href = "/trevo-project/public/criar-anuncio"; 
+                          window.location.href = "/trevo-project/public/perfil"; 
                         }
                       });
                 } else {

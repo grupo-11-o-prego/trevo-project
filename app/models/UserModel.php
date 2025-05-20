@@ -26,7 +26,7 @@ class UserModel extends Model {
             $emailExiste = $stmt->fetch(\PDO::FETCH_ASSOC);
 
             if (!$emailExiste) {
-                $stmt = $this->conn->prepare('INSERT INTO usuarios_tb (user_nome, user_email, user_data_nasc, user_contato, user_senha, user_moderador, user_data, user_vendedor) VALUES (:nome, :email, :data_nasc, :contato, :senha, 0, :dia, 0)');
+                $stmt = $this->conn->prepare('INSERT INTO usuarios_tb (user_ativo, user_nome, user_email, user_data_nasc, user_contato, user_senha, user_moderador, user_data, user_vendedor) VALUES (0, :nome, :email, :data_nasc, :contato, :senha, 0, :dia, 0)');
 
                 $stmt->bindParam(':nome', $nome);
                 $stmt->bindParam(':email', $email);

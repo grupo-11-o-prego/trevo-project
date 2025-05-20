@@ -10,6 +10,8 @@ class AnuncioController {
     private $tabela = 'anuncios_tb';
     public function anuncio() { include_once('../views/anuncio.html');}
 
+    public function anuncioDetalhes() { include_once('../views/anuncio_detalhe.html');}
+
     public function viewAlterarTitulo() { include_once('../views/crud-anuncio/alterartitulo.html'); }
 
     public function viewAlterarDescricao() { include_once('../views/crud-anuncio/alterardescricao.html'); }
@@ -34,11 +36,12 @@ class AnuncioController {
         if (isset($_POST)) {
             $titulo = $_POST['titulo'];
             $descricao = $_POST['descricao'];
+            $tipo = $_POST['tipo'];
             $preco = $_POST['preco'];
             $estado = $_POST['estado'];
             
             $model = new AnuncioModel;
-            return $model->criarAnuncio($id, $titulo, $descricao, $preco, $estado);
+            return $model->criarAnuncio($id, $titulo, $descricao,$tipo, $preco, $estado);
         } else {
             return ['sucesso' => false, 'message' => 'Requisição POST nao realizada.'];
         }
