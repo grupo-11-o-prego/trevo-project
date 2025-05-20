@@ -185,7 +185,7 @@ switch (Controller::requestUrl($baseFolder)) {
         $controller->anuncioDetalhes();
         break;
     
-    case '/api/criaranuncio':
+    case '/api/anuncio/criaranuncio':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
         $session = new SessionController;
@@ -288,7 +288,7 @@ switch (Controller::requestUrl($baseFolder)) {
         $session = new SessionController;
         $session->protectAPI(true);
         $params = Controller::queryParams();
-        if (isset($params['id'])) { $id = $params['id']; }
+        $id = isset($params['id']) ? $params['id'] : null;
         echo json_encode(isset($id) ? $denuncia->listar($id) : $denuncia->listar());
         break;
     
