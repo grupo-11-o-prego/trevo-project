@@ -43,7 +43,7 @@ class AnuncioController {
             $estado = $_POST['estado'];
             
             $model = new AnuncioModel;
-            return $model->criarAnuncio($id, $titulo, $descricao,$tipo, $preco, $estado);
+            return $model->criarAnuncio($id, $titulo, $descricao, $tipo, $preco, $estado);
         } else {
             return ['sucesso' => false, 'message' => 'Requisição POST nao realizada.'];
         }
@@ -102,7 +102,7 @@ class AnuncioController {
             $model = new AnuncioModel;
             return $model->alterarStatus($id, $status, $user);
         } else {
-            echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
+            return ['sucesso' => false, 'error' => 'Requisicao POST nao realizada.'];
         }
     }
 
