@@ -17,8 +17,13 @@ window.onload = async function () {
                             const card = document.createElement('div');
                             card.className = 'bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex flex-col';
 
+                            card.onclick = () => {
+                                // alert("oi")
+                                window.location.href = `/trevo-project/public/anuncio-detalhes?id=${post.anun_id}`;
+                            }
+
                             const imagemDiv = document.createElement('div');
-                            imagemDiv.className = 'h-44 bg-gradient-to-tr from-purple-200 to-purple-300 flex items-center justify-center text-white text-xl font-bold';
+                            imagemDiv.className = 'h-44 bg-gradient-to-r from-[#6F23D9] to-indigo-600 flex items-center justify-center text-white text-xl font-bold';
                             imagemDiv.textContent = 'Imagem';
 
                             const conteudo = document.createElement('div');

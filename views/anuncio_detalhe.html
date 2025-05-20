@@ -14,34 +14,7 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="../views/assets/css/style.css" />
-  </head>
-  <body class="h-screen overflow-hidden font-poppins">
-    <header
-      class="fixed top-0 left-0 right-0 h-16 bg-white shadow flex items-center justify-between px-6 z-10"
-    >
-      <a href="/trevo-project/public" class="text-xl font-bold"
-        ><img src="../views/assets/img/logo.png" alt="LOGO" width="55px"
-      /></a>
-      <div id="auth-buttons" class="flex gap-4">
-        <a
-          href="/trevo-project/public/cadastro"
-          class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 text-[#6F23D9] hover:scale-110 transition duration-300 cursor-pointer font-semibold"
-        >
-          Cadastrar
-        </a>
-        <a
-          href="/trevo-project/public/login"
-          class="px-4 py-2 bg-[#6F23D9] rounded hover:bg-[#4f179c] text-white cursor-pointer hover:scale-110 transition duration-300"
-        >
-    <title>Home</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet" />
-    <link href="../views/src/output.css" rel="stylesheet" />
-    <link rel="icon" href="#" type="image/x-icon" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <script src="../views/assets/js/home.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  </head>
-
+  </head>  
   <body class="h-screen overflow-hidden font-poppins bg-gradient-to-br from-gray-100 to-white text-gray-800">
 
     <header class="fixed top-0 left-0 right-0 h-16 bg-white shadow-md flex items-center justify-between px-6 z-10">
@@ -109,158 +82,88 @@
       </button>
     </aside>
 
-    <main
-      class="ml-72 mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-6 bg-gray-50"
-    >
-      <div
-        class="max-w-5xl mx-auto bg-white rounded-lg shadow-md overflow-hidden"
-      >
-        <div class="p-6 border-b border-gray-200">
-          <div class="flex justify-between items-start">
-            <div>
-              <h1 class="text-2xl font-bold text-gray-800" id="anuncio-titulo">
-                Carregando título...
-              </h1>
-              <div class="flex items-center mt-2">
-                <span class="text-gray-600">Publicado por: </span>
-                <a
-                  href="#"
-                  class="ml-1 text-[#6F23D9] font-medium hover:underline"
-                  id="anuncio-vendedor"
-                  >Carregando...</a
-                >
-              </div>
-            </div>
-            <span class="text-xl font-bold text-[#6F23D9]" id="anuncio-preco"
-              >R$ 0,00</span
-            >
-          </div>
+    <main class="ml-72 mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-8 bg-gray-50 font-sans">
+      <button onclick="history.back()" 
+          class=" top-4 left-4 flex items-center gap-1 text-[#6F23D9] hover:text-indigo-700 border border-[#6F23D9] hover:border-indigo-700 py-1 px-3 rounded-md text-sm transition bg-white shadow-sm cursor-pointer">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+      </svg>
+      Voltar
+    </button>
+
+      <div class="max-w-5xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden" id="posts-container">
+
+        <!-- <div class="bg-gradient-to-r from-[#6F23D9] to-indigo-600 h-64 flex items-end px-6 py-6">
+          <h1 class="text-3xl font-bold text-white drop-shadow-md">Título do Anúncio</h1>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
-          <div class="space-y-4">
-            <div
-              class="bg-gray-100 rounded-lg overflow-hidden h-80 flex items-center justify-center"
-            >
-              <img
-                src="../views/assets/img/sem-imagem.jpg"
-                alt="Capa do livro"
-                class="h-full object-contain"
-                id="anuncio-imagem"
-              />
-            </div>
-          </div>
-
-          <div class="flex flex-col justify-between">
-            <div>
-              <div>
-                <h2 class="text-lg font-semibold text-gray-800">Descrição</h2>
-                <p class="mt-2 text-gray-600" id="anuncio-descricao">
-                  Carregando descrição...
-                </p>
-              </div>
-            </div>
-
-            <button
-              class="mt-4 px-6 py-3 bg-[#6F23D9] text-white rounded-lg hover:bg-[#4f179c] transition duration-300 font-medium w-full"
-              id="botao-comprar"
-            >
-              Comprar agora
-            </button>
-          </div>
-        </div>
-      </div>
-    </main>
-    <script src="../app/api/api.js"></script>
-    <script src="../app/api/auth/anuncio_detalhe.js"></script>
-    <aside class="fixed top-16 left-0 w-72 h-[calc(100vh-4rem)] bg-white p-4 shadow-lg border-r border-gray-200 overflow-y-auto flex flex-col gap-6">
-      <button  onclick="functionDescer()" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
-        <object id="bookIcon" data="../views/assets/svg/bookpreto.svg" type="image/svg+xml"></object>
-        <span>Livros</span>
-      </button>
-      <div id="escondido" class=" border-l-4 border-purple-400 bg-gray-50 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 w-full">
-        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400 w-full">
-          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Todos os Livros</a></li>
-          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Empréstimos</a></li>
-          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Trocas</a></li>
-        </ul>
-      </div>
-
-      <button onclick="functionDescerForum()" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
-        <span>Fórum</span>
-      </button>
-      <div id="escondidoForum" class="border-l-4 border-purple-400 bg-gray-50 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0 px-0">
-        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400 w-full">
-          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Todos os Fóruns</a></li>
-          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Discussões</a></li>
-        </ul>
-      </div>
-
-      <!-- <button class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
-        <span>Biblioteca</span>
-      </button> -->
-
-      <button id="botaoConfiguracoes" onclick="functionDescerConfiguracoes()" class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
-        <span>Configurações</span>
-      </button>
-      <div id="escondidoConfiguracoes" class="border-l-4 border-purple-400 bg-gray-50 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0 px-2 py-2">
-        <ul class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400 w-full">
-          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="/trevo-project/public/perfil">Perfil</a></li>
-          <li class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"><a href="#">Segurança</a></li>
-          <li class="py-2 px-4 w-full rounded-md text-red-400 hover:bg-red-100 transition"><a href="/trevo-project/public/logout">Sair</a></li>
-        </ul>
-      </div>
-    </aside>
-
-    <main class="ml-72 mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-6 bg-gray-50">
-        <div id="anuncio-detalhado" class="max-w-4xl mx-auto bg-white p-8 rounded-2xl shadow-lg space-y-6">
-            
-            <!-- Imagem do Anúncio
-            <div class="w-full h-64 bg-gray-200 rounded-xl overflow-hidden flex items-center justify-center">
-            <span class="text-gray-500 text-lg">Imagem do Anúncio</span>
-            </div>
-
-            <div class="flex justify-between items-center">
-            <h1 class="text-3xl font-bold text-gray-800">Título do Anúncio</h1>
-            <span class="px-4 py-1 bg-green-100 text-green-700 text-sm rounded-full font-semibold">Disponível</span>
-            </div>
-
-            <div class="flex gap-4 text-sm text-gray-600">
-            <p><strong>Tipo:</strong> Troca</p>
-            <p><strong>Estado:</strong> Usado</p>
-            </div>
-
-            <di>
+        <div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
             <h2 class="text-xl font-semibold text-gray-800 mb-2">Descrição</h2>
-            <p class="text-gray-700 leading-relaxed">
-                Aqui vai uma descrição detalhada do anúncio, incluindo as características do item, condições e qualquer outra informação importante que o anunciante queira fornecer.
+            <p class="text-gray-600 mb-6 leading-relaxed">
+              Aqui vai a descrição detalhada do anúncio, explicando o que está sendo oferecido, suas características e qualquer informação relevante ao comprador.
             </p>
-            </di
-            <div class="pt-4 border-t border-gray-200">
-            <h3 class="text-lg font-semibold text-gray-800 mb-2">Informações do Vendedor</h3>
-            <p class="text-gray-700"><strong>Nome:</strong> João da Silva</p>
-            <p class="text-gray-700"><strong>Status:</strong> Vendedor Verificado</p>
-            <p class="text-gray-700"><strong>Data de Criação:</strong> 18/05/2025</p>
+
+            <h2 class="text-xl font-semibold text-gray-800 mb-2">Detalhes</h2>
+            <ul class="text-gray-700 space-y-2 text-sm">
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M96 32l0 32L48 64C21.5 64 0 85.5 0 112l0 48 448 0 0-48c0-26.5-21.5-48-48-48l-48 0 0-32c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 32L160 64l0-32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192L0 192 0 464c0 26.5 21.5 48 48 48l352 0c26.5 0 48-21.5 48-48l0-272z"/></svg>
+                <span class="font-semibold text-gray-600">Data de Criação:</span> 20/05/2025
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M253.3 35.1c6.1-11.8 1.5-26.3-10.2-32.4s-26.3-1.5-32.4 10.2L117.6 192 32 192c-17.7 0-32 14.3-32 32s14.3 32 32 32L83.9 463.5C91 492 116.6 512 146 512L430 512c29.4 0 55-20 62.1-48.5L544 256c17.7 0 32-14.3 32-32s-14.3-32-32-32l-85.6 0L365.3 12.9C359.2 1.2 344.7-3.4 332.9 2.7s-16.3 20.6-10.2 32.4L404.3 192l-232.6 0L253.3 35.1zM192 304l0 96c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-96c0-8.8 7.2-16 16-16s16 7.2 16 16zm96-16c8.8 0 16 7.2 16 16l0 96c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-96c0-8.8 7.2-16 16-16zm128 16l0 96c0 8.8-7.2 16-16 16s-16-7.2-16-16l0-96c0-8.8 7.2-16 16-16s16 7.2 16 16z"/></svg>
+                <span class="font-semibold text-gray-600">Tipo:</span> Produto
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+                <span class="font-semibold text-gray-600">Status:</span> <span class="text-green-600 font-medium">Ativo</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M384 192c0 87.4-117 243-168.3 307.2c-12.3 15.3-35.1 15.3-47.4 0C117 435 0 279.4 0 192C0 86 86 0 192 0S384 86 384 192z"/></svg>
+                <span class="font-semibold text-gray-600">Estado:</span> São Paulo
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-gray-50 rounded-xl p-6 flex flex-col justify-between shadow-inner border border-gray-200">
+            <div class="space-y-4">
+              <div>
+                <span class="text-sm text-gray-500 flex items-center gap-1">
+                  <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 448 512"><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zM313.6 288H134.4C60.2 288 0 348.2 0 422.4C0 466.5 33.5 500 74.6 500H373.4c41.1 0 74.6-33.5 74.6-74.6C448 348.2 387.8 288 313.6 288z"/></svg>
+                  Vendedor
+                </span>
+                <p class="text-lg font-semibold text-gray-800">João da Silva</p>
+              </div>
+
+              <div>
+                <span class="text-sm text-gray-500 flex items-center gap-1">
+                  <svg class="w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 288 512"><path d="M240 32H48C21.5 32 0 53.5 0 80V176c0 8.8 7.2 16 16 16H40c8.8 0 16-7.2 16-16V96h176v320H56V336c0-8.8-7.2-16-16-16H16c-8.8 0-16 7.2-16 16V432c0 26.5 21.5 48 48 48H240c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48z"/></svg>
+                  Preço
+                </span>
+                <p class="text-3xl font-extrabold text-[#6F23D9]">R$ 250,00</p>
+              </div>
             </div>
 
-            <div class="flex justify-end mt-6">
-            <button class="bg-[#6F23D9] hover:bg-[#4f179c] text-white font-semibold px-6 py-2 rounded-lg transition duration-300">
-                Entrar em Contato
-            </button>
-            </div> -->
+            <div class="mt-6 flex gap-3">
+              <button class="flex-1 flex items-center justify-center gap-1 text-[#6F23D9] hover:text-indigo-700 border border-[#6F23D9] hover:border-indigo-700 py-1 px-2 rounded-md text-sm transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13l6-6m2 2l-6 6H9v-2.828a1 1 0 01.293-.707l6-6z" />
+                </svg>
+                Editar
+              </button>
 
+              <button class="flex-1 flex items-center justify-center gap-1 text-red-500 hover:text-red-600 border border-red-500 hover:border-red-600 py-1 px-2 rounded-md text-sm transition">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4a1 1 0 011 1v1H9V4a1 1 0 011-1z" />
+                </svg>
+                Excluir
+              </button>
+            </div>
+          </div> -->
         </div>
-    </main>
-
-        
-
+      </div>
+  </main>
     <script src="../app/api/api.js"></script>
-    <script src="../app/api/auth/user/alterarsenha.js"></script>
-    <script src="../app/api/auth/user/alterarnome.js"></script>
-    <script src="../app/api/auth/user/alterardata_nasc.js"></script>
-    <script src="../app/api/auth/user/alterarcontato.js"></script>
-    <script src="../app/api/auth/user/alterarmodo.js"></script>
     <script src="../app/api/tela/anuncio_detalhes_tela.js"></script>
-    <script src="../app/api/tela/perfil_tela.js"></script>
   </body>
 </html>
