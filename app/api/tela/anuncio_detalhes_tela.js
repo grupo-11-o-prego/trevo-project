@@ -40,11 +40,74 @@ window.onload = async function () {
     btnVoltar.onclick = () => history.back();
 
     const capa = document.createElement('div');
-    capa.className = 'bg-gradient-to-r from-[#6F23D9] to-indigo-600 h-64 flex items-end px-6 py-6';
+    capa.className = 'bg-gradient-to-r from-[#6F23D9] to-indigo-600 h-64 flex items-start px-6 py-6 justify-between';
     const titulo = document.createElement('h1');
     titulo.className = 'text-3xl font-bold text-white drop-shadow-md';
     titulo.textContent = post.anun_titulo;
     capa.appendChild(titulo);
+
+    const whats = document.createElement('button');
+    whats.className = 'flex items-center justify-center text-red-500 hover:text-red-600 border border-red-500 hover:border-red-600 py-2 px-3 rounded-md text-sm transition cursor-pointer bg-green-500 hover:scale-105'
+    whats.innerHTML = `
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+      </svg>
+    `
+    capa.appendChild(whats);
+    
+    const btnDenunciar = document.createElement('button');
+    btnDenunciar.className = 'flex items-center justify-center text-red-500 hover:text-red-600 border border-red-500 hover:border-red-600 py-2 px-3 rounded-md text-sm transition cursor-pointer bg-red-500 hover:scale-105';
+    btnDenunciar.title = 'Denunciar';
+    btnDenunciar.innerHTML = `
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+      </svg>
+    `;
+    btnDenunciar.onclick = () => {
+      Swal.fire({
+          title: "Você tem certeza?",
+          text: "Você não poderá reverter isso!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonColor: "#3085d6",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "Sim, deletar!",
+          cancelButtonText: 'Cancelar',
+        }).then(async (res) => {
+          if (res.isConfirmed) {
+            try {
+              const resposta = await requisitar('GET', '/trevo-project/public/api/deletaranuncio', { id: post.anun_id });
+              console.log(resposta);
+              if (resposta.sucesso) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Erro',
+                  text: resposta.mensagem || 'Não foi possível deletar seu anúncio.',
+                });
+              } else {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Anúcio deletada!',
+                  text: 'Seu anúncio foi removido com sucesso.',
+                  confirmButtonColor: '#6F23D9'
+                }).then(() => {
+                  history.back()
+                });
+              }
+            } catch (erro) {
+              console.error('Erro ao deletar anúncio:', erro);
+              Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao deletar seu anúncio.',
+              });
+            }
+          }
+
+        });
+      }
+      capa.appendChild(btnDenunciar);
+
 
     const conteudo = document.createElement('div');
     conteudo.className = 'p-6 grid grid-cols-1 md:grid-cols-2 gap-6';
@@ -101,7 +164,7 @@ window.onload = async function () {
     statusSpan.textContent = post.anun_status;
     listaDetalhes.appendChild(criaItemDetalhe(statusPath, 'Status:', statusSpan));
 
-    listaDetalhes.appendChild(criaItemDetalhe(estadoPath, `Estado: ${post.user_estado}`));
+    listaDetalhes.appendChild(criaItemDetalhe(estadoPath, `Estado: ${post.anun_estado}`));
 
     colunaEsquerda.appendChild(descTitulo);
     colunaEsquerda.appendChild(descTexto);
@@ -142,6 +205,9 @@ window.onload = async function () {
     const botoesDiv = document.createElement('div');
     botoesDiv.className = 'mt-6 flex gap-3';
 
+    if (!post.user_vendedor){
+      
+    }
     const btnEditar = document.createElement('button');
     btnEditar.className = 'flex-1 flex items-center justify-center gap-1 text-[#6F23D9] hover:text-indigo-700 border border-[#6F23D9] hover:border-indigo-700 py-1 px-2 rounded-md text-sm transition duration-500 hover:bg-purple-700 hover:text-white cursor-pointer';
     btnEditar.title = 'Editar anúncio';
@@ -152,6 +218,8 @@ window.onload = async function () {
       </svg> Editar
     `;
 
+    if (!post.user_vendedor){
+  
     const btnExcluir = document.createElement('button');
     btnExcluir.className = 'flex-1 flex items-center justify-center gap-1 text-red-500 hover:text-red-600 border border-red-500 hover:border-red-600 py-1 px-2 rounded-md text-sm transition cursor-pointer';
     btnExcluir.title = 'Excluir anúncio';
@@ -207,6 +275,7 @@ window.onload = async function () {
 
     botoesDiv.appendChild(btnEditar);
     botoesDiv.appendChild(btnExcluir);
+    }
 
     colunaDireita.appendChild(vendedorDiv);
     colunaDireita.appendChild(botoesDiv);
