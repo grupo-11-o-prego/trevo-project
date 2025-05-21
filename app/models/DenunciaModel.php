@@ -10,17 +10,51 @@ use Database\TimeStamp;
 
 class DenunciaModel extends Model {
 
-    public function denunciar($id, $tipo)
+    public function denunciar($id, $tipo, $motivo, $descricao)
     {
        try{
             if ($tipo == 'user') {
-                $stmt = $this->conn->prepare("INSERT INTO denuncias_tb (den_data, den_user_id) VALUES (now(), :id)");
+                $stmt = $this->conn->prepare("
+                INSERT INTO denuncias_tb 
+                (den_data, den_user_id, den_motivo, den_descricao)
+                VALUES
+                (now(), :id, :motivo, :descricao)
+                ");
             } else if ($tipo = 'anun') {
-                $stmt = $this->conn->prepare("INSERT INTO denuncias_tb (den_data, den_anun_id) VALUES (now(), :id)");
+                $stmt = $this->conn->prepare("
+                INSERT INTO denuncias_tb
+                (den_data, den_anun_id, den_motivo, den_descricao)
+                VALUES
+                (now(), :id, :motivo, :descricao)
+                ");
+            } else if ($tipo = 'for') {
+                $stmt = $this->conn->prepare("
+                INSERT INTO denuncias_tb
+                (den_data, den_for_id, den_motivo, den_descricao)
+                VALUES
+                (now(), :id, :motivo, :descricao)
+                ");
+            } else if ($tipo = 'post') {
+                $stmt = $this->conn->prepare("
+                INSERT INTO denuncias_tb
+                (den_data, den_post_id, den_motivo, den_descricao)
+                VALUES
+                (now(), :id, :motivo, :descricao)
+                ");
+            } else if ($tipo = 'com') {
+                $stmt = $this->conn->prepare("
+                INSERT INTO denuncias_tb
+                (den_data, den_com_id, den_motivo, den_descricao)
+                VALUES
+                (now(), :id, :motivo, :descricao)
+                ");
             } else {
                 return ["sucesso" => false, "message" => "Tipo inválido."];
             }
             $stmt->bindParam(":id", $id);
+            $stmt->bindParam(":motivo", $motivo);
+            $stmt->bindParam(":descricao", $descricao);
+
             $result = $stmt->execute();
 
             return $result ? ["sucesso" => true, "message" => "Denúncia realizada!"] : ["sucesso" => false, "message" => "Ocorreu um erro ao denunciar!"];

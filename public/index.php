@@ -123,8 +123,12 @@ switch (Controller::requestUrl($baseFolder)) {
         require __DIR__ . '/../app/controllers/UserController.php';
         $controller = new \App\Controllers\UserController;
         $session = new SessionController;
-        // header('Content-Type: application/json');
-        echo json_encode($controller->modoVendedor($_SESSION['user']));
+        header('Content-Type: application/json');
+        $session->protectAPI();
+        $result = $controller->modoVendedor($_SESSION['user']);
+        $result['sucesso'] ? $_SESSION['user']['vendedor'] = 1 : null;
+        echo json_encode($result);
+
         break;
 
     case '/api/alterarcontato':
@@ -285,8 +289,7 @@ switch (Controller::requestUrl($baseFolder)) {
         $session = new SessionController;
         header("Content-Type: application/json");
         $session->protectAPI();
-        $params = Controller::queryParams();
-        echo json_encode($denuncia->denunciar($params));
+        echo json_encode($denuncia->denunciar());
         break;
 
     case '/api/denuncia/listar':

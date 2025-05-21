@@ -14,13 +14,18 @@ class DenunciaController {
         include_once('../views/denuncia.html');
     }
 
-    public static function denunciar($params)
+    public static function denunciar()
     {
-        if (isset($params['tipo']) && isset($params['id'])) {
+        if (isset($_POST)) {
+            $tipo = $_POST['tipo'];
+            $motivo = $_POST['motivo'];
+            $descricao = $_POST['descricao'];
+            $id = $_POST['id'];
+
             $model = new DenunciaModel;
-            return $model->denunciar($params['id'], $params['tipo']);
+            return $model->denunciar($id, $tipo, $motivo, $descricao);
         } else {
-            return ["sucesso" => false, "message" => "Requisição GET incompleta"];
+            return ["sucesso" => false, "message" => "Requisição POST incompleta"];
         }
     }
 
