@@ -1,18 +1,25 @@
 <?php
+namespace App\Models;
 
-class ForumModel
+include_once __DIR__ . '/Model.php';
+
+class ForumModel extends Model
 {
-    private $conn;
-
-    public function __construct()
+    public function criarForum($user, $titulo, $descricao, $tema) 
     {
-        require_once __DIR__ . '/../../config/DBConnection.php';
-        $this->conn = DBConnection::getConnection();
-    }
+        try{          
+            $stmt = $this->conn->prepare("INSERT INTO forum_tb (for_titulo, for_descricao, for_tema, for_criador_user_id) VALUES (:titulo, :descricao, :tema, :usuario)");
+            $stmt->bindParam(':titulo', $titulo);
+            $stmt->bindParam(':descricao', $descricao);
+            $stmt->bindParam(':tema', $tema);
+            $stmt->bindParam(':usuario', $user['id']);
 
-    public function salvar($titulo, $descricao)
-    {
-        $stmt = $this->conn->prepare('INSERT INTO forum_posts (titulo, descricao, criado_em) VALUES (?, ?, NOW())');
-        $stmt->execute([$titulo, $descricao]);
+            $result = $stmt->execute();
+
+            return $result ? ["sucesso" => true, "mensagem" => "Fórum criado com sucesso!"] : ["sucesso" => false, "mensagem" => "Ocorreu um erro ao criar fórum."];
+
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
     }
 }

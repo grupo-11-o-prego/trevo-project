@@ -325,23 +325,32 @@ switch (Controller::requestUrl($baseFolder)) {
         
     // -------- FÓRUM --------
     case '/forum':
-        require __DIR__ . '/../app/controllers/PostController.php';
-        $controller = new \App\Controllers\PostController;
-        $controller->form();
+        // require __DIR__ . '/../app/controllers/ForumController.php';
+        // $controller = new \App\Controllers\ForumController;
+        // $controller->form();
 
-        $session = new SessionController;
-        $session->protect();
+        // $session = new SessionController;
+        // $session->protect();
 
         break;
 
-    case '/post/cadastrar':
-        require __DIR__ . '/../app/controllers/PostController.php';
-        $controller = new \App\Controllers\PostController;
-
+    case '/api/forum/criarforum':
+        require __DIR__ . '/../app/controllers/ForumController.php';
+        $controller = new \App\Controllers\ForumController;
         $session = new SessionController;
-        $session->protect();
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        echo json_encode($controller->criarForum($_SESSION['user']));
+        break;
 
-        $controller->cadastrar();
+    case '/post/cadastrar':
+        // require __DIR__ . '/../app/controllers/ForumController.php';
+        // $controller = new \App\Controllers\ForumController;
+
+        // $session = new SessionController;
+        // $session->protect();
+
+        // $controller->cadastrar();
         break;
 
     default:
