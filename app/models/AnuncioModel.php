@@ -167,16 +167,7 @@ class AnuncioModel extends Model {
             if ($id) {
                 $stmt = $this->conn->prepare("
                 SELECT a.anun_id, 
-                a.anun_titulo, 
-                a.anun_descricao, 
-                a.anun_data, 
-                a.anun_imagem,
-                a.anun_tipo,
-                a.anun_user_id,
-                a.anun_cliente_user_id,
-                a.anun_preco,
-                a.anun_status,
-                a.anun_estado,
+                a.*,
                 u.user_nome,
                 u.user_email,
                 u.user_contato
@@ -187,16 +178,7 @@ class AnuncioModel extends Model {
             } else {
                 $stmt = $this->conn->prepare("
                 SELECT a.anun_id, 
-                a.anun_titulo, 
-                a.anun_descricao, 
-                a.anun_data, 
-                a.anun_imagem,
-                a.anun_tipo,
-                a.anun_user_id,
-                a.anun_cliente_user_id,
-                a.anun_preco,
-                a.anun_status,
-                a.anun_estado,
+                a.*,
                 u.user_nome,
                 u.user_email,
                 u.user_contato
