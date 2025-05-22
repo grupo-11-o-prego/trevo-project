@@ -10,9 +10,9 @@ class AnuncioController {
     private $tabela = 'anuncios_tb';
     public function anuncio() { include_once('../views/anuncio.html');}
 
-    public function anuncioDetalhes() { include_once('../views/anuncio_detalhe.html');}
+    public function anuncioAtualizar() { include_once('../views/anuncio_atualizar.html');}
 
-    public function anuncioDetalhesAtualizar() { include_once('../views/anuncio_detalhe_atualizar.html');}
+    public function anuncioDetalhes() { include_once('../views/anuncio_detalhe.html');}
 
     public function viewAlterarTitulo() { include_once('../views/crud-anuncio/alterartitulo.html'); }
 

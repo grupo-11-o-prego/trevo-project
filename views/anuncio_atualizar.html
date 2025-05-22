@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Anuncios</title>
+    <link rel="stylesheet" href="../views/src/output.css">
+    <link rel="icon" href="#" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="../views/assets/js/home.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="../views/assets/css/style.css">
+  </head>
+  <body class="h-screen overflow-hidden font-poppins">
+    <header
+      class="fixed top-0 left-0 right-0 h-16 bg-white shadow flex items-center justify-between px-6 z-10"
+    >
+      <a href="/trevo-project/public" class="text-xl font-bold"><img src="../views/assets/img/logo.png" alt="LOGO" width="55px"></a>
+      <div id="auth-buttons" class="flex gap-4">
+        <a
+          href="/trevo-project/public/cadastro"
+          class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400 text-[#6F23D9] hover:scale-110 transition duration-300 cursor-pointer font-semibold"
+        >
+          Cadastrar
+        </a>
+        <a
+          href="/trevo-project/public/login"
+          class="px-4 py-2 bg-[#6F23D9] rounded hover:bg-[#4f179c] text-white cursor-pointer hover:scale-110 transition duration-300"
+        >
+          Login
+        </a>
+      </div>
+    </header>
+    <aside
+      class="fixed top-16 left-0 w-72 h-[calc(100vh-4rem)] bg-gray-100 p-4 flex flex-col gap-4 shadow overflow-y-auto"
+    >
+      <button
+        id="botaoLivros"
+        onclick="functionDescer()"
+        class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center"
+      >
+        <object
+          id="bookIcon"
+          data="../views/assets/svg/bookpreto.svg"
+          type="image/svg+xml"
+        ></object>
+        <span class="ml-2">Livros</span>
+      </button>
+      <div
+        id="escondido"
+        class="border-l-4 border-gray-500 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0"
+      >
+        <ul
+          class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400"
+        >
+          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200">
+            <a href="#">Todos os Livros</a>
+          </li>
+          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200">
+            <a href="#">Empréstimos</a>
+          </li>
+          <li class="py-2 px-6 w-full rounded-lg hover:bg-gray-200">
+            <a href="#">Trocas</a>
+          </li>
+        </ul>
+      </div>
+      <button
+        class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center"
+      >
+        <span class="ml-2">Fórum</span>
+      </button>
+      <button
+        class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center"
+      >
+        <span class="ml-2">Biblioteca</span>
+      </button>
+      <button
+        class="py-6 px-8 bg-white rounded-xl cursor-pointer shadow-md hover:bg-gray-50 flex justify-center items-center"
+      >
+        <span class="ml-2">Configurações</span>
+      </button>
+    </aside>
+    <main class="ml-72 mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-6 bg-gray-50">
+
+      <form id="denuncia-form"
+        class="max-w-3xl mx-auto bg-white p-8 rounded-2xl shadow-xl space-y-6"
+      >
+        <h2 class="text-2xl font-bold text-gray-800 text-center mb-4">Atualizar Anúncio</h2>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Motivo</label>
+          <select
+            name="motivo"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer"
+            required
+          >
+            <option value="">Selecione...</option>
+            <option value="Abuso Verbal" class="cursor-pointer">Abuso Verbal</option>
+            <option value="Discurso de Odio" class="cursor-pointer">Discurso de Ódio</option>
+            <option value="Conteudo Abusivo" class="cursor-pointer">Conteúdo Abusivo</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">Descrição</label>
+          <textarea
+            rows="4"
+            name="descricao"
+            placeholder="Descreva o produto"
+            class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            required
+          ></textarea>
+        </div>
+
+        <button type="submit"
+          class="w-full py-3 bg-[#6F23D9] text-white font-semibold rounded-lg hover:bg-[#4f179c] transition cursor-pointer"
+        >
+          Denunciar
+        </button>
+      </form>
+    </main>
+ 
+    <script src="../app/api/api.js"></script>
+    <script src="../app/api/auth/denunciar.js"></script>
+  </body>
+</html>

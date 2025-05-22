@@ -12,6 +12,10 @@ class PerfilController {
     {
         include_once('../views/perfil.html');
     }
+    public static function perfilVendedor()
+    {
+        include_once('../views/perfil_random.html');
+    }
 
     public function getPerfil ($user) {
         if (isset($user)) {

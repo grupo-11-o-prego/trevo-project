@@ -157,6 +157,16 @@ switch (Controller::requestUrl($baseFolder)) {
         $controller->perfil();
         break;
 
+    case '/perfil-vendedor':
+        require __DIR__ . '/../app/controllers/PerfilController.php';
+        $controller = new \App\Controllers\PerfilController;
+
+        // $session = new SessionController;
+        // $session->protect(false, false);
+
+        $controller->perfilVendedor();
+        break;
+
     case '/api/perfil':
         require __DIR__ . '/../app/controllers/PerfilController.php';
         $controller = new \App\Controllers\PerfilController;
@@ -188,6 +198,13 @@ switch (Controller::requestUrl($baseFolder)) {
         $session->protect(false, true);
         $controller->anuncio();
         break;
+    case '/atualizar-anuncio':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        $session = new SessionController;
+        $session->protect(false, true);
+        $controller->anuncioAtualizar();
+        break;
     case '/anuncio-detalhes':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
@@ -195,15 +212,7 @@ switch (Controller::requestUrl($baseFolder)) {
         $session->protect(false, false);
         $controller->anuncioDetalhes();
         break;
-
-    case '/anuncio-detalhes-atualizar':
-        require __DIR__ . '/../app/controllers/AnuncioController.php';
-        $controller = new \App\Controllers\AnuncioController;
-        $session = new SessionController;
-        $session->protect(false, false);
-        $controller->anuncioDetalhesAtualizar();
-        break;
-    
+  
     case '/api/anuncio/criaranuncio':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
@@ -288,6 +297,12 @@ switch (Controller::requestUrl($baseFolder)) {
         $session = new SessionController;
         $session->protect(true);
         $controller->index();
+        break;
+    case '/denunciar' :
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $controller = new \App\Controllers\DenunciaController;
+        $session = new SessionController;
+        $controller->denunciartela();
         break;
 
     case '/api/denuncia/denunciar':
