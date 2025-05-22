@@ -9,10 +9,10 @@ use App\Models\DenunciaModel;
 class DenunciaController {
 
     
-    public static function index()
-    {
-        include_once('../views/denuncia.html');
-    }
+    public static function index(){include_once('../views/denuncia.html');}
+    public static function denunciartela(){include_once('../views/denunciar.html');}
+    
+    
 
     public static function denunciar()
     {

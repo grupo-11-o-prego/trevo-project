@@ -11,6 +11,7 @@ window.onload = async function () {
 
   try {
     const result = await requisitar('GET', '/trevo-project/public/api/anuncio/listar');
+    const resultPerfil = await requisitar('GET', '/trevo-project/public/api/perfil');
 
     if (result.erro) {
       console.error('Erro:', result.erro);
@@ -19,7 +20,11 @@ window.onload = async function () {
     }
 
     const anuncios = result.dados.result;
+    const dadosPessoa = resultPerfil.dados.users;
+    // console.log("dados",dadosPessoa)
+    
     const post = anuncios.find(p => p.anun_id == anuncioId);
+    // console.log("AnunId:",post.anun_user_id, "UserId: ", dadosPessoa.user_id)
 
     if (!post) {
       container.innerHTML = '<p class="text-center text-red-500 mt-6">Anúncio não encontrado.</p>';
@@ -46,67 +51,16 @@ window.onload = async function () {
     titulo.textContent = post.anun_titulo;
     capa.appendChild(titulo);
 
-    const whats = document.createElement('button');
-    whats.className = 'flex items-center justify-center text-red-500 hover:text-red-600 border border-red-500 hover:border-red-600 py-2 px-3 rounded-md text-sm transition cursor-pointer bg-green-500 hover:scale-105'
-    whats.innerHTML = `
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
-        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-      </svg>
-    `
-    capa.appendChild(whats);
+    // const whats = document.createElement('button');
+    // whats.className = 'flex items-center justify-center text-red-500 hover:text-red-600 border border-red-500 hover:border-red-600 py-2 px-3 rounded-md text-sm transition cursor-pointer bg-green-500 hover:scale-105'
+    // whats.innerHTML = `
+    //               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+    //     <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+    //   </svg>
+    // `
+    // capa.appendChild(whats);
     
-    const btnDenunciar = document.createElement('button');
-    btnDenunciar.className = 'flex items-center justify-center text-red-500 hover:text-red-600 border border-red-500 hover:border-red-600 py-2 px-3 rounded-md text-sm transition cursor-pointer bg-red-500 hover:scale-105';
-    btnDenunciar.title = 'Denunciar';
-    btnDenunciar.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
-        <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
-      </svg>
-    `;
-    btnDenunciar.onclick = () => {
-      Swal.fire({
-          title: "Você tem certeza?",
-          text: "Você não poderá reverter isso!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Sim, deletar!",
-          cancelButtonText: 'Cancelar',
-        }).then(async (res) => {
-          if (res.isConfirmed) {
-            try {
-              const resposta = await requisitar('GET', '/trevo-project/public/api/deletaranuncio', { id: post.anun_id });
-              console.log(resposta);
-              if (resposta.sucesso) {
-                Swal.fire({
-                  icon: 'error',
-                  title: 'Erro',
-                  text: resposta.mensagem || 'Não foi possível deletar seu anúncio.',
-                });
-              } else {
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Anúcio deletada!',
-                  text: 'Seu anúncio foi removido com sucesso.',
-                  confirmButtonColor: '#6F23D9'
-                }).then(() => {
-                  history.back()
-                });
-              }
-            } catch (erro) {
-              console.error('Erro ao deletar anúncio:', erro);
-              Swal.fire({
-                icon: 'error',
-                title: 'Erro',
-                text: 'Erro ao deletar seu anúncio.',
-              });
-            }
-          }
-
-        });
-      }
-      capa.appendChild(btnDenunciar);
+    
 
 
     const conteudo = document.createElement('div');
@@ -182,8 +136,12 @@ window.onload = async function () {
     vendedorLabel.className = 'text-sm text-gray-500';
     vendedorLabel.textContent = '👤 Vendedor';
     const vendedorNome = document.createElement('p');
-    vendedorNome.className = 'text-lg font-semibold text-gray-800';
+    vendedorNome.className = 'text-lg font-semibold text-gray-800 cursor-pointer ';
     vendedorNome.textContent = post.user_nome;
+    vendedorNome.onclick = () => {
+      idUser = post.anun_user_id
+      window.location.href = `/trevo-project/public/perfil-vendedor?id=${idUser}`
+    }
 
     vendedorInfo.appendChild(vendedorLabel);
     vendedorInfo.appendChild(vendedorNome);
@@ -203,11 +161,8 @@ window.onload = async function () {
     vendedorDiv.appendChild(precoInfo);
 
     const botoesDiv = document.createElement('div');
-    botoesDiv.className = 'mt-6 flex gap-3';
+    botoesDiv.className = 'mt-6  flex gap-3';
 
-    if (!post.user_vendedor){
-      
-    }
     const btnEditar = document.createElement('button');
     btnEditar.className = 'flex-1 flex items-center justify-center gap-1 text-[#6F23D9] hover:text-indigo-700 border border-[#6F23D9] hover:border-indigo-700 py-1 px-2 rounded-md text-sm transition duration-500 hover:bg-purple-700 hover:text-white cursor-pointer';
     btnEditar.title = 'Editar anúncio';
@@ -217,65 +172,100 @@ window.onload = async function () {
           d="M15.232 5.232l3.536 3.536M9 11l6.364-6.364a1.5 1.5 0 112.121 2.121L11.121 13.5H9v-2.5z"/>
       </svg> Editar
     `;
+    btnEditar.onclick = () => {
+      idPost = post.anun_id;
+      window.location.href = `/trevo-project/public/denunciar?id=${idPost}`;
+    }
 
-    if (!post.user_vendedor){
-  
-    const btnExcluir = document.createElement('button');
-    btnExcluir.className = 'flex-1 flex items-center justify-center gap-1 text-red-500 hover:text-red-600 border border-red-500 hover:border-red-600 py-1 px-2 rounded-md text-sm transition cursor-pointer';
-    btnExcluir.title = 'Excluir anúncio';
-    btnExcluir.innerHTML = `
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4a1 1 0 011 1v1H9V4a1 1 0 011-1z"/>
-      </svg> Excluir
-    `;
-    btnExcluir.onclick = () => {
-      Swal.fire({
-          title: "Você tem certeza?",
-          text: "Você não poderá reverter isso!",
-          icon: "warning",
-          showCancelButton: true,
-          confirmButtonColor: "#3085d6",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "Sim, deletar!",
-          cancelButtonText: 'Cancelar',
-        }).then(async (res) => {
-          if (res.isConfirmed) {
-            try {
-              const resposta = await requisitar('GET', '/trevo-project/public/api/deletaranuncio', { id: post.anun_id });
-              console.log(resposta);
-              if (resposta.sucesso) {
+    if (post.anun_user_id == dadosPessoa.user_id || dadosPessoa.user_moderador == 1){
+      
+      const btnExcluir = document.createElement('button');
+      btnExcluir.className = 'flex-1 flex items-center justify-center gap-1 text-red-500 hover:text-red-600 border border-red-500 hover:border-red-600 py-1 px-2 rounded-md text-sm transition cursor-pointer hover:text-white hover:bg-red-600 transition duration-500 ';
+      btnExcluir.title = 'Excluir anúncio';
+      btnExcluir.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5-4h4a1 1 0 011 1v1H9V4a1 1 0 011-1z"/>
+        </svg> Excluir
+      `;
+      btnExcluir.onclick = () => {
+        Swal.fire({
+            title: "Você tem certeza?",
+            text: "Você não poderá reverter isso!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, deletar!",
+            cancelButtonText: 'Cancelar',
+          }).then(async (res) => {
+            if (res.isConfirmed) {
+              try {
+                const resposta = await requisitar('GET', '/trevo-project/public/api/deletaranuncio', { id: post.anun_id });
+                console.log(resposta);
+                if (resposta.sucesso) {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Erro',
+                    text: resposta.mensagem || 'Não foi possível deletar seu anúncio.',
+                  });
+                } else {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Anúcio deletada!',
+                    text: 'Seu anúncio foi removido com sucesso.',
+                    confirmButtonColor: '#6F23D9'
+                  }).then(() => {
+                    history.back()
+                  });
+                }
+              } catch (erro) {
+                console.error('Erro ao deletar anúncio:', erro);
                 Swal.fire({
                   icon: 'error',
                   title: 'Erro',
-                  text: resposta.mensagem || 'Não foi possível deletar seu anúncio.',
-                });
-              } else {
-                Swal.fire({
-                  icon: 'success',
-                  title: 'Anúcio deletada!',
-                  text: 'Seu anúncio foi removido com sucesso.',
-                  confirmButtonColor: '#6F23D9'
-                }).then(() => {
-                  history.back()
+                  text: 'Erro ao deletar seu anúncio.',
                 });
               }
-            } catch (erro) {
-              console.error('Erro ao deletar anúncio:', erro);
-              Swal.fire({
-                icon: 'error',
-                title: 'Erro',
-                text: 'Erro ao deletar seu anúncio.',
-              });
             }
-          }
 
-        });
-      }
+          });
+        }
+        botoesDiv.appendChild(btnEditar);
+        botoesDiv.appendChild(btnExcluir);
+    }else{
+      const denunciarDiv = document.createElement('div');
+      denunciarDiv.className = ' p-1 flex justify-end items-center';
+      const btnDenunciar = document.createElement('button');
+      btnDenunciar.className = 'flex items-center justify-end text-red-500  py-1 px-2 rounded-md text-sm transition cursor-pointer hover:scale-105 hover:bg-gray-200';
+      btnDenunciar.title = 'Denunciar';
+      btnDenunciar.innerHTML = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-exclamation-lg" viewBox="0 0 16 16">
+          <path d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0zM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0"/>
+        </svg>
+      `;
+      btnDenunciar.onclick = () => {
+        Swal.fire({
+            title: "Você deseja denunciar o anúncio?",
+            text: "Você não poderá reverter isso!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#6F23D9",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Sim, denunciar!",
+            cancelButtonText: 'Cancelar',
+          }).then(async (res) => {
+            if (res.isConfirmed) {
+              idanun = post.anun_id
+              window.location.href = `/trevo-project/public/denunciar?tipo=anun&&id=${idanun}`;
+            }
+          });
+        }
+          denunciarDiv.appendChild(btnDenunciar);
+          colunaDireita.appendChild(denunciarDiv);
 
-    botoesDiv.appendChild(btnEditar);
-    botoesDiv.appendChild(btnExcluir);
     }
+    
 
     colunaDireita.appendChild(vendedorDiv);
     colunaDireita.appendChild(botoesDiv);
