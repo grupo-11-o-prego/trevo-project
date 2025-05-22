@@ -42,7 +42,7 @@ class Model {
 
             $result = $multiple ? $stmt->fetchAll(\PDO::FETCH_ASSOC) : $stmt->fetch(\PDO::FETCH_ASSOC);
 
-            return $result ? ["sucesso" => true, "result" => $result] : ["sucesso" => true, "result" => false];
+            return $result ? ["sucesso" => true, "result" => $result] : ["sucesso" => false, "result" => false];
 
         } catch (\Exception $e) {
             return ["sucesso" => false, "erro" => 'Erro ao realizar query em ' . $tabela . ': ' . $e->getMessage()];

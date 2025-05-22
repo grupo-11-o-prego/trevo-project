@@ -160,9 +160,7 @@ switch (Controller::requestUrl($baseFolder)) {
     case '/api/perfil':
         require __DIR__ . '/../app/controllers/PerfilController.php';
         $controller = new \App\Controllers\PerfilController;
-        // $params = Controller::queryParams(); 
         $session = new SessionController;  
-        // $id = 6;
         $result = $controller->getPerfil( $_SESSION['user']['id']);
         header('Content-Type: application/json');
 
@@ -171,6 +169,15 @@ switch (Controller::requestUrl($baseFolder)) {
         } else {
             echo json_encode(['error' => 'Requisicao GET nao realizada.']);
         }
+        break;
+
+    case '/api/getuser':
+        require __DIR__ . '/../app/controllers/UserController.php';
+        $controller = new \App\Controllers\UserController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $params = Controller::queryParams();
+        echo json_encode($controller->getUser($params));
         break;
         
     // -------- ANÚNCIO --------
@@ -344,6 +351,15 @@ switch (Controller::requestUrl($baseFolder)) {
         header("Content-Type: application/json");
         $session->protectAPI();
         echo json_encode($controller->criarForum($_SESSION['user']));
+        break;
+
+    case '/api/forum/alterartitulo':
+        require __DIR__ . '/../app/controllers/ForumController.php';
+        $controller = new \App\Controllers\ForumController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        echo json_encode($controller->alterarTitulo($_SESSION['user']));
         break;
 
     case '/post/cadastrar':

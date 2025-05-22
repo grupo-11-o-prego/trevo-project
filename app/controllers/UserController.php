@@ -71,7 +71,7 @@ class UserController {
        
     }
     
-    public function getUser($get)
+    public function getUser($get = null)
     {
         $model = new UserModel;
 
@@ -82,7 +82,10 @@ class UserController {
         } else {
             $result = $model->get(true, $this->tabela);
         }
-
+        
+        if ($result['result'] == false) {
+            $result['result'] = "Não encontrado.";
+        }
         return $result;
     }
 
