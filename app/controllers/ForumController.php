@@ -10,6 +10,7 @@ use App\Models\ForumModel;
 
 class ForumController
 {
+    private $tabela = 'forum_tb';
 
     public static function forum()
     {
@@ -41,6 +42,16 @@ class ForumController
             }
         } else {
             return ["sucesso" => false, "message" => "Requisição POST não realizada."];
+        }
+    }
+    
+    public function getForum($id = null)
+    {
+        $model = new ForumModel;
+        if (isset($id)) {
+            return $model->get(false, $this->tabela, 'for_id', $id);
+        } else {
+            return $model->get(true, $this->tabela);
         }
     }
 
