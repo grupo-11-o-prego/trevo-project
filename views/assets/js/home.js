@@ -47,24 +47,24 @@ let isCoracao = true;
   }
 
 
-  let isDesceuForum = false;
+let isDesceuForum = false;
 
 function functionDescerForum() {
   const escondidoForum = document.getElementById("escondidoForum");
-  const ul = escondidoForum.querySelector("ul");
 
   if (isDesceuForum) {
     escondidoForum.style.maxHeight = "0px";
-    escondidoForum.style.padding = "0px";
-    ul.style.padding = "0px";
+    escondidoForum.style.paddingTop = "0px";
+    escondidoForum.style.paddingBottom = "0px";
   } else {
     escondidoForum.style.maxHeight = escondidoForum.scrollHeight + "px";
-    escondidoForum.style.padding = "0.5rem"; // padding 2 (Tailwind: py-2 px-2)
-    ul.style.padding = "0.5rem";
+    escondidoForum.style.paddingTop = "0.5rem";
+    escondidoForum.style.paddingBottom = "0.5rem";
   }
 
   isDesceuForum = !isDesceuForum;
 }
+
 
 
   function mascara(preco) {
@@ -96,7 +96,7 @@ function functionDescerConfiguracoes() {
     content.classList.remove("max-h-0");
     content.classList.add("max-h-40");
     botao.classList.remove("bg-white", "text-black");
-    botao.classList.add("bg-[#6F23D9]", "text-white");
+    botao.classList.add("bg-[#6F23D9]", "text-[#6F23D9]");
     botao.classList.remove("hover:bg-gray-50");
   }
 
