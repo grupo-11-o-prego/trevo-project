@@ -51,8 +51,12 @@ class AnuncioController {
 
     public function deletarAnuncio($id, $user){
         if (isset($id)) {
-            $anuncio = new AnuncioModel;
-            return $anuncio->deletarAnuncio($id, $user);
+            if ($this->validaPermissaoAnuncio($user, $id)) {
+                $anuncio = new AnuncioModel;
+                return $anuncio->deletarAnuncio($id, $user);
+            } else {
+                return ["sucesso" => false, "message" => "Sem persmissão para editar anúncio!"];
+            }
         } else {
             return ['sucesso' => false, 'message' => 'ID do anúncio não enviado.'];
         }
@@ -63,8 +67,12 @@ class AnuncioController {
         if (isset($_POST)) {
             $id = $_POST['id'];
             $titulo = $_POST['titulo'];
-            $model = new AnuncioModel;
-            return $model->alterarTitulo($id, $titulo, $user);
+            if ($this->validaPermissaoAnuncio($user, $id)) {
+                $model = new AnuncioModel;
+                return $model->alterarTitulo($id, $titulo, $user);
+            } else {
+                return ["sucesso" => false, "message" => "Sem persmissão para editar anúncio!"];
+            }
         } else {
             echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         }
@@ -75,8 +83,12 @@ class AnuncioController {
         if (isset($_POST)) {
             $id = $_POST['id'];
             $descricao = $_POST['descricao'];
-            $model = new AnuncioModel;
-            return $model->alterarDescricao($id, $descricao, $user);
+            if ($this->validaPermissaoAnuncio($user, $id)) {
+                $model = new AnuncioModel;
+                return $model->alterarDescricao($id, $descricao, $user);
+            } else {
+                return ["sucesso" => false, "message" => "Sem persmissão para editar anúncio!"];
+            }
         } else {
             echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         }
@@ -87,8 +99,12 @@ class AnuncioController {
         if (isset($_POST)) {
             $id = $_POST['id'];
             $preco = $_POST['preco'];
-            $model = new AnuncioModel;
-            return $model->alterarPreco($id, $preco, $user);
+            if ($this->validaPermissaoAnuncio($user, $id)) {
+                $model = new AnuncioModel;
+                return $model->alterarPreco($id, $preco, $user);
+            } else {
+                return ["sucesso" => false, "message" => "Sem persmissão para editar anúncio!"];
+            }
         } else {
             echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         }
@@ -99,8 +115,12 @@ class AnuncioController {
         if (isset($_POST)) {
             $id = $_POST['id'];
             $status = $_POST['status'];
-            $model = new AnuncioModel;
-            return $model->alterarStatus($id, $status, $user);
+            if ($this->validaPermissaoAnuncio($user, $id)) {
+                $model = new AnuncioModel;
+                return $model->alterarStatus($id, $status, $user);
+            } else {
+                return ["sucesso" => false, "message" => "Sem persmissão para editar anúncio!"];
+            }
         } else {
             return ['sucesso' => false, 'error' => 'Requisicao POST nao realizada.'];
         }
@@ -111,8 +131,12 @@ class AnuncioController {
         if (isset($_POST)) {
             $id = $_POST['id'];
             $estado = $_POST['estado'];
-            $model = new AnuncioModel;
-            return $model->alterarEstado($id, $estado, $user);
+            if ($this->validaPermissaoAnuncio($user, $id)) {
+                $model = new AnuncioModel;
+                return $model->alterarEstado($id, $estado, $user);
+            } else {
+                return ["sucesso" => false, "message" => "Sem persmissão para editar anúncio!"];
+            }
         } else {
             echo json_encode(['sucesso' => false, 'error' => 'Requisicao POST nao realizada.']);
         }
@@ -122,6 +146,17 @@ class AnuncioController {
     {
         $model = new AnuncioModel;
         return isset($id) ? $model->listar($id) : $model->listar();
+    }
+
+    public function validaPermissaoAnuncio($user, $idAnun){
+        $model = new AnuncioModel;
+        $anuncio = $model->get(false, $this->tabela, 'anun_id', $idAnun);
+        // verifica se quem está deletando o anúncio é o usuário que o criou ou se é administrador
+        if ($anuncio['result']['anun_user_id'] == $user['id'] || $user['admin'] > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
