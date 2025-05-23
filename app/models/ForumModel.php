@@ -5,6 +5,8 @@ include_once __DIR__ . '/Model.php';
 
 class ForumModel extends Model
 {
+    private $tabela = "forum_tb";
+
     public function criarForum($user, $titulo, $descricao, $tema) 
     {
         try{          
@@ -18,6 +20,26 @@ class ForumModel extends Model
 
             return $result ? ["sucesso" => true, "mensagem" => "Fórum criado com sucesso!"] : ["sucesso" => false, "mensagem" => "Ocorreu um erro ao criar fórum."];
 
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function alterarTitulo($user, $id, $titulo)
+    {
+        try {
+            $stmt = $this->conn->prepare("UPDATE forum_tb SET for_titulo = :titulo WHERE for_id = :id");
+            $stmt->bindParam(":titulo", $titulo);
+            $stmt->bindParam(":id", $id);
+
+            $result = $stmt->execute();
+
+            if ($result) {
+                $forum = $this->get(false, $this->tabela, 'for_id', $id);
+                return ["sucesso" => true, "result" => ["for_id" => $forum['result']['for_id'], "for_titulo" => $forum['result']['for_titulo']]];
+            } else {
+                return ["sucesso" => false];
+            }
         } catch (\Exception $e) {
             return ["sucesso" => false, "message" => $e->getMessage()];
         }
