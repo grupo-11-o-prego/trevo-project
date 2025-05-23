@@ -136,7 +136,7 @@ window.onload = async function () {
     vendedorLabel.className = 'text-sm text-gray-500';
     vendedorLabel.textContent = '👤 Vendedor';
     const vendedorNome = document.createElement('p');
-    vendedorNome.className = 'text-lg font-semibold text-gray-800 cursor-pointer ';
+    vendedorNome.className = 'text-lg font-semibold text-gray-800 cursor-pointer w-auto hover:bg-gray-100';
     vendedorNome.textContent = post.user_nome;
     vendedorNome.onclick = () => {
       idUser = post.anun_user_id
@@ -237,11 +237,11 @@ window.onload = async function () {
       const denunciarDiv = document.createElement('div');
       denunciarDiv.className = ' p-1 flex justify-end items-center';
       const btnDenunciar = document.createElement('button');
-      btnDenunciar.className = 'flex items-center justify-end text-red-500  py-1 px-2 rounded-md text-sm transition cursor-pointer hover:scale-105 hover:bg-gray-200';
+      btnDenunciar.className = 'text-sm bg-red-100 text-purple-700 px-2 py-2 rounded-full font-medium cursor-pointer transition hover:scale-110 duration-200';
       btnDenunciar.title = 'Denunciar';
       btnDenunciar.innerHTML = `
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="black" class="bi bi-exclamation-lg" viewBox="0 0 16 16">
-          <path d="M7.005 3.1a1 1 0 1 1 1.99 0l-.388 6.35a.61.61 0 0 1-1.214 0zM7 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0"/>
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+          <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5m.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
         </svg>
       `;
       btnDenunciar.onclick = () => {

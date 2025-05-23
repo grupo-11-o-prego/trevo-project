@@ -14,8 +14,13 @@ window.onload = async function () {
                         result.dados.result.forEach(post => {
                             console.log(result)
 
-                            const card = document.createElement('div');
-                            card.className = 'bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex flex-col';
+                                const card = document.createElement('div');
+                                card.className = 'search-card bg-white rounded-xl shadow hover:shadow-md transition overflow-hidden flex flex-col cursor-pointer';
+                                const titulosr = post.anun_titulo.toLowerCase();
+                                const nomesr = post.user_nome.toLowerCase();
+                                const precosr = post.anun_preco.toLowerCase().replace("R$", "");
+                                card.setAttribute("data-search", `${titulosr} ${nomesr} ${precosr}`);
+
 
                             card.onclick = () => {
                                 // alert("oi")
@@ -76,8 +81,24 @@ window.onload = async function () {
                         });
                     } else {
                         console.error("Erro: Não há dados de anúncios disponíveis.");
+                        alert("Não há anúncios disponíveis")
                     }
                 }
             });
-    }
+
+        }
+        document.getElementById("pesquisa").addEventListener("keyup",(e) => {
+            // console.log("_>",e.target.value);
+            const termo = e.target.value.toLowerCase();
+            const cards = document.querySelectorAll('[data-search]');
+
+            cards.forEach(card => {
+                const texto = card.getAttribute('data-search');
+                if (texto.includes(termo)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+    });
+        })
 }
