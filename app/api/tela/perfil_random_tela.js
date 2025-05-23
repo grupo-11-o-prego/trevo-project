@@ -3,25 +3,24 @@ window.onload = async function () {
   if (!container) return;
 
   try {
-    const result = await requisitar('GET', 'api/perfil');
-
     const urlParams = new URLSearchParams(window.location.search);
     const idVendedor = urlParams.get('id');
+    const result = await requisitar('GET', `/trevo-project/public/api/getuser?id=${idVendedor}`);
+  
 
     if (result.erro) {
+      console.log(result.erro)
       const aviso = document.createElement('div');
       aviso.className = 'bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center mt-8';
       aviso.innerHTML = `
-        <strong class="font-bold">Você não está logado.</strong>
-        <span class="block sm:inline">
-          Por favor, <a href="trevo-project/public/login" class="text-purple-600 underline hover:text-purple-800">faça login</a> para acessar seu perfil.
-        </span>
+        <strong class="font-bold">Erro ao carregar dados.</strong>
+        
       `;
       container.appendChild(aviso);
       return;
     }
     
-    const post = result.dados.users;
+    const post = result.dados.result;
     if (!post) return;
 
     const card = document.createElement('div');
