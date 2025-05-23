@@ -10,6 +10,12 @@ use App\Models\ForumModel;
 
 class ForumController
 {
+
+    public static function forum()
+    {
+        include_once('../views/forum.html');
+    }
+
     public function criarForum($user) {
         if (isset($_POST)) {
             $titulo = $_POST['titulo'];

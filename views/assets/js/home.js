@@ -123,3 +123,73 @@ window.addEventListener('DOMContentLoaded', async () => {
     console.error("Erro ao verificar sessão:", error);
   }
 });
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const messagesEl = document.getElementById("chat-messages");
+  const input = document.getElementById("chat-input");
+  const form = document.getElementById("chat-form");
+  const forumItems = document.querySelectorAll(".forum-item");
+  const titleEl = document.getElementById("chat-title");
+
+  let currentForum = "literatura";
+
+  const forumChats = {
+    literatura: [
+      { user: "Ana", text: "Alguém já leu Dom Casmurro?" },
+      { user: "João", text: "Sim! Achei muito bom." }
+    ],
+    ficcao: [
+      { user: "Lucas", text: "Indicações de ficção científica?" },
+      { user: "Marina", text: "Leia Duna ou Fundação!" }
+    ],
+    romance: [
+      { user: "Sofia", text: "Alguém chorou com Orgulho e Preconceito?" }
+    ]
+  };
+
+  function renderMessages(forumId) {
+    messagesEl.innerHTML = "";
+    (forumChats[forumId] || []).forEach(({ user, text }) => {
+      messagesEl.innerHTML += `
+        <div class="flex items-start gap-3">
+          <div class="w-10 h-10 bg-blue-200 text-blue-700 rounded-full flex items-center justify-center font-bold">${user.charAt(0)}</div>
+          <div>
+            <div class="font-semibold text-sm text-gray-700">${user}</div>
+            <div class="bg-gray-100 p-3 rounded-lg text-sm text-gray-800 max-w-md">${text}</div>
+          </div>
+        </div>
+      `;
+    });
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  forumItems.forEach(item => {
+    item.addEventListener("click", () => {
+      currentForum = item.dataset.id;
+      titleEl.textContent = item.dataset.name;
+
+      forumItems.forEach(f => f.classList.remove("bg-purple-100", "font-semibold", "text-purple-800"));
+      item.classList.add("bg-purple-100", "font-semibold", "text-purple-800");
+
+      renderMessages(currentForum);
+    });
+  });
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if (!text) return;
+
+    const newMsg = { user: "Você", text };
+    forumChats[currentForum] = forumChats[currentForum] || [];
+    forumChats[currentForum].push(newMsg);
+
+    renderMessages(currentForum);
+    input.value = "";
+  });
+
+  renderMessages(currentForum);
+});

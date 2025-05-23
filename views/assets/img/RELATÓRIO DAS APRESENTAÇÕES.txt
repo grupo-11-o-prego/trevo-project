@@ -1,0 +1,171 @@
+RELATÓRIO DAS APRESENTAÇÕES
+
+Grupo 01 – Gustavo, Bruno e Rafael
+Público-alvo: Crianças (3 a 8 anos)
+Tema: Como guardar e criar senhas de forma segura
+
+Principais “vilões” que tentam roubar senhas:
+
+Alguém que observa você digitando a senha;
+
+Compartilhar a senha com outras pessoas, que podem repassá-la;
+
+Alguém que encontra a senha em algum documento;
+
+Acesso a links maliciosos.
+
+Dicas informadas:
+
+“SENHA É SEGREDO”
+
+“USAR SENHAS DIFÍCEIS, COM CARACTERES ESPECIAIS, NÚMEROS E LETRAS”
+
+“ALTERAR A SENHA COM FREQUÊNCIA”
+
+“USAR SENHAS MEMORÁVEIS, SEM UTILIZAR DADOS PESSOAIS FÁCEIS DE ACESSAR, COMO TELEFONE OU DATA DE NASCIMENTO”
+
+Avaliação: 10
+
+---
+
+Grupo 02 – Tiago, Guilherme, Matheus, Mateus
+Público-alvo: Idosos
+Tema: Como se proteger na internet contra códigos maliciosos
+
+Tópicos abordados:
+
+Como os códigos maliciosos entram nos aparelhos;
+
+Principais tipos de vírus: vírus, ransomware, cavalo de troia, spyware e scareware;
+
+Como se proteger: uso de antivírus confiáveis e atualizados, evitar clicar em links estranhos;
+
+Caso algo dê errado: não usar o aparelho, não inserir dados bancários, procurar um técnico;
+
+Dicas extras:
+
+Desconfiar de mensagens com prêmios;
+
+Sempre manter o celular bloqueado;
+
+Não anotar senhas em papéis soltos;
+
+Cuidado com anúncios “bons demais para ser verdade”.
+
+Avaliação: 10
+
+---
+
+Grupo 03 – Arthur, Felipe, Matheus Silva
+Público-alvo: Funcionários antigos de uma empresa de treinamento (adultos)
+Tema: Códigos maliciosos: o que são e como se proteger
+
+Conteúdo apresentado:
+
+Explicação sobre o que são códigos maliciosos e seus tipos;
+
+Como eles chegam até o usuário (ex.: e-mails falsos);
+
+Sinais de infecção: computador lento, janelas estranhas, programas não instalados pelo usuário;
+
+Como se proteger: antivírus confiáveis, evitar downloads de jogos e programas piratas;
+
+Exemplos de ataques com ransomware;
+
+Dicas rápidas:
+
+Usar autenticação em dois fatores;
+
+Atualizar o sistema operacional;
+
+Desconfiar de ofertas muito vantajosas;
+
+Evitar acessar contas pessoais em computadores públicos ou redes públicas.
+
+Avaliação: 10
+
+---
+
+Grupo 04 – Fernando Padilha, Vinicius Veiga
+Público-alvo: Adolescentes
+Tema: Ransomware e Adwares
+
+Avaliação: 10
+
+Grupo 05 – Hector, Gabriel, Theo (Professores)
+Público-alvo: Adolescentes do Ensino Médio
+Tema: Malwares
+
+Conteúdo apresentado:
+
+Definição: Programas maliciosos;
+
+Tipos abordados:
+
+Ransomware: Bloqueia a máquina e exige pagamento para desbloqueio;
+
+Spyware: Monitora atividades do usuário, incluindo teclas digitadas;
+
+Adware: Exibe pop-ups durante a navegação;
+
+Worms ("vermes"): Se espalham sozinhos, infectando dispositivos conectados à rede;
+
+Cavalo de Troia (Trojan): Programa que parece inofensivo, mas instala outros malwares ao ser executado;
+
+Botnets: Transformam o computador em "zumbi" para ataques em larga escala.
+
+Como se prevenir:
+
+Não clicar em links suspeitos em e-mails, sites e anúncios;
+
+Cuidado ao baixar jogos de sites não oficiais;
+
+Utilizar antivírus, mesmo os gratuitos;
+
+Manter os computadores atualizados (malwares exploram vulnerabilidades em sistemas desatualizados).
+
+Consequências:
+Malwares podem causar vazamento de fotos e dados privados, com impactos morais e financeiros.
+
+Avaliação: 10
+
+---
+
+ Grupo 06 – Eduardo
+Público-alvo: Empresas
+Tema: Ransomware
+
+Conteúdo apresentado:
+
+No Brasil, é comum o ataque por ransomware, e muitas empresas brasileiras acabam realizando o pagamento exigido pelos criminosos, o que acaba financiando novos ataques.
+
+O ransomware é um código malicioso que bloqueia o acesso do usuário ao computador, exigindo um pagamento como “resgate” para liberar os dados.
+
+A infecção normalmente ocorre ao clicar em links maliciosos ou ao baixar programas e jogos suspeitos ou piratas.
+
+A chave usada para criptografar os arquivos é extremamente difícil de quebrar, o que torna a recuperação dos dados praticamente impossível sem o pagamento.
+
+Os impactos para as empresas são devastadores, podendo causar:
+
+Perda de dados;
+
+Danos à reputação;
+
+Paralisação das atividades.
+
+Um exemplo citado foi o caso da empresa Coinbase, que sofreu um vazamento de dados.
+
+Medidas de prevenção incluem:
+
+Realização de backups regulares;
+
+Treinamento dos funcionários para reconhecer ameaças;
+
+Aplicação de patches de segurança;
+
+Uso de autenticação multifatorial.
+
+Foi apresentado um vídeo com um relatório sobre empresas que realizaram o pagamento do resgate para tentar recuperar seus dados bloqueados. Informa que o ideal é não realizar o pagamento para não financiar novos ataques ou estimular os criminosos a continuarem com os ataques.
+67% das empresas brasileiras que sofreram o ataque pagaram o "resgate", dados bem preocupantes de acordo com o youtuber.
+
+Avaliação: 10

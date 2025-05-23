@@ -349,14 +349,11 @@ switch (Controller::requestUrl($baseFolder)) {
         break;
         
     // -------- FÓRUM --------
-    case '/forum':
-        // require __DIR__ . '/../app/controllers/ForumController.php';
-        // $controller = new \App\Controllers\ForumController;
-        // $controller->form();
-
-        // $session = new SessionController;
-        // $session->protect();
-
+    case '/forum' :
+        require __DIR__ . '/../app/controllers/ForumController.php';
+        $controller = new \App\Controllers\ForumController;
+        $session = new SessionController;
+        $controller->forum();
         break;
 
     case '/api/forum/criarforum':
