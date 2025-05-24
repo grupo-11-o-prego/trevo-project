@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 18/05/2025 às 20:28
+-- Tempo de geração: 24/05/2025 às 18:11
 -- Versão do servidor: 9.1.0
 -- Versão do PHP: 8.3.14
 
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `anuncios_tb` (
   `anun_tipo` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `anun_user_id` int DEFAULT NULL,
   `anun_cliente_user_id` int DEFAULT NULL,
-  `anun_preco` float NOT NULL,
+  `anun_preco` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `anun_status` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `anun_estado` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`anun_id`),
@@ -51,27 +51,9 @@ CREATE TABLE IF NOT EXISTS `anuncios_tb` (
 --
 
 INSERT INTO `anuncios_tb` (`anun_id`, `anun_titulo`, `anun_descricao`, `anun_data`, `anun_imagem`, `anun_tipo`, `anun_user_id`, `anun_cliente_user_id`, `anun_preco`, `anun_status`, `anun_estado`) VALUES
-(3, 'Livro Duna', 'Livro Duna, de Frank Herbert, editora Intrínseca', '2025-05-08 20:53:48', NULL, NULL, 2, NULL, 70, 'DISPONÍVEL', 'NOVO'),
-(4, 'Livro Duna', 'Livro Duna, de Frank Herbert, editora Intrínseca', '2025-05-08 20:53:54', NULL, NULL, 2, NULL, 70, 'DISPONÍVEL', 'NOVO'),
-(6, 'Biografia do Dudu', 'Biografia do Menino Eduardo completa!', '2025-05-08 21:12:56', NULL, NULL, 2, NULL, 30, 'DISPONÍVEL', 'SEMINOVO');
-
--- --------------------------------------------------------
-
---
--- Estrutura para tabela `avaliacao_tb`
---
-
-DROP TABLE IF EXISTS `avaliacao_tb`;
-CREATE TABLE IF NOT EXISTS `avaliacao_tb` (
-  `aval_id` int NOT NULL AUTO_INCREMENT,
-  `aval_user_id` int DEFAULT NULL,
-  `aval_vend_id` int DEFAULT NULL,
-  `aval_avaliacao` int DEFAULT NULL,
-  `aval_data` datetime DEFAULT NULL,
-  PRIMARY KEY (`aval_id`),
-  KEY `aval_user_id` (`aval_user_id`),
-  KEY `aval_vend_id` (`aval_vend_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+(3, 'Livro Duna', 'Livro Duna, de Frank Herbert, editora Intrínseca', '2025-05-08 20:53:48', NULL, 'venda', 2, NULL, '70', 'DISPONÍVEL', 'NOVO'),
+(4, 'Livro Duna', 'Livro Duna, de Frank Herbert, editora Intrínseca', '2025-05-08 20:53:54', NULL, 'venda', 2, NULL, '70', 'DISPONÍVEL', 'NOVO'),
+(6, 'Biografia do Dudu', 'Biografia do Menino Eduardo completa!', '2025-05-08 21:12:56', NULL, 'venda', 2, NULL, '30', 'DISPONÍVEL', 'SEMINOVO');
 
 -- --------------------------------------------------------
 
@@ -81,14 +63,14 @@ CREATE TABLE IF NOT EXISTS `avaliacao_tb` (
 
 DROP TABLE IF EXISTS `comentarios_tb`;
 CREATE TABLE IF NOT EXISTS `comentarios_tb` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `coment_user_id` int DEFAULT NULL,
-  `coment_anun_id` int DEFAULT NULL,
-  `coment_data` datetime DEFAULT NULL,
-  `coment_comentario` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `coment_user_id` (`coment_user_id`),
-  KEY `coment_anun_id` (`coment_anun_id`)
+  `com_id` int NOT NULL AUTO_INCREMENT,
+  `com_user_id` int NOT NULL,
+  `com_post_id` int NOT NULL,
+  `com_data` datetime NOT NULL,
+  `com_comentario` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  PRIMARY KEY (`com_id`),
+  KEY `coment_user_id` (`com_user_id`),
+  KEY `fk_com_post` (`com_post_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -103,6 +85,9 @@ CREATE TABLE IF NOT EXISTS `denuncias_tb` (
   `den_adm_user_id` int DEFAULT NULL,
   `den_user_id` int DEFAULT NULL,
   `den_anun_id` int DEFAULT NULL,
+  `den_for_id` int NOT NULL,
+  `den_post_id` int NOT NULL,
+  `den_com_id` int NOT NULL,
   `den_motivo` varchar(250) COLLATE utf8mb4_general_ci NOT NULL,
   `den_descricao` varchar(350) COLLATE utf8mb4_general_ci NOT NULL,
   `den_data` datetime NOT NULL,
@@ -110,7 +95,57 @@ CREATE TABLE IF NOT EXISTS `denuncias_tb` (
   PRIMARY KEY (`den_id`),
   KEY `den_adm_user_id` (`den_adm_user_id`),
   KEY `den_user_id` (`den_user_id`),
-  KEY `den_anun_id` (`den_anun_id`)
+  KEY `den_anun_id` (`den_anun_id`),
+  KEY `fk_denuncias_forum_id` (`den_for_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `denuncias_tb`
+--
+
+INSERT INTO `denuncias_tb` (`den_id`, `den_adm_user_id`, `den_user_id`, `den_anun_id`, `den_for_id`, `den_post_id`, `den_com_id`, `den_motivo`, `den_descricao`, `den_data`, `den_revisao`) VALUES
+(1, NULL, NULL, 4, 0, 0, 0, 'Abuso Verbal', 'Muito ódio', '2025-05-24 14:48:44', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `forum_tb`
+--
+
+DROP TABLE IF EXISTS `forum_tb`;
+CREATE TABLE IF NOT EXISTS `forum_tb` (
+  `for_id` int NOT NULL AUTO_INCREMENT,
+  `for_titulo` varchar(350) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `for_descricao` text CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `for_tema` varchar(250) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `for_criador_user_id` int NOT NULL,
+  PRIMARY KEY (`for_id`),
+  KEY `fk_forum_criador_user` (`for_criador_user_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `forum_tb`
+--
+
+INSERT INTO `forum_tb` (`for_id`, `for_titulo`, `for_descricao`, `for_tema`, `for_criador_user_id`) VALUES
+(1, 'Fãs de Star Wars', 'Fórum para fãs de star wars (obviamente)', 'Star Wars (de novo)', 1),
+(2, 'Fãs de Duna', 'Fórum para fãs de Duna (obviamente)', 'Duna', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `forum_usuario_tb`
+--
+
+DROP TABLE IF EXISTS `forum_usuario_tb`;
+CREATE TABLE IF NOT EXISTS `forum_usuario_tb` (
+  `foruser_id` int NOT NULL AUTO_INCREMENT,
+  `foruser_for_id` int NOT NULL,
+  `foruser_user_id` int NOT NULL,
+  `foruser_data` datetime NOT NULL,
+  PRIMARY KEY (`foruser_id`),
+  KEY `fk_foruser_user` (`foruser_user_id`),
+  KEY `fk_foruser_forum` (`foruser_for_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -133,20 +168,6 @@ CREATE TABLE IF NOT EXISTS `imagem_tb` (
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `lista_desejo_tb`
---
-
-DROP TABLE IF EXISTS `lista_desejo_tb`;
-CREATE TABLE IF NOT EXISTS `lista_desejo_tb` (
-  `list_desj_user_id` int DEFAULT NULL,
-  `list_desj_anun_id` int DEFAULT NULL,
-  KEY `list_desj_user_id` (`list_desj_user_id`),
-  KEY `list_desj_anun_id` (`list_desj_anun_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
 -- Estrutura para tabela `mensagens_tb`
 --
 
@@ -161,6 +182,24 @@ CREATE TABLE IF NOT EXISTS `mensagens_tb` (
   KEY `men_enviou_user_id` (`men_enviou_user_id`),
   KEY `men_receb_user_id` (`men_receb_user_email`(250))
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `posts_tb`
+--
+
+DROP TABLE IF EXISTS `posts_tb`;
+CREATE TABLE IF NOT EXISTS `posts_tb` (
+  `pos_id` int NOT NULL AUTO_INCREMENT,
+  `pos_user_id` int NOT NULL,
+  `pos_data` datetime NOT NULL,
+  `pos_texto` text NOT NULL,
+  `pos_for_id` int NOT NULL,
+  PRIMARY KEY (`pos_id`),
+  KEY `fk_post_user` (`pos_user_id`),
+  KEY `fk_post_forum` (`pos_for_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
 
 -- --------------------------------------------------------
 
@@ -191,7 +230,7 @@ CREATE TABLE IF NOT EXISTS `usuarios_tb` (
 --
 
 INSERT INTO `usuarios_tb` (`user_id`, `user_ativo`, `user_nome`, `user_data_nasc`, `user_moderador`, `user_vendedor`, `user_data`, `user_email`, `user_senha`, `user_cpf`, `user_contato`, `user_img_id`) VALUES
-(1, 0, 'Usuário Leitor', '2005-12-21', 0, 0, '2025-05-08 19:35:03', 'leitor@gmail.com', '$2y$10$OuLfMxeWBnE1wI6bv2/goOU86FkDqXRjgEmMvAV74hkHSJGGAd.ka', 13058785747, '(11) 95430-3067', NULL),
+(1, 0, 'Usuário Leitor', '2005-12-21', 0, 0, '2025-05-08 19:35:03', 'leitor@gmail.com', '$2y$10$OuLfMxeWBnE1wI6bv2/goOU86FkDqXRjgEmMvAV74hkHSJGGAd.ka', 54488473822, '(11) 95430-3067', NULL),
 (2, 0, 'Usuário vendedor', '1914-05-28', 0, 1, '2025-05-08 19:35:16', 'vendedor@gmail.com', '$2y$10$M8aMT5YcqIUz5hVVIFDhNuzFmCR3KjvduRFFl/1dkBMr/U6cjheh6', NULL, '1238091823123', NULL),
 (3, 0, 'Usuário administrador', '1914-05-28', 1, 1, '2025-05-08 19:35:29', 'admin@gmail.com', '$2y$10$CXEQjhtut2Ga46ZZQsxVtOxrQbh4Qr66.GLoiJYQDdmXvnauO02bq', NULL, '1238091823123', NULL),
 (4, 0, 'Usuário vendedor 2', '1914-05-28', 0, 1, '2025-05-08 20:54:10', 'vendedor2@gmail.com', '$2y$10$JB6Ar5pXl11Pncdu60qCS.h3uFVXeJw6xzhVQ5Ta/gPBRRgtSIP6G', NULL, '1238091823123', NULL);
