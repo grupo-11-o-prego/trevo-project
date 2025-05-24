@@ -360,7 +360,7 @@ switch (Controller::requestUrl($baseFolder)) {
         require __DIR__ . '/../app/controllers/ForumController.php';
         $controller = new \App\Controllers\ForumController;
         $session = new SessionController;
-        // header("Content-Type: application/json");
+        header("Content-Type: application/json");
         $params = Controller::queryParams();
         $id = isset($params['id']) ? $params['id'] : null;
         echo json_encode(isset($id) ? $controller->getForum($id) : $controller->getForum());
