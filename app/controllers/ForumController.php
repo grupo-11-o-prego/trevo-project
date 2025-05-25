@@ -36,7 +36,37 @@ class ForumController
             $titulo = $_POST['titulo'];
             if ($this->validaPermissaoForum($user, $id)) {
                 $model = new ForumModel;
-                return $model->alterarTitulo($user, $id, $titulo);
+                return $model->alterarTitulo($id, $titulo);
+            } else {
+                return ["sucesso" => false, "message" => "Sem permissão para alterar fórum"];
+            }
+        } else {
+            return ["sucesso" => false, "message" => "Requisição POST não realizada."];
+        }
+    }
+
+    public function alterarDescricao($user) {
+        if (isset($_POST)) {
+            $id = $_POST['id'];
+            $titulo = $_POST['descricao'];
+            if ($this->validaPermissaoForum($user, $id)) {
+                $model = new ForumModel;
+                return $model->alterarDescricao($id, $titulo);
+            } else {
+                return ["sucesso" => false, "message" => "Sem permissão para alterar fórum"];
+            }
+        } else {
+            return ["sucesso" => false, "message" => "Requisição POST não realizada."];
+        }
+    }
+
+    public function alterarTema($user) {
+        if (isset($_POST)) {
+            $id = $_POST['id'];
+            $titulo = $_POST['tema'];
+            if ($this->validaPermissaoForum($user, $id)) {
+                $model = new ForumModel;
+                return $model->alterarTema($id, $titulo);
             } else {
                 return ["sucesso" => false, "message" => "Sem permissão para alterar fórum"];
             }
@@ -58,9 +88,12 @@ class ForumController
     public function validaPermissaoForum($user, $forId) {
         $model = new ForumModel;
         $forum = $model->get(false, 'forum_tb', 'for_id', $forId);
-        
-        if ($forum['result']['for_criador_user_id'] == $user['id'] || $user['admin'] > 0) {
-            return true;
+        if ($forum['sucesso']) {
+            if ($forum['result']['for_criador_user_id'] == $user['id'] || $user['admin'] > 0) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
             return false;
         }

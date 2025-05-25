@@ -78,6 +78,13 @@ switch (Controller::requestUrl($baseFolder)) {
         $session->protect();
         $session->logout();
         break;
+
+    case '/api/logout' :
+        $session = new SessionController;
+        $session->protectAPI();
+        header('Content-Type: application/json');   
+        echo json_encode($session->apiLogout());
+        break;
         
     case '/api/cadastro':
         require __DIR__ . '/../app/controllers/UserController.php';
@@ -382,6 +389,24 @@ switch (Controller::requestUrl($baseFolder)) {
         header("Content-Type: application/json");
         $session->protectAPI();
         echo json_encode($controller->alterarTitulo($_SESSION['user']));
+        break;
+
+    case '/api/forum/alterardescricao':
+        require __DIR__ . '/../app/controllers/ForumController.php';
+        $controller = new \App\Controllers\ForumController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        echo json_encode($controller->alterarDescricao($_SESSION['user']));
+        break;
+
+    case '/api/forum/alterartema':
+        require __DIR__ . '/../app/controllers/ForumController.php';
+        $controller = new \App\Controllers\ForumController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        echo json_encode($controller->alterarTema($_SESSION['user']));
         break;
 
     case '/post/cadastrar':

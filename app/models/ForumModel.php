@@ -25,7 +25,7 @@ class ForumModel extends Model
         }
     }
 
-    public function alterarTitulo($user, $id, $titulo)
+    public function alterarTitulo($id, $titulo)
     {
         try {
             $stmt = $this->conn->prepare("UPDATE forum_tb SET for_titulo = :titulo WHERE for_id = :id");
@@ -37,6 +37,46 @@ class ForumModel extends Model
             if ($result) {
                 $forum = $this->get(false, $this->tabela, 'for_id', $id);
                 return ["sucesso" => true, "result" => ["for_id" => $forum['result']['for_id'], "for_titulo" => $forum['result']['for_titulo']]];
+            } else {
+                return ["sucesso" => false];
+            }
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function alterarDescricao($id, $descricao)
+    {
+        try {
+            $stmt = $this->conn->prepare("UPDATE forum_tb SET for_descricao = :descricao WHERE for_id = :id");
+            $stmt->bindParam(":descricao", $descricao);
+            $stmt->bindParam(":id", $id);
+
+            $result = $stmt->execute();
+
+            if ($result) {
+                $forum = $this->get(false, $this->tabela, 'for_id', $id);
+                return ["sucesso" => true, "result" => ["for_id" => $forum['result']['for_id'], "for_descricao" => $forum['result']['for_descricao']]];
+            } else {
+                return ["sucesso" => false];
+            }
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function alterarTema($id, $tema)
+    {
+        try {
+            $stmt = $this->conn->prepare("UPDATE forum_tb SET for_tema = :tema WHERE for_id = :id");
+            $stmt->bindParam(":tema", $tema);
+            $stmt->bindParam(":id", $id);
+
+            $result = $stmt->execute();
+
+            if ($result) {
+                $forum = $this->get(false, $this->tabela, 'for_id', $id);
+                return ["sucesso" => true, "result" => ["for_id" => $forum['result']['for_id'], "for_tema" => $forum['result']['for_tema']]];
             } else {
                 return ["sucesso" => false];
             }
