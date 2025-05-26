@@ -93,6 +93,34 @@ class ForumController
         }
     }
 
+    public function getFullForum($id = null)
+    {
+        if (isset($id)) {
+            $forum = $this->getForum($id);
+            if (!$forum['sucesso']) {
+                return $forum;
+            }
+            $membros = $this->getMembros($id);
+            $result = ["forum" => $forum, "membros" => $membros['result']];
+            return ["sucesso" => true, "result" => $result];
+        } else {
+            $foruns = $this->getForum();
+            if (!$foruns['sucesso']) {
+                return $foruns;
+            }
+
+            $result = [];
+            foreach ($foruns['result'] as $forum) {
+                $membros = $this->getMembros($forum['for_id']);
+                $result[] = [
+                    "forum" => $forum,
+                    "membros" => $membros['result']
+                ];
+            }
+            return ["sucesso" => true, "result" => $result];
+        }
+    }
+
     public function entrarForum($user, $forId)
     {
         if (isset($forId)) {

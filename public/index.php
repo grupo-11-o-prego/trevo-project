@@ -388,6 +388,16 @@ switch (Controller::requestUrl($baseFolder)) {
         echo json_encode($controller->getMembros($id));
         break;
 
+    case '/api/forum/getfullforum':
+        require __DIR__ . '/../app/controllers/ForumController.php';
+        $controller = new \App\Controllers\ForumController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $params = Controller::queryParams();
+        $id = isset($params['id']) ? $params['id'] : null;
+        echo json_encode(isset($id) ? $controller->getFullForum($id) : $controller->getFullForum());
+        break;
+
     case '/api/forum/criarforum':
         require __DIR__ . '/../app/controllers/ForumController.php';
         $controller = new \App\Controllers\ForumController;
