@@ -361,6 +361,12 @@ switch (Controller::requestUrl($baseFolder)) {
         $session = new SessionController;
         $controller->forum();
         break;
+    case '/forum-entrar' :
+        require __DIR__ . '/../app/controllers/ForumController.php';
+        $controller = new \App\Controllers\ForumController;
+        $session = new SessionController;
+        $controller->forumEntrar();
+        break;
 
     case '/api/forum/getforum':
         require __DIR__ . '/../app/controllers/ForumController.php';

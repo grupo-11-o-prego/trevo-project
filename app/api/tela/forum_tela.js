@@ -19,6 +19,9 @@ window.onload = async function () {
             titulo.className = "text-2xl font-semibold text-gray-800";
             titulo.textContent = "Fórum de Discussão";
 
+            const divBtns = document.createElement("div");
+            divBtns.className = "flex justify-between items-center w-xs";
+
             const botaoCriar = document.createElement("button");
             botaoCriar.id = "btn-criar-forum";
             botaoCriar.className =
@@ -28,9 +31,23 @@ window.onload = async function () {
               const modal = document.getElementById("modal-criar-forum");
               if (modal) modal.classList.remove("hidden");
             };
+            const botaoEntrar = document.createElement("button");
+            botaoEntrar.id = "btn-entrar-forum";
+            botaoEntrar.className =
+              "bg-[#6F23D9] text-white px-4 py-2 rounded-lg hover:bg-[#4f179c] transition font-medium shadow cursor-pointer";
+            botaoEntrar.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
+              <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
+              <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+            </svg>`;
+            botaoEntrar.textContent = `Entrar Forum`;
+            botaoEntrar.onclick = () => {
+              window.location.href = '/trevo-project/public/forum-entrar'
+            };
 
             header.appendChild(titulo);
-            header.appendChild(botaoCriar);
+            header.appendChild(divBtns);
+            divBtns.appendChild(botaoCriar);
+            divBtns.appendChild(botaoEntrar);
             main.appendChild(header);
 
             const container = document.createElement("div");
@@ -85,7 +102,6 @@ window.onload = async function () {
             lista.id = "forum-list";
             lista.className = "space-y-3";
 
-            // Adicionando os fóruns dinâmicos
             forumList.forEach((f) => {
               const item = document.createElement("li");
               const tituloForum = f.for_titulo || "Fórum sem título";
@@ -113,9 +129,8 @@ window.onload = async function () {
             container.appendChild(aside);
             main.appendChild(container);
 
-            // Chat dummy inicial
             let currentForum = null;
-            const forumChats = {}; // aqui pode ser preenchido futuramente via API
+            const forumChats = {};
 
             const messagesEl = document.getElementById("chat-messages");
             const input = document.getElementById("chat-input");
