@@ -85,13 +85,12 @@ class ForumController
         }
     }
 
-    public function entrarForum($user)
+    public function entrarForum($user, $forId)
     {
-        if (isset($_POST)) {
-            $id = $_POST['id'];
-            if ($this->validaPresencaForum($user, $id)) {
+        if (isset($forId)) {
+            if ($this->validaPresencaForum($user, $forId)) {
                 $model = new ForumModel;
-                return $model->entrarForum($user, $id);
+                return $model->entrarForum($user, $forId);
             } else {
                 return ["sucesso" => false, "message" => "Usuário já presente no fórum!"];
             }

@@ -415,7 +415,9 @@ switch (Controller::requestUrl($baseFolder)) {
         $session = new SessionController;
         header("Content-Type: application/json");
         $session->protectAPI();
-        echo json_encode($controller->entrarForum($_SESSION['user']));
+        $params = Controller::queryParams();
+        $id = isset($params['id']) ? $params['id'] : null;
+        echo json_encode($controller->entrarForum($_SESSION['user'], $id));
         break;
 
     case '/post/cadastrar':
