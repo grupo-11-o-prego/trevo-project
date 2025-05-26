@@ -83,6 +83,16 @@ class ForumController
         }
     }
 
+    public function getMembros($id = null)
+    {
+        $model = new ForumModel;
+        if (isset($id)) {
+            return $model->get(true, 'forum_usuario_tb', 'foruser_for_id', $id);
+        } else {
+            return ["sucesso" => false, "message" => "Requisição GET incompleta."];
+        }
+    }
+
     public function entrarForum($user, $forId)
     {
         if (isset($forId)) {
@@ -93,7 +103,7 @@ class ForumController
                 return ["sucesso" => false, "message" => "Usuário já presente no fórum!"];
             }
         } else {
-            return ["sucesso" => false, "message" => "Requisição POST não realizada."];
+            return ["sucesso" => false, "message" => "Requisição GET não realizada."];
         }
     }
 
