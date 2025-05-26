@@ -104,12 +104,20 @@ class DenunciaModel extends Model {
                 d.den_adm_user_id,
                 d.den_user_id,
                 d.den_anun_id,
+                d.den_for_id,
+                d.den_post_id,
+                d.den_com_id,
                 d.den_data,
                 d.den_revisao,
+                d.den_motivo,
+                d.den_descricao,
                 u.user_nome,
-                u.user_email
+                u.user_email,
+                a.anun_titulo, 
+                p.post_titulo
                 FROM denuncias_tb as d
-                JOIN usuarios_tb as u ON u.user_id = d.den_user_id
+                LEFT JOIN usuarios_tb as u ON u.user_id = d.den_user_id
+                LEFT JOIN anuncios_tb as a ON a.anun_id = d.den_anun_id                
                 WHERE den_id = :id
                 ');
                 $stmt->bindParam(':id', $id);
@@ -120,12 +128,21 @@ class DenunciaModel extends Model {
                 d.den_adm_user_id,
                 d.den_user_id,
                 d.den_anun_id,
+                d.den_for_id,
+                d.den_post_id,
+                d.den_com_id,
                 d.den_data,
                 d.den_revisao,
+                d.den_motivo,
+                d.den_descricao,
                 u.user_nome,
-                u.user_email
+                u.user_email,
+                a.anun_titulo
                 FROM denuncias_tb as d
-                JOIN usuarios_tb as u ON u.user_id = d.den_user_id
+                LEFT JOIN usuarios_tb as u ON u.user_id = d.den_user_id
+                LEFT JOIN anuncios_tb as a ON a.anun_id = d.den_anun_id
+                
+                
                 ');
             }
         
