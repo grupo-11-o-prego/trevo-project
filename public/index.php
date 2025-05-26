@@ -284,7 +284,6 @@ switch (Controller::requestUrl($baseFolder)) {
         echo json_encode($controller->alterarEstado($_SESSION['user']));
         break;
 
-
     case '/api/anuncio/listar':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
         $controller = new \App\Controllers\AnuncioController;
@@ -407,6 +406,16 @@ switch (Controller::requestUrl($baseFolder)) {
         header("Content-Type: application/json");
         $session->protectAPI();
         echo json_encode($controller->alterarTema($_SESSION['user']));
+        break;
+
+
+    case '/api/forum/entrarforum':
+        require __DIR__ . '/../app/controllers/ForumController.php';
+        $controller = new \App\Controllers\ForumController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        echo json_encode($controller->entrarForum($_SESSION['user']));
         break;
 
     case '/post/cadastrar':

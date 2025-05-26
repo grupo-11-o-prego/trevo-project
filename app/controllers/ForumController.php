@@ -85,6 +85,27 @@ class ForumController
         }
     }
 
+    public function entrarForum($user)
+    {
+        if (isset($_POST)) {
+            $id = $_POST['id'];
+            if ($this->validaPresencaForum($user, $id)) {
+                $model = new ForumModel;
+                return $model->entrarForum($user, $id);
+            } else {
+                return ["sucesso" => false, "message" => "Usuário já presente no fórum!"];
+            }
+        } else {
+            return ["sucesso" => false, "message" => "Requisição POST não realizada."];
+        }
+    }
+
+    public function validaPresencaForum($user, $forId)
+    {
+        $model = new ForumModel;
+        return $model->getPresencaForum($user, $forId);
+    }
+
     public function validaPermissaoForum($user, $forId) {
         $model = new ForumModel;
         $forum = $model->get(false, 'forum_tb', 'for_id', $forId);

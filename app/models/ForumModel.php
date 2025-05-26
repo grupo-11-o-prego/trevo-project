@@ -84,4 +84,36 @@ class ForumModel extends Model
             return ["sucesso" => false, "message" => $e->getMessage()];
         }
     }
+
+    public function entrarForum($user, $forId) 
+    {
+        try{          
+            $stmt = $this->conn->prepare("INSERT INTO forum_usuario_tb VALUES (DEFAULT, :forum, :usuario, now())");
+            $stmt->bindParam(':forum', $forId);
+            $stmt->bindParam(':usuario', $user['id']);
+
+            $result = $stmt->execute();
+
+            return $result ? ["sucesso" => true, "mensagem" => "Entrou no fórum!"] : ["sucesso" => false, "mensagem" => "Ocorreu um erro ao entrar no fórum."];
+
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function getPresencaForum($user, $forId)
+    {
+        try{          
+            $stmt = $this->conn->prepare("SELECT * FROM forum_usuario_tb WHERE foruser_for_id = :forum AND foruser_user_id = :usuario");
+            $stmt->bindParam(':forum', $forId);
+            $stmt->bindParam(':usuario', $user['id']);
+            $stmt->execute();
+
+            $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+            return !$result ? true : false;
+
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
 }
