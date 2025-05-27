@@ -216,5 +216,11 @@ class UserModel extends Model {
             return ["sucesso" => false, "message" => "Erro ao trocar para vendedor: " . $e->getMessage()];
         }
     }
+
+    public function suspenderUsuario($id){
+        try{
+            $stmt = $this->conn->prepare("")
+        }
+    }
     
 }

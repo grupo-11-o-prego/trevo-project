@@ -45,9 +45,13 @@ window.onload = async function () {
                             }
                             divNome.innerHTML = `<span class="font-semibold text-gray-800">${nomeLabel}:</span> ${nomeValor}`;
 
-                            
+                            let email = '';
+                            if(denuncia.den_user_id){
+                                email = denuncia.user_email;
+                            }else if (denuncia.den_anun_id)
+                                email = denuncia.anun_user_email;
                             const divEmail = document.createElement('div');                            
-                            divEmail.innerHTML = `<span class="font-semibold text-gray-800">Email:</span> ${denuncia.user_email}`;
+                            divEmail.innerHTML = `<span class="font-semibold text-gray-800">Email:</span> ${email}`;
 
                             const divMotivo = document.createElement('div');
                             divMotivo.innerHTML = `<span class="font-semibold text-gray-800">Motivo:</span> ${denuncia.den_motivo}`;
@@ -86,11 +90,17 @@ window.onload = async function () {
                             const buttonBanir = document.createElement('button');
                             buttonBanir.className = 'cursor-pointer px-4 py-2 border border-red-500 text-red-600 font-semibold rounded-md hover:bg-red-50 transition';
                             buttonBanir.textContent = 'Banir Usuário';
-                            buttonBanir.onclick = function () { banirUsuario(denuncia.den_user_id) };
+                            buttonBanir.onclick = function () { banirUsuario(denuncia.den_user_id)};
+
+                            const buttonSuspender = document.createElement('button');
+                            buttonSuspender.className = 'cursor-pointer px-4 py-2 border border-red-500 text-red-600 font-semibold rounded-md hover:bg-red-50 transition';
+                            buttonSuspender.textContent = 'Suspender Usuário';
+                            buttonSuspender.onclick = function() {suspenderUsuario(denuncia.den_user_id)};
 
                             botoes.appendChild(buttonRevisar);
                             botoes.appendChild(buttonExcluir);
                             botoes.appendChild(buttonBanir);
+                            botoes.appendChild(buttonSuspender);
 
                             card.appendChild(titulo);
                             card.appendChild(gridInfo);
