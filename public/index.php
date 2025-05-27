@@ -445,14 +445,24 @@ switch (Controller::requestUrl($baseFolder)) {
         echo json_encode($controller->entrarForum($_SESSION['user'], $id));
         break;
 
-    case '/post/cadastrar':
-        // require __DIR__ . '/../app/controllers/ForumController.php';
-        // $controller = new \App\Controllers\ForumController;
+    // -------- POST --------
 
-        // $session = new SessionController;
-        // $session->protect();
+    case '/api/post/criar':
+        require __DIR__ . '/../app/controllers/PostController.php';
+        $controller = new \App\Controllers\PostController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        echo json_encode($controller->criarPost($_SESSION['user']));
+        break;
 
-        // $controller->cadastrar();
+    case '/api/post/alterartexto':
+        require __DIR__ . '/../app/controllers/PostController.php';
+        $controller = new \App\Controllers\PostController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        echo json_encode($controller->alterarTexto($_SESSION['user']));
         break;
 
     default:
