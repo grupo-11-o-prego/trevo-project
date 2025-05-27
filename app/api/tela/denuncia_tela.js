@@ -45,14 +45,19 @@ window.onload = async function () {
                             }
                             divNome.innerHTML = `<span class="font-semibold text-gray-800">${nomeLabel}:</span> ${nomeValor}`;
 
+                            
                             const divEmail = document.createElement('div');                            
                             divEmail.innerHTML = `<span class="font-semibold text-gray-800">Email:</span> ${denuncia.user_email}`;
 
                             const divMotivo = document.createElement('div');
                             divMotivo.innerHTML = `<span class="font-semibold text-gray-800">Motivo:</span> ${denuncia.den_motivo}`;
 
-                            const divDescricao = document.createElement('div');
-                            divDescricao.innerHTML = `<span class="font-semibold text-gray-800">Descrição:</span> ${denuncia.den_descricao}`;
+                            
+                            const divDescricaoAnuncio = document.createElement('div');
+                            divDescricaoAnuncio.innerHTML = `<span class="font-semibold text-gray-800">Descrição do anúncio:</span> ${denuncia.anun_descricao}`;
+                            
+                            const divDescricaoDenuncia = document.createElement('div');
+                            divDescricaoDenuncia.innerHTML = `<span class="font-semibold text-gray-800">Descrição da denúncia:</span> ${denuncia.den_descricao}`;
 
                             const divData = document.createElement('div');
                             divData.innerHTML = `<span class="font-semibold text-gray-800">Data:</span> ${denuncia.den_data}`;
@@ -61,7 +66,8 @@ window.onload = async function () {
                             gridInfo.appendChild(divNome);
                             gridInfo.appendChild(divEmail);
                             gridInfo.appendChild(divMotivo);
-                            gridInfo.appendChild(divDescricao);
+                            gridInfo.appendChild(divDescricaoDenuncia);
+                            gridInfo.appendChild(divDescricaoAnuncio);
                             gridInfo.appendChild(divData);
 
                             const botoes = document.createElement('div');

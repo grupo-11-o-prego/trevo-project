@@ -113,7 +113,8 @@ class DenunciaModel extends Model {
                 d.den_descricao,
                 u.user_nome,
                 u.user_email,
-                a.anun_titulo, 
+                a.anun_titulo,
+                a.anun_descricao,
                 p.post_titulo
                 FROM denuncias_tb as d
                 LEFT JOIN usuarios_tb as u ON u.user_id = d.den_user_id
@@ -137,7 +138,8 @@ class DenunciaModel extends Model {
                 d.den_descricao,
                 u.user_nome,
                 u.user_email,
-                a.anun_titulo
+                a.anun_titulo,
+                a.anun_descricao
                 FROM denuncias_tb as d
                 LEFT JOIN usuarios_tb as u ON u.user_id = d.den_user_id
                 LEFT JOIN anuncios_tb as a ON a.anun_id = d.den_anun_id
