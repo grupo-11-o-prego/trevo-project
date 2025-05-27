@@ -217,10 +217,10 @@ class UserModel extends Model {
         }
     }
 
-    public function suspenderUsuario($id){
-        try{
-            $stmt = $this->conn->prepare("")
-        }
-    }
+    // public function suspenderUsuario($id){
+    //     try{
+    //         $stmt = $this->conn->prepare("")
+    //     }
+    // }
     
 }
