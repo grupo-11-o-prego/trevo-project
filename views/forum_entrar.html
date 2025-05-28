@@ -146,6 +146,22 @@
 
     <main class="ml-72 mt-16 h-[calc(100vh-4rem)] overflow-y-auto p-8 bg-gray-50 space-y-6">
       <div class="flex flex-col gap-6" id="posts-container">
+        <div class="flex items-center justify-between">
+          <button onclick="window.location.href = '/trevo-project/public/forum'";
+          id="btn-criar-forum"
+          class="bg-[#6F23D9] text-white px-4 py-2 rounded-lg hover:bg-[#4f179c] transition font-medium shadow cursor-pointer flex items-center"
+        >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 32 23" stroke-width="1.5" stroke="currentColor" class="size-6">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
+        </svg>
+        Meus Fóruns
+        </button>
+        </div>
+        
+        
+        
+        
+      </div>
         <!-- <div class="w-full">
           <input
             type="text"
@@ -188,96 +204,90 @@
       </div>
     </main>
 
-    <!-- <div
-      id="modal-criar-forum"
-      class="fixed inset-0 bg-[rgba(0,0,0,0.3)] flex items-center justify-center z-50 hidden"
-    >
-      <div class="bg-white rounded-lg shadow-xl p-6 w-full max-w-md relative">
-        <button
-          onclick="fecharModal()"
-          class="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
-        >
-          <i class="fas fa-times cursor-pointer"></i>
-        </button>
-        <h2 class="text-xl font-semibold text-gray-800 mb-4">
-          Criar Novo Fórum
-        </h2>
-        <form id="forum-form" class="space-y-4">
-          <div>
-            <label for="titulo" class="block text-sm font-medium text-gray-700"
-              >Título</label
-            >
-            <input
-              type="text"
-              id="titulo"
-              name="titulo"
-              required
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-            />
-          </div>
-          <div>
-            <label
-              for="descricao"
-              class="block text-sm font-medium text-gray-700"
-              >Descrição</label
-            >
-            <textarea
-              id="descricao"
-              name="descricao"
-              rows="3"
-              required
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-            ></textarea>
-          </div>
-          <div>
-            <label for="tema" class="block text-sm font-medium text-gray-700"
-              >Tema</label
-            >
-            <input
-              type="text"
-              id="tema"
-              name="tema"
-              required
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
-            />
-          </div>
-          <div class="flex justify-end">
-            <button
-              type="submit"
-              class="bg-[#6F23D9] text-white px-4 py-2 rounded-lg hover:bg-[#5515b3] transition cursor-pointer"
-            >
-              Criar
-            </button>
-          </div>
-        </form>
-      </div>
+    <div class="bg-gray-900 min-h-screen text-white font-sans">
+    <!-- Topo com imagem do grupo -->
+    <div class="flex flex-col items-center py-6">
+      <img src="group-photo.jpg" alt="Grupo" class="w-28 h-28 rounded-full object-cover border-4 border-gray-700">
+      <h1 class="text-xl font-semibold mt-4">HEREGE'S FAMILY</h1>
+      <p class="text-gray-400 text-sm">Group · 11 members</p>
     </div>
+
+    <!-- Lista de membros -->
+    <div class="px-6 space-y-4">
+      <!-- Exemplo de membro com status e admin -->
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="font-medium">Junico</p>
+          <p class="text-sm text-gray-400">Não posso falar, somente WhatsApp</p>
+        </div>
+        <span class="bg-green-800 text-xs px-2 py-1 rounded">Group Admin</span>
+      </div>
+
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="font-medium">Mãe</p>
+          <p class="text-sm text-gray-400">Eu prefiro ser esta metamorfose ambulante...</p>
+        </div>
+        <span class="bg-green-800 text-xs px-2 py-1 rounded">Group Admin</span>
+      </div>
+
+      <!-- Replique o bloco acima para os demais membros -->
+      <!-- Exemplo sem admin -->
+      <div>
+        <p class="font-medium">naomi 🐱</p>
+        <p class="text-sm text-gray-400">🥳😌😍😑😃🥳</p>
+      </div>
+
+      <div>
+        <p class="font-medium">Renan</p>
+        <p class="text-sm text-gray-400">Hey there! I am using WhatsApp.</p>
+      </div>
+
+      <!-- ... -->
+    </div>
+
+    <!-- Ações -->
+    <div class="border-t border-gray-700 mt-8 pt-4 px-6 space-y-4">
+      <button class="flex items-center gap-3 text-red-500 hover:text-red-400 w-full">
+        <i class="fas fa-sign-out-alt"></i>
+        <span>Exit group</span>
+      </button>
+      <button class="flex items-center gap-3 text-red-500 hover:text-red-400 w-full">
+        <i class="fas fa-flag"></i>
+        <span>Report group</span>
+      </button>
+    </div>
+  </div>
+
+
     <script>
-      document
-        .getElementById("btn-criar-forum")
-        .addEventListener("click", function () {
-          document
-            .getElementById("modal-criar-forum")
-            .classList.remove("hidden");
-        });
+      function abrirModalInfoForum(proprietario, participantes) {
+      document.getElementById('proprietario-forum').textContent = proprietario;
 
-      function fecharModal() {
-        document.getElementById("modal-criar-forum").classList.add("hidden");
-      }
+      const lista = document.getElementById('participantes-forum');
+      lista.innerHTML = ''; // limpa
+      participantes.forEach(usuario => {
+        const li = document.createElement('li');
+        li.textContent = usuario;
+        lista.appendChild(li);
+      });
 
-      document
-        .getElementById("forum-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
+      document.getElementById('modal-info-forum').classList.remove('hidden');
+    }
 
-          const titulo = document.getElementById("titulo").value;
-          const descricao = document.getElementById("descricao").value;
-          const tema = document.getElementById("tema").value;
-          console.log({ titulo, descricao, tema });
+    function fecharModal() {
+      document.getElementById('modal-info-forum').classList.add('hidden');
+    }
+    function sairDoForum() {
 
-          fecharModal();
-        });
-    </script> -->
+      alert('Você saiu do fórum.');
+      fecharModal();
+    }
+    function denunciarForum() {
+      alert('Fórum denunciado.');
+    }
+
+    </script>
 
     <script src="../app/api/api.js"></script>
     <script src="../app/api/tela/forum_entrar_tela.js"></script>

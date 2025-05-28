@@ -359,6 +359,7 @@ switch (Controller::requestUrl($baseFolder)) {
         require __DIR__ . '/../app/controllers/ForumController.php';
         $controller = new \App\Controllers\ForumController;
         $session = new SessionController;
+        
         $controller->forum();
         break;
     case '/forum-entrar' :

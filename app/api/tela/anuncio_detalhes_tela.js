@@ -12,7 +12,8 @@ window.onload = async function () {
   try {
     const result = await requisitar('GET', '/trevo-project/public/api/anuncio/listar');
     const resultPerfil = await requisitar('GET', '/trevo-project/public/api/perfil');
-
+    
+    
     if (result.erro) {
       console.error('Erro:', result.erro);
       alert('Ocorreu um erro ao buscar os anúncios.');
@@ -21,6 +22,7 @@ window.onload = async function () {
 
     const anuncios = result.dados.result;
     const dadosPessoa = resultPerfil.dados.users;
+    
     // console.log("dados",dadosPessoa)
     
     const post = anuncios.find(p => p.anun_id == anuncioId);
