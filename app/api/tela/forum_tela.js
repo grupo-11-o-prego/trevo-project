@@ -6,11 +6,8 @@ window.onload = async function () {
           console.error("Erro:", result.erro);
           alert("Ocorreu um erro ao buscar os anúncios. Tente novamente.");
         } else {
-          console.log(result.dados.sucesso);
-          console.log(result.dados.result);
           if (result.dados.sucesso) {
             const forumList = result.dados.result;
-            console.log(forumList);
 
             const main = document.querySelector("main");
             main.innerHTML = "";
@@ -34,17 +31,14 @@ window.onload = async function () {
               const modal = document.getElementById("modal-criar-forum");
               if (modal) modal.classList.remove("hidden");
             };
+
             const botaoEntrar = document.createElement("button");
             botaoEntrar.id = "btn-entrar-forum";
             botaoEntrar.className =
               "bg-[#6F23D9] text-white px-4 py-2 rounded-lg hover:bg-[#4f179c] transition font-medium shadow cursor-pointer";
-            botaoEntrar.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-in-right" viewBox="0 0 16 16">
-              <path fill-rule="evenodd" d="M6 3.5a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v9a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-2a.5.5 0 0 0-1 0v2A1.5 1.5 0 0 0 6.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-8A1.5 1.5 0 0 0 5 3.5v2a.5.5 0 0 0 1 0z"/>
-              <path fill-rule="evenodd" d="M11.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H1.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
-            </svg>`;
-            botaoEntrar.textContent = `Entrar Forum`;
+            botaoEntrar.textContent = "Entrar Fórum";
             botaoEntrar.onclick = () => {
-              window.location.href = '/trevo-project/public/forum-entrar'
+              window.location.href = "/trevo-project/public/forum-entrar";
             };
 
             header.appendChild(titulo);
@@ -65,12 +59,34 @@ window.onload = async function () {
             tituloMensagens.className =
               "text-xl font-semibold text-purple-700 mb-4";
             tituloMensagens.textContent = "Selecione um fórum";
-            mensagens.appendChild(tituloMensagens);
 
             const listaMensagens = document.createElement("div");
             listaMensagens.id = "chat-messages";
             listaMensagens.className = "flex-1 overflow-y-auto space-y-4 pr-2";
-            mensagens.appendChild(listaMensagens);
+            listaMensagens.innerHTML = `
+              <div class="border-b border-gray-200 pb-6 mb-6">
+                <div class="flex items-start gap-4">
+                  <img src="https://ui-avatars.com/api/?name=Joao&background=6F23D9&color=fff" alt="João" class="w-12 h-12 rounded-full shadow" />
+                  <div class="flex-1">
+                    <div class="flex justify-between items-center">
+                      <span class="font-semibold text-gray-900 text-base">João</span>
+                    </div>
+                    <p class="text-gray-800 text-sm mt-1 leading-relaxed">
+                      Olá pessoal! Alguém já teve problemas com o carregamento de anúncios no fórum?
+                    </p>
+                    <div class="flex gap-6 text-gray-400 text-sm mt-3">
+                      <div class="flex items-center gap-1 hover:text-purple-600 cursor-pointer transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat" viewBox="0 0 16 16">
+                          <path d="M2.678 11.894a1 1 0 0 1 .287.801 11 11 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8 8 0 0 0 8 14c3.996 0 7-2.807 7-6s-3.004-6-7-6-7 2.808-7 6c0 1.468.617 2.83 1.678 3.894m-.493 3.905a22 22 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a10 10 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9 9 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105"/>
+                        </svg>
+                        Comentar
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            `;
+
 
             const form = document.createElement("form");
             form.id = "chat-form";
@@ -82,10 +98,13 @@ window.onload = async function () {
                 placeholder="Digite sua mensagem..."
                 class="flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
               />
-              <button type="submit" class="bg-[#6F23D9] text-white px-4 py-2 rounded-lg hover:bg-[#5515b3] transition cursor-pointer">
+              <button type="submit" class="bg-[#6F23D9] text-white px-4 py-2 rounded-lg cursor-pointer">
                 Enviar
               </button>
             `;
+
+            mensagens.appendChild(tituloMensagens);
+            mensagens.appendChild(listaMensagens);
             mensagens.appendChild(form);
             container.appendChild(mensagens);
 
@@ -109,102 +128,35 @@ window.onload = async function () {
               forumList.forEach((f) => {
                 const item = document.createElement("li");
                 const tituloForum = f.for_titulo || "Fórum sem título";
-  
+
                 item.setAttribute("data-search", tituloForum.toLowerCase());
                 item.dataset.id = `forum-${f.for_id}`;
                 item.dataset.name = tituloForum;
                 item.className =
                   "forum-item p-3 bg-gray-100 text-gray-800 rounded-lg hover:bg-purple-200 cursor-pointer transition";
-  
+
                 const h3 = document.createElement("h3");
                 h3.className = "font-semibold";
                 h3.textContent = tituloForum;
-  
+
                 const p = document.createElement("p");
                 p.className = "text-sm text-gray-600";
                 p.textContent = f.for_descricao || "Sem descrição disponível.";
-  
+
                 item.appendChild(h3);
                 item.appendChild(p);
                 lista.appendChild(item);
               });
             } else {
-                const p = document.createElement("p");
-                p.className = "text-sm text-gray-500 font-semibold text-center";
-                p.textContent = "Entre em um fórum para poder ver seus posts.";
-
-                lista.appendChild(p);
+              const p = document.createElement("p");
+              p.className = "text-sm text-gray-500 font-semibold text-center";
+              p.textContent = "Entre em um fórum para poder ver seus posts.";
+              lista.appendChild(p);
             }
 
             aside.appendChild(lista);
             container.appendChild(aside);
             main.appendChild(container);
-
-            let currentForum = null;
-            const forumChats = {};
-
-            const messagesEl = document.getElementById("chat-messages");
-            const input = document.getElementById("chat-input");
-            const titleEl = document.getElementById("chat-title");
-
-            function renderMessages(forumId) {
-              messagesEl.innerHTML = "";
-              (forumChats[forumId] || []).forEach(({ user, text }) => {
-                messagesEl.innerHTML += `
-                  <div class="flex items-start gap-3">
-                    <div class="w-10 h-10 bg-blue-200 text-blue-700 rounded-full flex items-center justify-center font-bold">${user.charAt(
-                      0
-                    )}</div>
-                    <div>
-                      <div class="font-semibold text-sm text-gray-700">${user}</div>
-                      <div class="bg-gray-100 p-3 rounded-lg text-sm text-gray-800 max-w-md">${text}</div>
-                    </div>
-                  </div>
-                `;
-              });
-              messagesEl.scrollTop = messagesEl.scrollHeight;
-            }
-
-            document.querySelectorAll(".forum-item").forEach((item) => {
-              item.addEventListener("click", () => {
-                currentForum = item.dataset.id;
-                titleEl.textContent = item.dataset.name;
-
-                document
-                  .querySelectorAll(".forum-item")
-                  .forEach((f) =>
-                    f.classList.remove(
-                      "bg-purple-100",
-                      "text-purple-800",
-                      "font-semibold"
-                    )
-                  );
-                item.classList.add(
-                  "bg-purple-100",
-                  "text-purple-800",
-                  "font-semibold"
-                );
-
-                renderMessages(currentForum);
-              });
-            });
-
-            form.addEventListener("submit", (e) => {
-              e.preventDefault();
-              const text = input.value.trim();
-              if (!text || !currentForum) return;
-
-              const newMsg = { user: "Você", text };
-              forumChats[currentForum] = forumChats[currentForum] || [];
-              forumChats[currentForum].push(newMsg);
-
-              renderMessages(currentForum);
-              input.value = "";
-            });
-
-            renderMessages(currentForum);
-          } else {
-            
           }
         }
       }
