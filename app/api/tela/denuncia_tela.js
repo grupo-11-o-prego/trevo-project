@@ -87,10 +87,18 @@ window.onload = async function () {
                             buttonExcluir.textContent = 'Excluir Denúncia';
                             buttonExcluir.onclick = function () { excluirDenuncia(denuncia.den_id) };
 
+
+                            
                             const buttonBanir = document.createElement('button');
                             buttonBanir.className = 'cursor-pointer px-4 py-2 border border-red-500 text-red-600 font-semibold rounded-md hover:bg-red-50 transition';
                             buttonBanir.textContent = 'Banir Usuário';
-                            buttonBanir.onclick = function () { banirUsuario(denuncia.den_user_id)};
+                            buttonBanir.onclick = function () {
+                                if (denuncia.den_anun_id) {                                    
+                                    banirUsuario(denuncia.dono_anuncio_user_id);
+                                } else if (denuncia.den_user_id) {                                    
+                                    banirUsuario(denuncia.den_user_id);
+                                }
+                            };
 
                             const buttonSuspender = document.createElement('button');
                             buttonSuspender.className = 'cursor-pointer px-4 py-2 border border-red-500 text-red-600 font-semibold rounded-md hover:bg-red-50 transition';
