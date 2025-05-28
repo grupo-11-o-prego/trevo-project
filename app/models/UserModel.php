@@ -222,5 +222,5 @@ class UserModel extends Model {
     //         $stmt = $this->conn->prepare("")
     //     }
     // }
-    
 }
+

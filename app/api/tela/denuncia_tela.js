@@ -8,12 +8,12 @@ window.onload = async function () {
                 } else {
                     const body = document.getElementById('body-denuncias');
                     console.log(result.dados);
-                    
+
                     if (result.dados.sucesso && result.dados.result) {
                         result.dados.result.forEach(denuncia => {
-                    
+
                             const card = document.createElement('section');
-                            card.className = 'bg-white p-6 rounded-xl shadow-md';
+                            card.className = 'bg-white p-6 rounded-xl shadow-md max-w-3xl mx-auto mt-10';
 
                             const titulo = document.createElement('h2');
                             titulo.className = 'text-lg font-semibold text-gray-600 mb-2';
@@ -22,94 +22,76 @@ window.onload = async function () {
                             const gridInfo = document.createElement('div');
                             gridInfo.className = 'grid grid-cols-2 gap-4 mb-2 text-sm';
 
-                            let tipo = '';
-                            if(denuncia.den_user_id){
-                                tipo = 'Usuário';                                
-                            } else if(denuncia.den_anun_id){
-                                tipo = `Anúncio`;
-                            } else{
-                                tipo = 'desconhecido';
-                            }
+                            const tipo = denuncia.den_user_id ? 'Usuário' : (denuncia.den_anun_id ? 'Anúncio' : 'Desconhecido');
+                            const data = denuncia.den_data;
 
                             const divTipo = document.createElement('div');
                             divTipo.innerHTML = `<span class="font-semibold text-gray-800">Tipo:</span> ${tipo}`;
 
-                            const divNome = document.createElement('div');
-                            let nomeLabel = 'Nome';
-                            let nomeValor = '';
-                            if(denuncia.den_user_id){
-                                nomeValor = denuncia.user_nome;
-                            }else if(denuncia.den_anun_id){
-                                nomeLabel = 'Titulo'
-                                nomeValor = denuncia.anun_titulo;
-                            }
-                            divNome.innerHTML = `<span class="font-semibold text-gray-800">${nomeLabel}:</span> ${nomeValor}`;
+                            const divData = document.createElement('div');
+                            divData.innerHTML = `<span class="font-semibold text-gray-800">Data:</span> ${data}`;
 
-                            let email = '';
-                            if(denuncia.den_user_id){
-                                email = denuncia.user_email;
-                            }else if (denuncia.den_anun_id)
-                                email = denuncia.anun_user_email;
-                            const divEmail = document.createElement('div');                            
-                            divEmail.innerHTML = `<span class="font-semibold text-gray-800">Email:</span> ${email}`;
+                            const nome = denuncia.den_user_id ? denuncia.user_nome : denuncia.anun_titulo;
+                            const nomeLabel = denuncia.den_user_id ? 'Denunciado(a):' : 'Título do Anúncio:';
+                            const divNome = document.createElement('div');
+                            divNome.innerHTML = `<span class="font-semibold text-gray-800">${nomeLabel}</span> <span class="text-indigo-600 font-semibold">${nome}</span>`;
 
                             const divMotivo = document.createElement('div');
                             divMotivo.innerHTML = `<span class="font-semibold text-gray-800">Motivo:</span> ${denuncia.den_motivo}`;
 
-                            
-                            const divDescricaoAnuncio = document.createElement('div');
-                            divDescricaoAnuncio.innerHTML = `<span class="font-semibold text-gray-800">Descrição do anúncio:</span> ${denuncia.anun_descricao}`;
-                            
+                            const email = denuncia.den_user_id ? denuncia.user_email : denuncia.anun_user_email;
+                            const divEmail = document.createElement('div');
+                            divEmail.className = 'col-span-2';
+                            divEmail.innerHTML = `<span class="font-semibold text-gray-800">Email:</span> ${email}`;
+
                             const divDescricaoDenuncia = document.createElement('div');
+                            divDescricaoDenuncia.className = 'col-span-2';
                             divDescricaoDenuncia.innerHTML = `<span class="font-semibold text-gray-800">Descrição da denúncia:</span> ${denuncia.den_descricao}`;
 
-                            const divData = document.createElement('div');
-                            divData.innerHTML = `<span class="font-semibold text-gray-800">Data:</span> ${denuncia.den_data}`;
+                            const divDescricaoAnuncio = document.createElement('div');
+                            divDescricaoAnuncio.className = 'col-span-2';
+                            divDescricaoAnuncio.innerHTML = `<span class="font-semibold text-gray-800">Descrição do anúncio:</span> ${denuncia.anun_descricao || '—'}`;
 
+                            // Monta o grid
                             gridInfo.appendChild(divTipo);
+                            gridInfo.appendChild(divData);
                             gridInfo.appendChild(divNome);
-                            gridInfo.appendChild(divEmail);
                             gridInfo.appendChild(divMotivo);
+                            gridInfo.appendChild(divEmail);
                             gridInfo.appendChild(divDescricaoDenuncia);
                             gridInfo.appendChild(divDescricaoAnuncio);
-                            gridInfo.appendChild(divData);
 
+                            // Botões
                             const botoes = document.createElement('div');
                             botoes.className = 'flex flex-wrap gap-4 mt-6';
 
-                            const buttonRevisar = document.createElement('button');
-                            buttonRevisar.className = 'cursor-pointer px-4 py-2 border border-gray-400 rounded-md text-gray-700 hover:bg-gray-100 transition';
-                            buttonRevisar.textContent = 'Revisar Denúncia';
-                            buttonRevisar.onclick = function () { revisarDenuncia(denuncia.den_id) };
-
-                            const buttonExcluir = document.createElement('button');
-                            buttonExcluir.className = 'cursor-pointer px-4 py-2 border border-red-500 text-red-600 font-semibold rounded-md hover:bg-red-50 transition';
-                            buttonExcluir.textContent = 'Excluir Denúncia';
-                            buttonExcluir.onclick = function () { excluirDenuncia(denuncia.den_id) };
-
-
-                            
-                            const buttonBanir = document.createElement('button');
-                            buttonBanir.className = 'cursor-pointer px-4 py-2 border border-red-500 text-red-600 font-semibold rounded-md hover:bg-red-50 transition';
-                            buttonBanir.textContent = 'Banir Usuário';
-                            buttonBanir.onclick = function () {
-                                if (denuncia.den_anun_id) {                                    
-                                    banirUsuario(denuncia.dono_anuncio_user_id);
-                                } else if (denuncia.den_user_id) {                                    
-                                    banirUsuario(denuncia.den_user_id);
-                                }
+                            const buttonCancelar = document.createElement('button');
+                            buttonCancelar.className = 'cursor-pointer px-4 py-2 border border-gray-400 rounded-md text-gray-700 hover:bg-gray-100 transition';
+                            buttonCancelar.textContent = 'Cancelar Denúncia';
+                            buttonCancelar.onclick = function () {
+                                excluirDenuncia(denuncia.den_id);
                             };
 
                             const buttonSuspender = document.createElement('button');
                             buttonSuspender.className = 'cursor-pointer px-4 py-2 border border-red-500 text-red-600 font-semibold rounded-md hover:bg-red-50 transition';
-                            buttonSuspender.textContent = 'Suspender Usuário';
-                            buttonSuspender.onclick = function() {suspenderUsuario(denuncia.den_user_id)};
+                            buttonSuspender.textContent = 'Suspender usuário';
+                            buttonSuspender.onclick = function () {
+                                suspenderUsuario(denuncia.den_user_id);
+                            };
 
-                            botoes.appendChild(buttonRevisar);
-                            botoes.appendChild(buttonExcluir);
-                            botoes.appendChild(buttonBanir);
+                            const buttonBanir = document.createElement('button');
+                            buttonBanir.className = 'cursor-pointer px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 transition';
+                            buttonBanir.textContent = 'Banir usuário';
+                            buttonBanir.onclick = function () {
+                                const id = denuncia.den_anun_id ? denuncia.dono_anuncio_user_id : denuncia.den_user_id;
+                                banirUsuario(id);
+                            };
+
+                            botoes.appendChild(buttonCancelar);
                             botoes.appendChild(buttonSuspender);
+                            botoes.appendChild(buttonBanir);
 
+                            // Monta o card completo
                             card.appendChild(titulo);
                             card.appendChild(gridInfo);
                             card.appendChild(botoes);
@@ -122,7 +104,9 @@ window.onload = async function () {
                 }
             });
     }
-}
+};
+
+
 
 async function revisarDenuncia(id) {
     await requisitar('GET', 'api/denuncia/revisar', {id: id})
