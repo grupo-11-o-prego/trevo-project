@@ -43,4 +43,33 @@ class PostModel extends Model
             return ["sucesso" => false, "message" => $e->getMessage()];
         }
     }
+
+    public function deletarPost($id)
+    {
+        try {
+            $stmt = $this->conn->prepare("DELETE FROM posts_tb WHERE pos_id = :id");
+            $stmt->bindParam(":id", $id);
+
+            $result = $stmt->execute();
+
+            return $result ? ["sucesso" => true, "mensagem" => "Post deletado!"] : ["sucesso" => false, "mensagem" => "Ocorreu um erro ao deletar post."];
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function getForumPosts($forId)
+    {
+        try {
+            $stmt = $this->conn->prepare("SELECT * FROM posts_tb WHERE pos_for_id = :forum ORDER BY pos_data");
+            $stmt->bindParam(":forum", $forId);
+            $stmt->execute();
+            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+
+            return $result ? ["sucesso" => true, "result" => $result] : ["sucesso" => true, "mensagem" => "Fórum sem posts."];
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
 }

@@ -486,6 +486,28 @@ switch (Controller::requestUrl($baseFolder)) {
         echo json_encode($controller->alterarTexto($_SESSION['user']));
         break;
 
+    case '/api/post/deletar':
+        require __DIR__ . '/../app/controllers/PostController.php';
+        $controller = new \App\Controllers\PostController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        $params = Controller::queryParams();
+        $id = isset($params['id']) ? $params['id'] : null;
+        echo json_encode($controller->deletarPost($_SESSION['user'], $id));
+        break;
+
+    case '/api/post/getforumposts':
+        require __DIR__ . '/../app/controllers/PostController.php';
+        $controller = new \App\Controllers\PostController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        $params = Controller::queryParams();
+        $id = isset($params['id']) ? $params['id'] : null;
+        echo json_encode($controller->getForumPosts($id));
+        break;
+
     default:
         http_response_code(404);
         require __DIR__ . '/../app/controllers/HomeController.php';

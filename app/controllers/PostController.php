@@ -40,6 +40,30 @@ class PostController
         }
     }
 
+    public function deletarPost($user, $posId)
+    {
+        if (isset($posId)) {
+            if ($this->validaPermissaoPost($user, $posId)) {
+                $model = new PostModel;
+                return $model->deletarPost($posId);
+            } else {
+                return ["sucesso" => false, "message" => "Sem permissão para alterar post!"];
+            }
+        } else {
+            return ["sucesso" => false, "message" => "Requisição GET incompleta."];
+        }
+    }
+
+    public function getForumPosts($forId)
+    {
+        if (isset($forId)) {
+            $model = new PostModel;
+            return $model->getForumPosts($forId);
+        } else {
+            return ["sucesso" => false, "message" => "Requisição GET incompleta."];
+        }
+    }
+
     public function validaPermissaoPost($user, $posId) {
         $model = new PostModel;
         $forum = $model->get(false, $this->tabela, 'pos_id', $posId);
