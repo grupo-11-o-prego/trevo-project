@@ -1,13 +1,16 @@
 window.onload = async function () {
   if (document.getElementById("posts-container")) {
-    await requisitar("GET", "/trevo-project/public/api/forum/getforum").then(
+    await requisitar("GET", "/trevo-project/public/api/forum/getuserforuns").then(
       (result) => {
         if (result.erro) {
           console.error("Erro:", result.erro);
           alert("Ocorreu um erro ao buscar os anúncios. Tente novamente.");
         } else {
-          if (result.dados.sucesso && result.dados.result) {
+          console.log(result.dados.sucesso);
+          console.log(result.dados.result);
+          if (result.dados.sucesso) {
             const forumList = result.dados.result;
+            console.log(forumList);
 
             const main = document.querySelector("main");
             main.innerHTML = "";
@@ -102,28 +105,36 @@ window.onload = async function () {
             lista.id = "forum-list";
             lista.className = "space-y-3";
 
-            forumList.forEach((f) => {
-              const item = document.createElement("li");
-              const tituloForum = f.for_titulo || "Fórum sem título";
+            if (forumList) {
+              forumList.forEach((f) => {
+                const item = document.createElement("li");
+                const tituloForum = f.for_titulo || "Fórum sem título";
+  
+                item.setAttribute("data-search", tituloForum.toLowerCase());
+                item.dataset.id = `forum-${f.for_id}`;
+                item.dataset.name = tituloForum;
+                item.className =
+                  "forum-item p-3 bg-gray-100 text-gray-800 rounded-lg hover:bg-purple-200 cursor-pointer transition";
+  
+                const h3 = document.createElement("h3");
+                h3.className = "font-semibold";
+                h3.textContent = tituloForum;
+  
+                const p = document.createElement("p");
+                p.className = "text-sm text-gray-600";
+                p.textContent = f.for_descricao || "Sem descrição disponível.";
+  
+                item.appendChild(h3);
+                item.appendChild(p);
+                lista.appendChild(item);
+              });
+            } else {
+                const p = document.createElement("p");
+                p.className = "text-sm text-gray-500 font-semibold text-center";
+                p.textContent = "Entre em um fórum para poder ver seus posts.";
 
-              item.setAttribute("data-search", tituloForum.toLowerCase());
-              item.dataset.id = `forum-${f.for_id}`;
-              item.dataset.name = tituloForum;
-              item.className =
-                "forum-item p-3 bg-gray-100 text-gray-800 rounded-lg hover:bg-purple-200 cursor-pointer transition";
-
-              const h3 = document.createElement("h3");
-              h3.className = "font-semibold";
-              h3.textContent = tituloForum;
-
-              const p = document.createElement("p");
-              p.className = "text-sm text-gray-600";
-              p.textContent = f.for_descricao || "Sem descrição disponível.";
-
-              item.appendChild(h3);
-              item.appendChild(p);
-              lista.appendChild(item);
-            });
+                lista.appendChild(p);
+            }
 
             aside.appendChild(lista);
             container.appendChild(aside);
@@ -192,6 +203,8 @@ window.onload = async function () {
             });
 
             renderMessages(currentForum);
+          } else {
+            
           }
         }
       }
