@@ -93,6 +93,16 @@ class ForumController
         }
     }
 
+    public function getUserForuns($id)
+    {
+        $model = new ForumModel;
+        if (isset($id)) {
+            return $model->getUserForuns($id);
+        } else {
+            return ["sucesso" => false, "message" => "Requisição GET incompleta."];
+        }
+    }
+
     public function getFullForum($id = null)
     {
         if (isset($id)) {
@@ -124,12 +134,27 @@ class ForumController
     public function entrarForum($user, $forId)
     {
         if (isset($forId)) {
-            if ($this->validaPresencaForum($user, $forId)) {
-                $model = new ForumModel;
-                return $model->entrarForum($user, $forId);
+            $model = new ForumModel;
+            $forum = $model->get(false, $this->tabela, 'for_id', $forId);
+            if ($forum['sucesso']) {
+                if ($this->validaPresencaForum($user, $forId)) {
+                    return $model->entrarForum($user, $forId);
+                } else {
+                    return ["sucesso" => false, "message" => "Usuário já presente no fórum!"];
+                }
             } else {
-                return ["sucesso" => false, "message" => "Usuário já presente no fórum!"];
+                return ["sucesso" => false, "message" => "Fórum inexistente!"];
             }
+        } else {
+            return ["sucesso" => false, "message" => "Requisição GET não realizada."];
+        }
+    }
+
+    public function sairForum($user, $forId)
+    {
+        if (isset($forId)) {
+            $model = new ForumModel;
+            return $model->sairForum($user, $forId);
         } else {
             return ["sucesso" => false, "message" => "Requisição GET não realizada."];
         }

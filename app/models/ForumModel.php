@@ -101,6 +101,42 @@ class ForumModel extends Model
         }
     }
 
+    public function sairForum($user, $forId) 
+    {
+        try{          
+            $stmt = $this->conn->prepare("DELETE FROM forum_usuario_tb WHERE foruser_for_id = :forum AND foruser_user_id = :usuario");
+            $stmt->bindParam(':forum', $forId);
+            $stmt->bindParam(':usuario', $user['id']);
+
+            $result = $stmt->execute();
+
+            return $result ? ["sucesso" => true, "mensagem" => "Saiu do fórum!"] : ["sucesso" => false, "mensagem" => "Ocorreu um erro ao sair do fórum."];
+
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    public function getUserForuns($id)
+    {
+        try{          
+            $stmt = $this->conn->prepare("
+                select forum_tb.* from forum_tb
+                join forum_usuario_tb on foruser_for_id = for_id
+                where foruser_user_id = :id;
+            ");
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+
+            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+            return $result ? ["sucesso" => true, "result" => $result] : ["sucesso" => true, "message" => "Não foram encontrados fóruns."] ;
+
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
+    //retorna true se a pessoa NÃO estiver presente no fórum
     public function getPresencaForum($user, $forId)
     {
         try{          

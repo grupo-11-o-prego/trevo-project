@@ -389,6 +389,15 @@ switch (Controller::requestUrl($baseFolder)) {
         echo json_encode($controller->getMembros($id));
         break;
 
+    case '/api/forum/getuserforuns':
+        require __DIR__ . '/../app/controllers/ForumController.php';
+        $controller = new \App\Controllers\ForumController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        echo json_encode($controller->getUserForuns($_SESSION['user']['id']));
+        break;
+
     case '/api/forum/getfullforum':
         require __DIR__ . '/../app/controllers/ForumController.php';
         $controller = new \App\Controllers\ForumController;
@@ -444,6 +453,17 @@ switch (Controller::requestUrl($baseFolder)) {
         $params = Controller::queryParams();
         $id = isset($params['id']) ? $params['id'] : null;
         echo json_encode($controller->entrarForum($_SESSION['user'], $id));
+        break;
+
+    case '/api/forum/sairforum':
+        require __DIR__ . '/../app/controllers/ForumController.php';
+        $controller = new \App\Controllers\ForumController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        $params = Controller::queryParams();
+        $id = isset($params['id']) ? $params['id'] : null;
+        echo json_encode($controller->sairForum($_SESSION['user'], $id));
         break;
 
     // -------- POST --------
