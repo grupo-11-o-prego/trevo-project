@@ -61,7 +61,11 @@ class PostModel extends Model
     public function getForumPosts($forId)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM posts_tb WHERE pos_for_id = :forum ORDER BY pos_data");
+            $stmt = $this->conn->prepare("
+            SELECT posts_tb.*, user_nome FROM posts_tb 
+            JOIN usuarios_tb ON pos_user_id = user_id
+            WHERE pos_for_id = :forum ORDER BY pos_data
+            ");
             $stmt->bindParam(":forum", $forId);
             $stmt->execute();
             $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
