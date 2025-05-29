@@ -508,6 +508,48 @@ switch (Controller::requestUrl($baseFolder)) {
         echo json_encode($controller->getForumPosts($id));
         break;
 
+    // -------- COMENTÁRIO --------
+
+    case '/api/comentario/criar':
+        require __DIR__ . '/../app/controllers/PostController.php';
+        $controller = new \App\Controllers\ComentarioController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        echo json_encode($controller->criarComentario($_SESSION['user']));
+        break;
+
+    case '/api/comentario/alterar':
+        require __DIR__ . '/../app/controllers/PostController.php';
+        $controller = new \App\Controllers\ComentarioController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        echo json_encode($controller->alterarComentario($_SESSION['user']));
+        break;
+
+    case '/api/comentario/deletar':
+        require __DIR__ . '/../app/controllers/PostController.php';
+        $controller = new \App\Controllers\ComentarioController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        $params = Controller::queryParams();
+        $id = isset($params['id']) ? $params['id'] : null;
+        echo json_encode($controller->deletarComentario($_SESSION['user'], $id));
+        break;
+
+    case '/api/comentario/getpostcomentarios':
+        require __DIR__ . '/../app/controllers/PostController.php';
+        $controller = new \App\Controllers\ComentarioController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        $params = Controller::queryParams();
+        $id = isset($params['id']) ? $params['id'] : null;
+        echo json_encode($controller->getPostComentarios($id));
+        break;
+
     default:
         http_response_code(404);
         require __DIR__ . '/../app/controllers/HomeController.php';
