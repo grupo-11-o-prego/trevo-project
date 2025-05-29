@@ -189,8 +189,22 @@
         botao.className =
           "mt-4 sm:mt-0 sm:ml-6 px-5 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 shadow-md transition text-sm font-medium cursor-pointer";
         botao.textContent = "Entrar no Fórum";
-        botao.onclick = () => {
-          window.location.href = `/trevo-project/public/api/forum/entrarforum?id=${forum.for_id}`;
+        botao.onclick = async () => {
+          try {
+            const result = await requisitar("GET", `/trevo-project/public/api/forum/entrarforum?id=${forum.for_id}`);
+
+            if (result.erro) {
+              alert("Erro ao entrar no fórum.");
+              console.error(result.erro);
+            } else if (result.dados.sucesso) {
+              window.location.href = "/trevo-project/public/forum";
+            } else {
+              alert(result.dados.message || "Não foi possível entrar no fórum.");
+            }
+          } catch (e) {
+            console.error("Erro ao fazer requisição:", e);
+            alert("Erro inesperado ao entrar no fórum.");
+          }
         };
 
         conteudo.appendChild(titulo);
