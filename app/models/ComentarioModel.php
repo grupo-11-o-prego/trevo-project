@@ -27,7 +27,7 @@ class ComentarioModel extends Model
     public function alterarComentario($id, $comentario)
     {
         try {
-            $stmt = $this->conn->prepare("UPDATE comentarios_tb SET com_comentario = :comentario, com_editado = 1 WHERE com_id = :id");
+            $stmt = $this->conn->prepare("UPDATE comentarios_tb SET com_comentario = :comentario, com_alterado = 1 WHERE com_id = :id");
             $stmt->bindParam(":comentario", $comentario);
             $stmt->bindParam(":id", $id);
 
@@ -61,7 +61,7 @@ class ComentarioModel extends Model
     public function getPostComentarios($posId)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM comentarios_tb WHERE com_pos_id = :post ORDER BY cp,_data");
+            $stmt = $this->conn->prepare("SELECT * FROM comentarios_tb WHERE com_post_id = :post ORDER BY com_data");
             $stmt->bindParam(":post", $posId);
             $stmt->execute();
             $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);

@@ -511,7 +511,7 @@ switch (Controller::requestUrl($baseFolder)) {
     // -------- COMENTÁRIO --------
 
     case '/api/comentario/criar':
-        require __DIR__ . '/../app/controllers/PostController.php';
+        require __DIR__ . '/../app/controllers/ComentarioController.php';
         $controller = new \App\Controllers\ComentarioController;
         $session = new SessionController;
         header("Content-Type: application/json");
@@ -520,7 +520,7 @@ switch (Controller::requestUrl($baseFolder)) {
         break;
 
     case '/api/comentario/alterar':
-        require __DIR__ . '/../app/controllers/PostController.php';
+        require __DIR__ . '/../app/controllers/ComentarioController.php';
         $controller = new \App\Controllers\ComentarioController;
         $session = new SessionController;
         header("Content-Type: application/json");
@@ -529,7 +529,7 @@ switch (Controller::requestUrl($baseFolder)) {
         break;
 
     case '/api/comentario/deletar':
-        require __DIR__ . '/../app/controllers/PostController.php';
+        require __DIR__ . '/../app/controllers/ComentarioController.php';
         $controller = new \App\Controllers\ComentarioController;
         $session = new SessionController;
         header("Content-Type: application/json");
@@ -540,7 +540,7 @@ switch (Controller::requestUrl($baseFolder)) {
         break;
 
     case '/api/comentario/getpostcomentarios':
-        require __DIR__ . '/../app/controllers/PostController.php';
+        require __DIR__ . '/../app/controllers/ComentarioController.php';
         $controller = new \App\Controllers\ComentarioController;
         $session = new SessionController;
         header("Content-Type: application/json");
