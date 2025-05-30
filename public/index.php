@@ -56,6 +56,7 @@ switch (Controller::requestUrl($baseFolder)) {
     // -------- USUÁRIO --------
     case '/api/logado' :
         $session = new SessionController;
+        header('Content-Type: application/json');
         echo json_encode(
             isset($_SESSION['user']) 
             ? 
