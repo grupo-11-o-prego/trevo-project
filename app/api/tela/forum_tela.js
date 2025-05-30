@@ -160,10 +160,20 @@ window.onload = async function () {
                     const mensagemFlex = document.createElement("div");
                     mensagemFlex.className = "flex items-start gap-4";
 
+                    const nomeUsuario = post.user_nome || "Usuário";
+                    const iniciais = nomeUsuario
+                      .split(" ")
+                      .map((n) => n.charAt(0).toUpperCase())
+                      .slice(0, 2)
+                      .join("");
+
                     const avatar = document.createElement("img");
-                    avatar.src =
-                      "https://ui-avatars.com/api/?name=Joao&background=6F23D9&color=fff";
-                    avatar.alt = "João";
+                    avatar.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                      iniciais
+                    )}&background=6F23D9&color=fff`;
+                    avatar.alt = nomeUsuario;
+                    avatar.className = "w-12 h-12 rounded-full shadow";
+
                     avatar.className = "w-12 h-12 rounded-full shadow";
 
                     const conteudo = document.createElement("div");
@@ -173,11 +183,24 @@ window.onload = async function () {
                     headerMensagem.className =
                       "flex justify-between items-center";
 
+                    // Nome do usuário
                     const nome = document.createElement("span");
                     nome.className = "font-semibold text-gray-900 text-base";
-                    nome.textContent = "João";
+                    nome.textContent = nomeUsuario;
 
+                    // Botão de opções (três pontinhos)
+                    const opcoes = document.createElement("button");
+                    opcoes.innerHTML = `
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                        <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                      </svg>
+                    `;
+                    opcoes.className = "hover:bg-gray-100 p-1 rounded-full cursor-pointer";
+
+                    // Adiciona nome e botão ao header
                     headerMensagem.appendChild(nome);
+                    headerMensagem.appendChild(opcoes);
+
 
                     const texto = document.createElement("p");
                     texto.className =
