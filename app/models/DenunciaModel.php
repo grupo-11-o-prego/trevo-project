@@ -117,11 +117,30 @@ class DenunciaModel extends Model {
                 au.user_nome as anun_user_nome,
                 a.anun_user_id as dono_anuncio_user_id,
                 a.anun_titulo,
-                a.anun_descricao                
+                a.anun_descricao,
+                f.for_titulo,
+                f.for_descricao,
+                f.for_criador_user_id,
+                uf.user_nome AS for_criador_user_nome,
+                uf.user_email AS for_criador_user_email,
+                p.pos_texto,
+                p.pos_user_id AS dono_post_user_id,
+                up.user_nome AS dono_post_nome,
+                up.user_email AS dono_post_email,
+                c.com_comentario,
+                c.com_user_id AS dono_comentario_user_id,                
+                uc.user_nome AS dono_comentario_nome,
+                uc.user_email AS dono_comentario_email
                 FROM denuncias_tb as d
-                LEFT JOIN usuarios_tb as u ON u.user_id = d.den_user_id
-                LEFT JOIN anuncios_tb as a ON a.anun_id = d.den_anun_id 
-                LEFT JOIN usuarios_tb as au ON au.user_id = a.anun_user_id               
+                LEFT JOIN usuarios_tb AS u ON u.user_id = d.den_user_id
+                LEFT JOIN anuncios_tb AS a ON a.anun_id = d.den_anun_id 
+                LEFT JOIN usuarios_tb AS au ON au.user_id = a.anun_user_id 
+                LEFT JOIN forum_tb AS f ON f.for_id = d.den_for_id
+                LEFT JOIN usuarios_tb AS uf ON uf.user_id = f.for_criador_user_id
+                LEFT JOIN posts_tb AS p ON p.pos_id = d.den_post_id
+                LEFT JOIN usuarios_tb AS up ON up.user_id = p.pos_user_id
+                LEFT JOIN comentarios_tb AS c ON c.com_id = d.den_com_id
+                LEFT JOIN usuarios_tb AS uc ON uc.user_id = c.com_user_id            
                 WHERE den_id = :id
                 ');
                 $stmt->bindParam(':id', $id);
@@ -145,13 +164,30 @@ class DenunciaModel extends Model {
                 au.user_nome as anun_user_nome,
                 a.anun_user_id as dono_anuncio_user_id,
                 a.anun_titulo,
-                a.anun_descricao
+                a.anun_descricao,
+                f.for_titulo,
+                f.for_descricao,
+                f.for_criador_user_id,
+                uf.user_nome AS for_criador_user_nome,
+                uf.user_email AS for_criador_user_email,
+                p.pos_texto,
+                p.pos_user_id AS dono_post_user_id,
+                up.user_nome AS dono_post_nome,
+                up.user_email AS dono_post_email,
+                c.com_comentario,
+                c.com_user_id AS dono_comentario_user_id,               
+                uc.user_nome AS dono_comentario_nome,
+                uc.user_email AS dono_comentario_email
                 FROM denuncias_tb as d
-                LEFT JOIN usuarios_tb as u ON u.user_id = d.den_user_id
-                LEFT JOIN anuncios_tb as a ON a.anun_id = d.den_anun_id
-                LEFT JOIN usuarios_tb as au ON au.user_id = a.anun_user_id 
-                
-                
+                LEFT JOIN usuarios_tb AS u ON u.user_id = d.den_user_id
+                LEFT JOIN anuncios_tb AS a ON a.anun_id = d.den_anun_id 
+                LEFT JOIN usuarios_tb AS au ON au.user_id = a.anun_user_id 
+                LEFT JOIN forum_tb AS f ON f.for_id = d.den_for_id
+                LEFT JOIN usuarios_tb AS uf ON uf.user_id = f.for_criador_user_id
+                LEFT JOIN posts_tb AS p ON p.pos_id = d.den_post_id
+                LEFT JOIN usuarios_tb AS up ON up.user_id = p.pos_user_id
+                LEFT JOIN comentarios_tb AS c ON c.com_id = d.den_com_id
+                LEFT JOIN usuarios_tb AS uc ON uc.user_id = c.com_user_id         
                 ');
             }
         

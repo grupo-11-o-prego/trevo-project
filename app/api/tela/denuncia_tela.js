@@ -22,7 +22,7 @@ window.onload = async function () {
                             const gridInfo = document.createElement('div');
                             gridInfo.className = 'grid grid-cols-2 gap-4 mb-2 text-sm';
 
-                            const tipo = denuncia.den_user_id ? 'Usuário' : (denuncia.den_anun_id ? 'Anúncio' : 'Desconhecido');
+                            const tipo = (denuncia.den_user_id) ? 'Usuário'  : (denuncia.den_anun_id) ? 'Anúncio' : (denuncia.den_for_id) ? 'Fórum' : (denuncia.den_post_id) ? 'Post' : (denuncia.den_com_id)? 'Comentário' : 'Desconhecido';
                             const data = denuncia.den_data;
 
                             const divTipo = document.createElement('div');
@@ -31,26 +31,39 @@ window.onload = async function () {
                             const divData = document.createElement('div');
                             divData.innerHTML = `<span class="font-semibold text-gray-800">Data:</span> ${data}`;
 
-                            const nome = denuncia.den_user_id ? denuncia.user_nome : denuncia.anun_titulo;
-                            const nomeLabel = denuncia.den_user_id ? 'Denunciado(a):' : 'Título do Anúncio:';
+                            const nome = denuncia.den_user_id ? denuncia.user_nome : denuncia.den_anun_id ? denuncia.anun_titulo : denuncia.den_for_id ? denuncia.for_titulo : denuncia.den_post_id ? denuncia.dono_post_nome : denuncia.den_com_id ? denuncia.dono_comentario_nome : 'Desconhecido';
+                            const nomeLabel = denuncia.den_user_id ? 'Denunciado(a):' : denuncia.den_anun_id ? 'Título do Anúncio:' : denuncia.den_for_id ? 'Título do Fórum:' : denuncia.den_post_id ? 'Dono do Post:' : denuncia.den_com_id ? 'Autor do Comentário:' : 'Tipo Desconhecido:';
                             const divNome = document.createElement('div');
                             divNome.innerHTML = `<span class="font-semibold text-gray-800">${nomeLabel}</span> <span class="text-indigo-600 font-semibold">${nome}</span>`;
 
                             const divMotivo = document.createElement('div');
                             divMotivo.innerHTML = `<span class="font-semibold text-gray-800">Motivo:</span> ${denuncia.den_motivo}`;
 
-                            const email = denuncia.den_user_id ? denuncia.user_email : denuncia.anun_user_email;
+                            const email = denuncia.den_user_id ? denuncia.user_email : denuncia.den_anun_id ? denuncia.anun_user_email : denuncia.den_for_id ? denuncia.for_criador_user_email : denuncia.den_post_id ? denuncia.dono_post_email : denuncia.den_com_id ? denuncia.dono_comentario_email: 'Email desconhecido';
                             const divEmail = document.createElement('div');
                             divEmail.className = 'col-span-2';
                             divEmail.innerHTML = `<span class="font-semibold text-gray-800">Email:</span> ${email}`;
 
                             const divDescricaoDenuncia = document.createElement('div');
                             divDescricaoDenuncia.className = 'col-span-2';
-                            divDescricaoDenuncia.innerHTML = `<span class="font-semibold text-gray-800">Descrição da denúncia:</span> ${denuncia.den_descricao}`;
+                            divDescricaoDenuncia.innerHTML = `<span class="font-semibold text-gray-800">Descrição da denúncia:</span> ${denuncia.den_descricao || '—'}`;
 
-                            const divDescricaoAnuncio = document.createElement('div');
-                            divDescricaoAnuncio.className = 'col-span-2';
-                            divDescricaoAnuncio.innerHTML = `<span class="font-semibold text-gray-800">Descrição do anúncio:</span> ${denuncia.anun_descricao || '—'}`;
+                            const divDescricao = document.createElement('div');
+                            divDescricao.className = 'col-span-2';
+
+                            if (denuncia.den_com_id) {
+                                divDescricao.innerHTML = `<span class="font-semibold text-gray-800">Comentário denunciado:</span> ${denuncia.com_comentario || '—'}`;
+                            } else if (denuncia.den_post_id) {
+                                divDescricao.innerHTML = `<span class="font-semibold text-gray-800">Texto do post denunciado:</span> ${denuncia.pos_texto || '—'}`;
+                            } else if (denuncia.den_for_id) {
+                                divDescricao.innerHTML = `<span class="font-semibold text-gray-800">Descrição do fórum:</span> ${denuncia.for_descricao || '—'}`;
+                            } else if (denuncia.den_anun_id) {
+                                divDescricao.innerHTML = `<span class="font-semibold text-gray-800">Descrição do anúncio:</span> ${denuncia.anun_descricao || '—'}`;
+                            } else {
+                                divDescricao.innerHTML = `<span class="font-semibold text-gray-800">Descrição:</span> —`;
+                            }
+
+
 
                             // Monta o grid
                             gridInfo.appendChild(divTipo);
@@ -58,8 +71,8 @@ window.onload = async function () {
                             gridInfo.appendChild(divNome);
                             gridInfo.appendChild(divMotivo);
                             gridInfo.appendChild(divEmail);
-                            gridInfo.appendChild(divDescricaoDenuncia);
-                            gridInfo.appendChild(divDescricaoAnuncio);
+                            gridInfo.appendChild(divDescricaoDenuncia);                            
+                            gridInfo.appendChild(divDescricao);
 
                             // Botões
                             const botoes = document.createElement('div');
@@ -83,8 +96,17 @@ window.onload = async function () {
                             buttonBanir.className = 'cursor-pointer px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 transition';
                             buttonBanir.textContent = 'Banir usuário';
                             buttonBanir.onclick = function () {
-                                const id = denuncia.den_anun_id ? denuncia.dono_anuncio_user_id : denuncia.den_user_id;
+                                const id = denuncia.den_anun_id
+                                    ? denuncia.dono_anuncio_user_id
+                                    : denuncia.den_user_id
+                                    ? denuncia.den_user_id
+                                    : denuncia.den_for_id
+                                    ? denuncia.for_criador_user_id
+                                    : denuncia.den_post_id
+                                    ? denuncia.dono_post_user_id
+                                    : denuncia.dono_comentario_user_id;
                                 banirUsuario(id);
+                                excluirDenuncia(denuncia.den_id);
                             };
 
                             botoes.appendChild(buttonCancelar);
