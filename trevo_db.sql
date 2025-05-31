@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 24/05/2025 às 18:11
+-- Tempo de geração: 31/05/2025 às 18:43
 -- Versão do servidor: 9.1.0
 -- Versão do PHP: 8.3.14
 
@@ -68,10 +68,18 @@ CREATE TABLE IF NOT EXISTS `comentarios_tb` (
   `com_post_id` int NOT NULL,
   `com_data` datetime NOT NULL,
   `com_comentario` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `com_alterado` tinyint(1) NOT NULL,
   PRIMARY KEY (`com_id`),
   KEY `coment_user_id` (`com_user_id`),
   KEY `fk_com_post` (`com_post_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `comentarios_tb`
+--
+
+INSERT INTO `comentarios_tb` (`com_id`, `com_user_id`, `com_post_id`, `com_data`, `com_comentario`, `com_alterado`) VALUES
+(1, 2, 1, '2025-05-28 22:22:38', 'Muito legal o post', 0);
 
 -- --------------------------------------------------------
 
@@ -92,19 +100,25 @@ CREATE TABLE IF NOT EXISTS `denuncias_tb` (
   `den_descricao` varchar(350) COLLATE utf8mb4_general_ci NOT NULL,
   `den_data` datetime NOT NULL,
   `den_revisao` tinyint(1) DEFAULT NULL,
+  `preco_onibus` float NOT NULL,
   PRIMARY KEY (`den_id`),
   KEY `den_adm_user_id` (`den_adm_user_id`),
   KEY `den_user_id` (`den_user_id`),
   KEY `den_anun_id` (`den_anun_id`),
-  KEY `fk_denuncias_forum_id` (`den_for_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  KEY `fk_denuncias_forum_id` (`den_for_id`),
+  KEY `fk_denuncias_post_id` (`den_post_id`),
+  KEY `fk_denuncias_coment_id` (`den_com_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `denuncias_tb`
 --
 
-INSERT INTO `denuncias_tb` (`den_id`, `den_adm_user_id`, `den_user_id`, `den_anun_id`, `den_for_id`, `den_post_id`, `den_com_id`, `den_motivo`, `den_descricao`, `den_data`, `den_revisao`) VALUES
-(1, NULL, NULL, 4, 0, 0, 0, 'Abuso Verbal', 'Muito ódio', '2025-05-24 14:48:44', NULL);
+INSERT INTO `denuncias_tb` (`den_id`, `den_adm_user_id`, `den_user_id`, `den_anun_id`, `den_for_id`, `den_post_id`, `den_com_id`, `den_motivo`, `den_descricao`, `den_data`, `den_revisao`, `preco_onibus`) VALUES
+(1, NULL, NULL, 4, 0, 0, 0, 'Abuso Verbal', 'Muito ódio', '2025-05-24 14:48:44', 1, 0),
+(2, NULL, 2, NULL, 0, 0, 0, 'Abuso Verbal', 'Nanana', '2025-05-27 21:12:26', NULL, 3),
+(3, NULL, 2, NULL, 0, 0, 0, 'Discurso de Odio', 'Odeia onibus', '2025-05-27 21:14:21', NULL, 30),
+(4, NULL, 2, NULL, 0, 0, 0, 'Conteudo Abusivo', 'abusou onibus', '2025-05-27 21:21:01', NULL, 20);
 
 -- --------------------------------------------------------
 
@@ -121,15 +135,16 @@ CREATE TABLE IF NOT EXISTS `forum_tb` (
   `for_criador_user_id` int NOT NULL,
   PRIMARY KEY (`for_id`),
   KEY `fk_forum_criador_user` (`for_criador_user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `forum_tb`
 --
 
 INSERT INTO `forum_tb` (`for_id`, `for_titulo`, `for_descricao`, `for_tema`, `for_criador_user_id`) VALUES
-(1, 'Fãs de Star Wars', 'Fórum para fãs de star wars (obviamente)', 'Star Wars (de novo)', 1),
-(2, 'Fãs de Duna', 'Fórum para fãs de Duna (obviamente)', 'Duna', 4);
+(1, 'Fãs de Star Wars', 'Fórum para fãs de Star Wars', 'Star Wars', 1),
+(2, 'Fãs de Duna', 'Fórum para fãs de Duna (obviamente)', 'Duna', 4),
+(3, 'Fórum Geral', 'Para todos os gêneros literários', 'Geral', 1);
 
 -- --------------------------------------------------------
 
@@ -146,7 +161,16 @@ CREATE TABLE IF NOT EXISTS `forum_usuario_tb` (
   PRIMARY KEY (`foruser_id`),
   KEY `fk_foruser_user` (`foruser_user_id`),
   KEY `fk_foruser_forum` (`foruser_for_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `forum_usuario_tb`
+--
+
+INSERT INTO `forum_usuario_tb` (`foruser_id`, `foruser_for_id`, `foruser_user_id`, `foruser_data`) VALUES
+(1, 1, 1, '2025-05-25 21:05:39'),
+(2, 1, 2, '2025-05-26 20:20:29'),
+(3, 2, 1, '2025-05-27 19:49:12');
 
 -- --------------------------------------------------------
 
@@ -196,10 +220,20 @@ CREATE TABLE IF NOT EXISTS `posts_tb` (
   `pos_data` datetime NOT NULL,
   `pos_texto` text NOT NULL,
   `pos_for_id` int NOT NULL,
+  `pos_editado` tinyint(1) NOT NULL,
   PRIMARY KEY (`pos_id`),
   KEY `fk_post_user` (`pos_user_id`),
   KEY `fk_post_forum` (`pos_for_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb3;
+
+--
+-- Despejando dados para a tabela `posts_tb`
+--
+
+INSERT INTO `posts_tb` (`pos_id`, `pos_user_id`, `pos_data`, `pos_texto`, `pos_for_id`, `pos_editado`) VALUES
+(1, 2, '2025-05-26 21:44:28', 'Primeiro post editado em um fórum no Trevo! Show de bola', 1, 1),
+(2, 1, '2025-05-28 20:15:35', 'Post top demais', 1, 0),
+(4, 2, '2025-05-28 21:01:37', 'Post top demais', 2, 0);
 
 -- --------------------------------------------------------
 
@@ -223,17 +257,18 @@ CREATE TABLE IF NOT EXISTS `usuarios_tb` (
   `user_img_id` int DEFAULT NULL,
   PRIMARY KEY (`user_id`),
   KEY `user_img_id` (`user_img_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `usuarios_tb`
 --
 
 INSERT INTO `usuarios_tb` (`user_id`, `user_ativo`, `user_nome`, `user_data_nasc`, `user_moderador`, `user_vendedor`, `user_data`, `user_email`, `user_senha`, `user_cpf`, `user_contato`, `user_img_id`) VALUES
-(1, 0, 'Usuário Leitor', '2005-12-21', 0, 0, '2025-05-08 19:35:03', 'leitor@gmail.com', '$2y$10$OuLfMxeWBnE1wI6bv2/goOU86FkDqXRjgEmMvAV74hkHSJGGAd.ka', 54488473822, '(11) 95430-3067', NULL),
-(2, 0, 'Usuário vendedor', '1914-05-28', 0, 1, '2025-05-08 19:35:16', 'vendedor@gmail.com', '$2y$10$M8aMT5YcqIUz5hVVIFDhNuzFmCR3KjvduRFFl/1dkBMr/U6cjheh6', NULL, '1238091823123', NULL),
-(3, 0, 'Usuário administrador', '1914-05-28', 1, 1, '2025-05-08 19:35:29', 'admin@gmail.com', '$2y$10$CXEQjhtut2Ga46ZZQsxVtOxrQbh4Qr66.GLoiJYQDdmXvnauO02bq', NULL, '1238091823123', NULL),
-(4, 0, 'Usuário vendedor 2', '1914-05-28', 0, 1, '2025-05-08 20:54:10', 'vendedor2@gmail.com', '$2y$10$JB6Ar5pXl11Pncdu60qCS.h3uFVXeJw6xzhVQ5Ta/gPBRRgtSIP6G', NULL, '1238091823123', NULL);
+(1, 1, 'Usuário Leitor', '2005-12-21', 0, 0, '2025-05-08 19:35:03', 'leitor@gmail.com', '$2y$10$v50kLLxhEhRbeE9eTqCQ4eEzsS15nLQa2EeP2XBusbF7d6TyDDhVK', 54488473822, '(11) 95430-3067', NULL),
+(2, 1, 'Usuário vendedor', '1914-05-28', 0, 1, '2025-05-08 19:35:16', 'vendedor@gmail.com', '$2y$10$M8aMT5YcqIUz5hVVIFDhNuzFmCR3KjvduRFFl/1dkBMr/U6cjheh6', NULL, '1238091823123', NULL),
+(3, 1, 'Usuário administrador', '1914-05-28', 1, 1, '2025-05-08 19:35:29', 'admin@gmail.com', '$2y$10$CXEQjhtut2Ga46ZZQsxVtOxrQbh4Qr66.GLoiJYQDdmXvnauO02bq', NULL, '1238091823123', NULL),
+(4, 1, 'Usuário vendedor 2', '1914-05-28', 0, 1, '2025-05-08 20:54:10', 'vendedor2@gmail.com', '$2y$10$JB6Ar5pXl11Pncdu60qCS.h3uFVXeJw6xzhVQ5Ta/gPBRRgtSIP6G', NULL, '1238091823123', NULL),
+(5, 0, 'Usuário mal', '1914-05-28', 0, 0, '2025-05-31 15:34:22', 'mal@gmail.com', '$2y$10$LxOGK4CcUWgHVUX3QQVoNurVVwGnwM.wx4otpJaEYLrQRVDLbrLFa', NULL, '11954303067', NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
