@@ -164,17 +164,7 @@ window.onload = async function () {
         //   alert("Você saiu do fórum.");
         //   divInfo.remove();
         // };
-        // acoes.appendChild(sair);
-
-        const denunciar = document.createElement("button");
-        denunciar.className =
-          "flex items-center gap-3 text-red-500 hover:text-red-400 w-full cursor-pointer p-2";
-        denunciar.innerHTML =
-          '<i class="fas fa-flag"></i><span>Denunciar fórum</span>';
-        denunciar.onclick = () => {
-          alert("Grupo denunciado.");
-        };
-        acoes.appendChild(denunciar);
+        // acoes.appendChild(sair);        
 
         modal.appendChild(acoes);
 
@@ -263,7 +253,7 @@ window.onload = async function () {
           }).then(async (res) => {
             if (res.isConfirmed) {
             
-              window.location.href = `/trevo-project/public/api/denuncia/denunciar`;
+              window.location.href = `/trevo-project/public/denunciar?tipo=for&id=${forum.for_id}`;
             }
           });
       });

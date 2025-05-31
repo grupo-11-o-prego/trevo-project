@@ -20,28 +20,28 @@ class DenunciaModel extends Model {
                 VALUES
                 (now(), :id, :motivo, :descricao)
                 ");
-            } else if ($tipo = 'anun') {
+            } else if ($tipo == 'anun') {
                 $stmt = $this->conn->prepare("
                 INSERT INTO denuncias_tb
                 (den_data, den_anun_id, den_motivo, den_descricao)
                 VALUES
                 (now(), :id, :motivo, :descricao)
                 ");
-            } else if ($tipo = 'for') {
+            } else if ($tipo == 'for') {
                 $stmt = $this->conn->prepare("
                 INSERT INTO denuncias_tb
                 (den_data, den_for_id, den_motivo, den_descricao)
                 VALUES
                 (now(), :id, :motivo, :descricao)
                 ");
-            } else if ($tipo = 'post') {
+            } else if ($tipo == 'post') {
                 $stmt = $this->conn->prepare("
                 INSERT INTO denuncias_tb
                 (den_data, den_post_id, den_motivo, den_descricao)
                 VALUES
                 (now(), :id, :motivo, :descricao)
                 ");
-            } else if ($tipo = 'com') {
+            } else if ($tipo == 'com') {
                 $stmt = $this->conn->prepare("
                 INSERT INTO denuncias_tb
                 (den_data, den_com_id, den_motivo, den_descricao)
