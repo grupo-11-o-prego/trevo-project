@@ -85,12 +85,12 @@ window.onload = async function () {
                                 excluirDenuncia(denuncia.den_id);
                             };
 
-                            const buttonSuspender = document.createElement('button');
-                            buttonSuspender.className = 'cursor-pointer px-4 py-2 border border-red-500 text-red-600 font-semibold rounded-md hover:bg-red-50 transition';
-                            buttonSuspender.textContent = 'Suspender usuário';
-                            buttonSuspender.onclick = function () {
-                                suspenderUsuario(denuncia.den_user_id);
-                            };
+                            // const buttonSuspender = document.createElement('button');
+                            // buttonSuspender.className = 'cursor-pointer px-4 py-2 border border-red-500 text-red-600 font-semibold rounded-md hover:bg-red-50 transition';
+                            // buttonSuspender.textContent = 'Suspender usuário';
+                            // buttonSuspender.onclick = function () {
+                            //     suspenderUsuario(denuncia.den_user_id);
+                            // };
 
                             const buttonBanir = document.createElement('button');
                             buttonBanir.className = 'cursor-pointer px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700 transition';
@@ -105,12 +105,12 @@ window.onload = async function () {
                                     : denuncia.den_post_id
                                     ? denuncia.dono_post_user_id
                                     : denuncia.dono_comentario_user_id;
-                                banirUsuario(id);
-                                excluirDenuncia(denuncia.den_id);
+                                    excluirDenuncia(denuncia.den_id);
+                                    banirUsuario(id);
                             };
 
                             botoes.appendChild(buttonCancelar);
-                            botoes.appendChild(buttonSuspender);
+                            // botoes.appendChild(buttonSuspender);
                             botoes.appendChild(buttonBanir);
 
                             // Monta o card completo
@@ -187,7 +187,7 @@ async function excluirDenuncia(id) {
 }
 
 async function banirUsuario(id) {
-    await requisitar('GET', 'api/deleteuser', {id: id})
+    await requisitar('GET', 'api/denuncia/suspenderusuario', {id: id})
         .then(result => {
             if (result.erro) {
                 console.log(result);

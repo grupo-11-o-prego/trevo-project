@@ -200,5 +200,21 @@ class DenunciaModel extends Model {
             return ["sucesso" => false, "message" => 'Erro ao denunciar usuário: ' . $e->getMessage()];
         }
     }
+
+    public function suspenderUsuario($id)
+    {
+        try{
+            $stmt = $this->conn->prepare('UPDATE usuarios_tb SET user_ativo = 0 WHERE user_id = :id');
+            $stmt->bindParam(':id', $id);
+
+            $stmt->execute();
+
+            $row = $stmt->rowCount();
+            return $row > 0 ? ["sucesso" => true, "message" => "Usuário suspenso!"] : ["sucesso" => true, "message" => "Usuário não encontrado."];
+
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
     
 }

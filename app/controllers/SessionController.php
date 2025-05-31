@@ -25,7 +25,8 @@ class SessionController
             'email' => $userData['user_email'],
             'nome' => $userData['user_nome'],
             'admin' => $userData['user_moderador'],
-            'vendedor' => $userData['user_vendedor']
+            'vendedor' => $userData['user_vendedor'],
+            'ativo' => $userData['user_ativo']
         ];
 
         return isset($_SESSION['user']['id']) ? true : false; 
@@ -40,6 +41,17 @@ class SessionController
             return $_SESSION['user']['vendedor'] == 1;
         }
         return isset($_SESSION['user']['id']);
+    }
+
+    public function isbBanned()
+    {
+        if ($this->isAuthenticated() && isset($_SESSION['user']['ativo'])) {
+            if ($_SESSION['user']['ativo'] == 0) {
+                return true;
+            }
+        } else {
+            return false;
+        }
     }
 
     public function protect($admin = false, $vendedor = false)

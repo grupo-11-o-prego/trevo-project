@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Cadastro</title>
+        <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+        rel="stylesheet"
+        />
+        <link href="../views/src/output.css" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+        <style>
+            body {
+                margin: 0;
+                height: 100vh;
+                background: linear-gradient(-45deg, #fff,#fff,#ff8a8a);
+                background-size: 400% 400%;
+                animation: bg 10s ease infinite;
+            }
+
+            @keyframes bg {
+                0% {
+                    background-position: 0% 50%;
+                }
+                50% {
+                    background-position: 100% 100%;
+                }
+                100% {
+                    background-position: 0% 50%;
+                }
+            }
+        </style>
+    </head>
+    <body class="bg-white min-h-screen flex flex-col items-center justify-center text-center px-4">
+
+        <h1 class="text-4xl md:text-5xl font-bold text-[#6F23D9] mb-6">Acesso Restrito</h1>
+
+        <p class="text-lg md:text-l text-gray-700 max-w-xl">
+        O acesso a esta conta foi temporariamente suspenso devido à verificação de comportamentos que não estão alinhados com as diretrizes da comunidade. A decisão foi tomada após análise criteriosa de registros e sinalizações recebidas.
+        </p>
+
+    </body>
+</html>

@@ -15,4 +15,9 @@ class HomeController {
         
     }
 
+    public function banido()
+    {
+        include_once('../views/banido.html');
+    }
+
 }

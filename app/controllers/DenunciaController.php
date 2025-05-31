@@ -54,4 +54,14 @@ class DenunciaController {
         $model = new DenunciaModel;
         return isset($id) ? $model->listarDenuncia($id) : $model->listarDenuncia();
     }
+
+    public function suspenderUsuario($id)
+    {
+        if (isset($id)) {
+            $model = new DenunciaModel;
+            return $model->suspenderUsuario($id);
+        } else {
+            return ["sucesso" => false, "message" => "Requisição GET incompleta"];
+        }
+    }
 }

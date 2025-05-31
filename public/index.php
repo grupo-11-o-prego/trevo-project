@@ -21,6 +21,14 @@ if(!($baseFolder)) {
     var_dump("variaveis env nao carregadas.");
 }
 
+$session = new SessionController;
+if ($session->isbBanned()) {
+    require __DIR__ . '/../app/controllers/HomeController.php';
+    $controller = new \App\Controllers\HomeController;
+    $controller->banido();
+    exit;
+}
+
 switch (Controller::requestUrl($baseFolder)) {
     case '/' :
         require __DIR__ . '/../app/controllers/HomeController.php';
@@ -353,6 +361,17 @@ switch (Controller::requestUrl($baseFolder)) {
         $params = Controller::queryParams();
         $id = isset($params['id']) ? $params['id'] : null;
         echo json_encode($denuncia->deletar($id));
+        break;
+
+    case '/api/denuncia/suspenderusuario':
+        require __DIR__ . '/../app/controllers/DenunciaController.php';
+        $denuncia = new \App\Controllers\DenunciaController;
+        $session = new SessionController;
+        header('Content-Type: application/json');
+        $session->protectAPI(true);
+        $params = Controller::queryParams();
+        $id = isset($params['id']) ? $params['id'] : null;
+        echo json_encode($denuncia->suspenderUsuario($id));
         break;
         
     // -------- FÓRUM --------
