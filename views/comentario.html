@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="../views/src/output.css" rel="stylesheet" />
+    <link rel="icon" href="#" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="../views/assets/js/home.js"></script>
+    <script
+      src="https://kit.fontawesome.com/c227e3363b.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body
+    class="h-screen overflow-hidden font-poppins bg-gradient-to-br from-gray-100 to-white text-gray-800"
+  >
+    <header
+      class="fixed top-0 left-0 right-0 h-16 bg-white shadow-md flex items-center justify-between px-6 z-10"
+    >
+      <a
+        href="/trevo-project/public"
+        class="flex items-center gap-2 text-xl font-bold text-[#6F23D9] hover:opacity-90 transition"
+      >
+        <img
+          src="../views/assets/img/logo.png"
+          alt="LOGO"
+          class="w-10 h-10 object-contain"
+        />
+        Trevo
+      </a>
+      <div id="auth-buttons" class="flex gap-3">
+        <a
+          href="/trevo-project/public/cadastro"
+          class="px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 text-[#6F23D9] hover:scale-105 transition duration-300 font-medium shadow-sm"
+        >
+          Cadastrar
+        </a>
+        <a
+          href="/trevo-project/public/login"
+          class="px-4 py-2 bg-[#6F23D9] rounded-lg hover:bg-[#4f179c] text-white hover:scale-105 transition duration-300 font-medium shadow-sm"
+        >
+          Login
+        </a>
+      </div>
+    </header>
+
+    <aside
+      class="fixed top-16 left-0 w-72 h-[calc(100vh-4rem)] bg-white p-4 shadow-lg border-r border-gray-200 overflow-y-auto flex flex-col gap-6"
+    >
+      <button
+        onclick="functionDescer()"
+        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer"
+      >
+        <!-- <object id="bookIcon" data="../views/assets/svg/bookpreto.svg" type="image/svg+xml"></object>
+          -->
+        <i class="fa-solid fa-book"></i>
+        <span>Livros</span>
+      </button>
+      <div
+        id="escondido"
+        class="border-l-4 border-purple-400 bg-gray-50 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 w-full"
+      >
+        <ul
+          class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400 w-full"
+        >
+          <li
+            class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"
+          >
+            <a href="#">Todos os Livros</a>
+          </li>
+          <li
+            class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"
+          >
+            <a href="#">Empréstimos</a>
+          </li>
+          <li
+            class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"
+          >
+            <a href="#">Trocas</a>
+          </li>
+        </ul>
+      </div>
+
+      <button
+        onclick="functionDescerForum()"
+        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer"
+      >
+        <i class="fa-solid fa-comment"></i>
+        <span>Fórum</span>
+      </button>
+      <div
+        id="escondidoForum"
+        class="border-l-4 border-purple-400 bg-gray-50 rounded-md w-full overflow-hidden transition-all duration-300 max-h-0 px-4 py-0"
+      >
+        <ul
+          class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400 w-full"
+        >
+          <li
+            class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"
+          >
+            <a href="/trevo-project/public/forum-entrar">Todos os Fóruns</a>
+          </li>
+          <li
+            class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"
+          >
+            <a href="/trevo-project/public/forum">Meus Fóruns</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- <button class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer">
+        <span>Biblioteca</span>
+      </button> -->
+
+      <button
+        id="botaoConfiguracoes"
+        onclick="functionDescerConfiguracoes()"
+        class="flex items-center gap-3 px-6 py-4 rounded-xl bg-gray-50 hover:bg-purple-100 text-gray-800 shadow transition duration-200 cursor-pointer"
+      >
+        <i class="fa-solid fa-gear"></i>
+        <span>Configurações</span>
+      </button>
+      <div
+        id="escondidoConfiguracoes"
+        class="border-l-4 border-purple-400 bg-gray-50 rounded-md flex items-center flex-col gap-2 overflow-hidden transition-all duration-300 max-h-0 px-2 py-0"
+      >
+        <ul
+          class="max-w-md space-y-1 text-gray-800 list-disc list-inside dark:text-gray-400 w-full"
+        >
+          <li
+            class="py-2 px-4 w-full rounded-md hover:bg-purple-100 transition"
+          >
+            <a href="/trevo-project/public/perfil">Perfil</a>
+          </li>
+          <li
+            class="py-2 px-4 w-full rounded-md text-red-400 hover:bg-red-100 transition"
+          >
+            <a href="/trevo-project/public/logout">Sair</a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+
+    <main class="bg-gray-50 min-h-screen py-10">
+      <!-- <div
+        class="max-w-3xl mx-auto bg-white rounded-2xl shadow-lg p-8 space-y-8 mt-5"
+      >
+        <button
+          class="text-purple-600 hover:text-purple-800 transition font-semibold flex items-center gap-1"
+          onclick="history.back()"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+          Voltar
+        </button>
+
+        <div
+          class="bg-purple-50 border border-purple-200 p-5 rounded-xl shadow-sm"
+        >
+          <div class="text-sm text-purple-700 font-semibold mb-1">
+            Nome do usuário que postou
+          </div>
+          <div class="text-gray-800 text-base">
+            Texto do post original exibido aqui. Este é o conteúdo principal do
+            post.
+          </div>
+        </div>
+
+        <section>
+          <h3 class="text-lg font-bold text-gray-800 mb-4">Comentários</h3>
+
+          <div class="space-y-4">
+            <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+              <div class="font-medium text-sm text-gray-700 mb-1">
+                Nome do comentarista
+              </div>
+              <div class="text-gray-800 text-sm">Texto do comentário.</div>
+            </div>
+
+            <div class="bg-gray-100 p-4 rounded-lg shadow-sm">
+              <div class="font-medium text-sm text-gray-700 mb-1">
+                Outro usuário
+              </div>
+              <div class="text-gray-800 text-sm">
+                Outro comentário legal aqui.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <form class="pt-6 border-t border-gray-200 flex flex-col gap-3">
+          <input
+            type="text"
+            name="texto"
+            placeholder="Escreva um comentário..."
+            required
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-300"
+          />
+          <button
+            type="submit"
+            class="bg-purple-600 hover:bg-purple-700 text-white px-5 py-2 rounded-lg font-medium shadow transition w-fit"
+          >
+            Comentar
+          </button>
+        </form>
+      </div> -->
+    </main>
+
+    <script src="../app/api/api.js"></script>
+    <script src="../app/api/auth/comentario/alterarcomentario.js"></script>
+    <script src="../app/api/tela/comentario_tela.js"></script>
+  </body>
+</html>
