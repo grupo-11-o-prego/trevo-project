@@ -14,6 +14,8 @@ class ForumController
 
     public static function forum(){include_once('../views/forum.html');}
     public static function forumEntrar(){include_once('../views/forum_entrar.html');}
+    public static function forumComentario(){include_once('../views/comentario.html');}
+    public static function forumDetalhes(){include_once('../views/forum_detalhes.html');}
     
     public function criarForum($user) {
         if (isset($_POST)) {
