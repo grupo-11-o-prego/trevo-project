@@ -61,7 +61,12 @@ class ComentarioModel extends Model
     public function getPostComentarios($posId)
     {
         try {
-            $stmt = $this->conn->prepare("SELECT * FROM comentarios_tb WHERE com_post_id = :post ORDER BY com_data");
+            $stmt = $this->conn->prepare("
+                SELECT comentarios_tb.*, user_nome FROM comentarios_tb 
+                JOIN usuarios_tb ON com_user_id = user_id 
+                WHERE com_post_id = :post 
+                ORDER BY com_data
+            ");
             $stmt->bindParam(":post", $posId);
             $stmt->execute();
             $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
