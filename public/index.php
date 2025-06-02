@@ -454,7 +454,7 @@ switch (Controller::requestUrl($baseFolder)) {
         require __DIR__ . '/../app/controllers/ForumController.php';
         $controller = new \App\Controllers\ForumController;
         $session = new SessionController;
-        header("Content-Type: application/json");
+        // header("Content-Type: application/json");
         $session->protectAPI();
         echo json_encode($controller->alterarTitulo($_SESSION['user']));
         break;

@@ -79,9 +79,9 @@ class ForumController
     {
         $model = new ForumModel;
         if (isset($id)) {
-            return $model->get(false, $this->tabela, 'for_id', $id);
+            return $model->getForum($id);
         } else {
-            return $model->get(true, $this->tabela);
+            return $model->getForum();
         }
     }
 

@@ -136,6 +136,32 @@ class ForumModel extends Model
         }
     }
 
+    public function getForum($forId = null)
+    {
+        try {
+            if (isset($forId)) {
+                $stmt = $this->conn->prepare("
+                SELECT forum_tb.*, user_nome FROM forum_tb 
+                JOIN usuarios_tb ON for_criador_user_id = user_id
+                WHERE for_id = :forum
+                ");
+                $stmt->bindParam(":forum", $forId);
+            } else {
+                $stmt = $this->conn->prepare("
+                SELECT forum_tb.*, user_nome FROM forum_tb 
+                JOIN usuarios_tb ON for_criador_user_id = user_id
+                ");
+            }
+            $stmt->execute();
+            $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+
+
+            return $result ? ["sucesso" => true, "result" => $result] : ["sucesso" => true, "mensagem" => "Fórum sem posts."];
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
     //retorna true se a pessoa NÃO estiver presente no fórum
     public function getPresencaForum($user, $forId)
     {
