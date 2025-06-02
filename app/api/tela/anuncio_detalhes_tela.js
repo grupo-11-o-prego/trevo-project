@@ -97,7 +97,7 @@ window.onload = async function () {
     const colunaEsquerda = document.createElement('div');
 
     const descTitulo = document.createElement('h2');
-    descTitulo.className = 'text-xl font-semibold text-gray-800 mb-2';
+    descTitulo.className = 'text-xl ffont-semibold text-gray-800 mb-2';
     descTitulo.textContent = 'Descrição';
 
     const descTexto = document.createElement('p');
@@ -284,8 +284,8 @@ window.onload = async function () {
             cancelButtonText: 'Cancelar',
           }).then(async (res) => {
             if (res.isConfirmed) {
-              idanun = post.anun_id
-              window.location.href = `/trevo-project/public/denunciar?tipo=anun&&id=${idanun}`;
+              
+              window.location.href = `/trevo-project/public/denunciar?tipo=com&&id=${idanun}`;
             }
           });
         }
