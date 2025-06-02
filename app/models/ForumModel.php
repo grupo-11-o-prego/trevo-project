@@ -162,6 +162,20 @@ class ForumModel extends Model
         }
     }
 
+    public function deletarForum($id)
+    {
+        try {
+            $stmt = $this->conn->prepare("DELETE FROM forum_tb WHERE for_id = :id");
+            $stmt->bindParam(":id", $id);
+
+            $result = $stmt->execute();
+
+            return $result ? ["sucesso" => true, "mensagem" => "Fórum deletado!"] : ["sucesso" => false, "mensagem" => "Ocorreu um erro ao deletar fórum."];
+        } catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
     //retorna true se a pessoa NÃO estiver presente no fórum
     public function getPresencaForum($user, $forId)
     {
