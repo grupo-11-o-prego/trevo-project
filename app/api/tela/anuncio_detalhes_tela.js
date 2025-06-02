@@ -202,7 +202,7 @@ window.onload = async function () {
     `;
     btnEditar.onclick = () => {
       idPost = post.anun_id;
-      window.location.href = `/trevo-project/public/denunciar?id=${idPost}`;
+      window.location.href = `/trevo-project/public/atualizar-anuncio?id=${idPost}`;
     }
 
     if (post.anun_user_id == dadosPessoa.user_id || dadosPessoa.user_moderador == 1){
