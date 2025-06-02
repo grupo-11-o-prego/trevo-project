@@ -192,10 +192,34 @@ window.onload = async function () {
           cancelButtonColor: "#d33",
           confirmButtonText: "Sim, deletar!",
           cancelButtonText: 'Cancelar',
-        }).then((res) => {
+        }).then( async (res) => {
           if (res.isConfirmed) {
-            console.log('Deletar fórum acionado');
-            Swal.fire('Deletado!', 'Seu fórum foi deletado.', 'success');
+            try {
+              const resposta = await requisitar('GET', '/trevo-project/public/api/forum/deletarforum', { id: forum.for_id });
+              console.log(resposta);
+              if (resposta.sucesso) {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Erro',
+                  text: resposta.mensagem || 'Não foi possível deletar o fórum.',
+                });
+              } else {
+                Swal.fire({
+                  icon: 'success',
+                  title: 'Fórum deletada!',
+                  confirmButtonColor: '#6F23D9'
+                }).then(() => {
+                  window.location.href = '/trevo-project/public/forum-entrar';
+                });
+              }
+            } catch (erro) {
+              console.error('Erro ao deletar fórum:', erro);
+              Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Erro ao deletar o fórum.',
+              });
+            }
           }
         });
       };

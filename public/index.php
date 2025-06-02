@@ -283,6 +283,15 @@ switch (Controller::requestUrl($baseFolder)) {
         $session->protectAPI(false, true);
         echo json_encode($controller->alterarStatus($_SESSION['user']));
         break;
+
+    case '/api/anuncio/alterartipo':
+        require __DIR__ . '/../app/controllers/AnuncioController.php';
+        $controller = new \App\Controllers\AnuncioController;
+        $session = new SessionController;
+        header('Content-Type: application/json');
+        $session->protectAPI(false, true);
+        echo json_encode($controller->alterarTipo($_SESSION['user']));
+        break;
     
     case '/api/anuncio/alterarestado':
         require __DIR__ . '/../app/controllers/AnuncioController.php';
@@ -448,6 +457,17 @@ switch (Controller::requestUrl($baseFolder)) {
         header("Content-Type: application/json");
         $session->protectAPI();
         echo json_encode($controller->criarForum($_SESSION['user']));
+        break;
+
+    case '/api/forum/deletarforum':
+        require __DIR__ . '/../app/controllers/ForumController.php';
+        $controller = new \App\Controllers\ForumController;
+        $session = new SessionController;
+        header("Content-Type: application/json");
+        $session->protectAPI();
+        $params = Controller::queryParams();
+        $id = isset($params['id']) ? $params['id'] : null;
+        echo json_encode($controller->deletarForum($_SESSION['user'], $id));
         break;
 
     case '/api/forum/alterartitulo':

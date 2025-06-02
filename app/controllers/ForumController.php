@@ -162,6 +162,20 @@ class ForumController
         }
     }
 
+    public function deletarForum($user, $forId)
+    {
+        if (isset($forId)) {
+            if ($this->validaPresencaForum($user, $forId)) {
+                $model = new ForumModel;
+                return $model->deletarForum($forId);
+            } else {
+                return ["sucesso" => false, "message" => "Sem permissão para alterar fórum!"];
+            }
+        } else {
+            return ["sucesso" => false, "message" => "Requisição GET incompleta."];
+        }
+    }
+
     public function validaPresencaForum($user, $forId)
     {
         $model = new ForumModel;

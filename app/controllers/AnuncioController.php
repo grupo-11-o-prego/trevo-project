@@ -126,6 +126,22 @@ class AnuncioController {
         }
     }
 
+    public function alterarTipo($user)
+    {
+        if (isset($_POST)) {
+            $id = $_POST['id'];
+            $tipo = $_POST['tipo'];
+            if ($this->validaPermissaoAnuncio($user, $id)) {
+                $model = new AnuncioModel;
+                return $model->alterarTipo($id, $tipo);
+            } else {
+                return ["sucesso" => false, "message" => "Sem persmissão para editar anúncio!"];
+            }
+        } else {
+            return ['sucesso' => false, 'error' => 'Requisicao POST nao realizada.'];
+        }
+    }
+
     public function alterarEstado($user)
     {
         if (isset($_POST)) {

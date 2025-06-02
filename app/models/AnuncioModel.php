@@ -117,6 +117,26 @@ class AnuncioModel extends Model {
         }
     }
 
+    public function alterarTipo($id, $tipo)
+    {
+        try{
+            $stmt = $this->conn->prepare('UPDATE anuncios_tb SET anun_tipo = :tipo WHERE anun_id = :id');
+            $stmt->bindParam(':id', $id);
+            $stmt->bindParam(':tipo', $tipo);
+
+            $result = $stmt->execute();
+
+            if ($result) {
+                $anuncio = $this->get(false, $this->tabela, 'anun_id', $id);
+                return ["sucesso" => true, "result" => ["anun_id" => $anuncio['result']['anun_id'], "anun_tipo" => $anuncio['result']['anun_tipo']]];
+            } else {
+                return ["sucesso" => false];
+            }
+        }  catch (\Exception $e) {
+            return ["sucesso" => false, "message" => $e->getMessage()];
+        }
+    }
+
     public function alterarEstado($id, $estado, $user)
     {
         try{
