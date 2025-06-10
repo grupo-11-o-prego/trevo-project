@@ -99,7 +99,11 @@ window.onload = async function () {
           inputHTML = `
             <form id="alterarstatus-form">
             <input type="number" name="id" id="id" class="hidden" value="${anunId}">
-              <input type="text" name="status" id="status" class="swal2-input">
+                <select name="status" id="status"  class="swal2-input" required>
+                    <option value="">Selecione...</option>
+                    <option value="Disponível" class="cursor-pointer">Disponível</option>
+                    <option value="Indisponível" class="cursor-pointer">Indisponível</option>                    
+                </select>
             </form>
           `;
         } else if (campo === 'anun_estado') {
