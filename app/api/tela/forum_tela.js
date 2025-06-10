@@ -157,8 +157,7 @@ window.onload = async function () {
                   chatTitle.append(titulo);
                   chatTitle.className =
                     "flex justify-center items-center text-2xl text-center font-semibold text-[#6F23D9]";
-                }             
-                
+                }
 
                 const menuforum = document.createElement("div");
                 menuforum.className =
@@ -199,46 +198,51 @@ window.onload = async function () {
                 menuforum
                   .querySelector("#sair")
                   .addEventListener("click", () => {
-                    swal.fire({
-                      title: "Você deseja sair do fórum?",
-                      icon: "warning",
-                      showCancelButton: true,
-                      confirmButtonColor: "#6F23D9",
-                      cancelButtonColor: "#d33",
-                      confirmButtonText: "Sim, sair!",
-                      cancelButtonText: "Cancelar"
-                    }).then(async (result) => {
-                      if(result.isConfirmed){
-                        try {
-                          const result = await requisitar(
-                            "GET",
-                            `/trevo-project/public/api/forum/sairforum?id=${idForm}`
-                          );
+                    swal
+                      .fire({
+                        title: "Você deseja sair do fórum?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#6F23D9",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Sim, sair!",
+                        cancelButtonText: "Cancelar",
+                      })
+                      .then(async (result) => {
+                        if (result.isConfirmed) {
+                          try {
+                            const result = await requisitar(
+                              "GET",
+                              `/trevo-project/public/api/forum/sairforum?id=${idForm}`
+                            );
 
-                          if (result.erro) {
-                            alert("Erro ao sair do fórum.");
-                            console.error(result.erro);
-                          } else if (result.dados.sucesso) {
-                            swal.fire({
-                              title: "Você saiu do fórum",
-                              icon: "success",
-                              showConfirmButton: false,
-                              timer: 1500,
-                              willClose: () => {
-                                window.location.href = "/trevo-project/public/forum-entrar";
-                              },
-                            })
-                          } else {
-                            alert(result.dados.message || "Não foi possível sair do fórum.");
+                            if (result.erro) {
+                              alert("Erro ao sair do fórum.");
+                              console.error(result.erro);
+                            } else if (result.dados.sucesso) {
+                              swal.fire({
+                                title: "Você saiu do fórum",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500,
+                                willClose: () => {
+                                  window.location.href =
+                                    "/trevo-project/public/forum-entrar";
+                                },
+                              });
+                            } else {
+                              alert(
+                                result.dados.message ||
+                                  "Não foi possível sair do fórum."
+                              );
+                            }
+                          } catch (e) {
+                            console.error("Erro ao fazer requisição:", e);
+                            alert("Erro inesperado ao sair do fórum.");
                           }
-                        } catch (e) {
-                          console.error("Erro ao fazer requisição:", e);
-                          alert("Erro inesperado ao sair do fórum.");
                         }
-                      }
-                    });  
+                      });
                   });
-                
 
                 listaMensagens.innerHTML = "";
 
@@ -313,35 +317,82 @@ window.onload = async function () {
                       menu
                         .querySelector("#editar")
                         .addEventListener("click", () => {
-                          alert("Editar clicado");
+                          Swal.fire({
+                            title: "Editar postagem",
+                            html: `
+                              <form id="alterar-post">
+                                <input type="text" name="texto" id="texto" class="swal2-input" placeholder="Editar post...">
+                                <input
+                                        name="id"
+                                        value="${post.pos_id}"
+                                        class="flex-1 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-300 hidden"
+                                      />
+                              </form>
+                            `,
+                            showCancelButton: true,
+                            confirmButtonText: "Salvar",
+                            cancelButtonText: "Cancelar",
+                            confirmButtonColor: "#6F23D9",
+                            preConfirm: () => {
+                              const nome =
+                                Swal.getPopup().querySelector(
+                                  "#texto"
+                                ).value;
+                              if (!nome)
+                                Swal.showValidationMessage(
+                                  "Por favor, preencha o campo"
+                                );
+                            },
+                          }).then(async (res) => {
+                            if (res.isConfirmed) {
+                              handleSubmitPost();
+                            }
+                          });
                         });
 
-                     menu.querySelector("#excluir").addEventListener("click", () => {
-                        swal.fire({
-                          title: "Você deseja excluir este post?",
-                          text: "Você não poderá reverter isso!",
-                          icon: "warning",
-                          showCancelButton: true,
-                          confirmButtonColor: "#6F23D9",
-                          cancelButtonColor: "#d33",
-                          confirmButtonText: "Sim, Excluir!",
-                          cancelButtonText: "Cancelar"
-                        }).then((result) => {
-                          if (result.isConfirmed) {                            
-                            fetch(`/trevo-project/public/api/post/deletar?tipo=post&id=${post.pos_id}`)
-                              .then(response => response.json())
-                              .then(data => {
-                                if (data.sucesso) {                                  
-                                  swal.fire("Deletado!", data.mensagem, "success").then(() => {
-                                    window.location.href = "http://localhost/trevo-project/public/forum";
+                      menu
+                        .querySelector("#excluir")
+                        .addEventListener("click", () => {
+                          swal
+                            .fire({
+                              title: "Você deseja excluir este post?",
+                              text: "Você não poderá reverter isso!",
+                              icon: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#6F23D9",
+                              cancelButtonColor: "#d33",
+                              confirmButtonText: "Sim, Excluir!",
+                              cancelButtonText: "Cancelar",
+                            })
+                            .then((result) => {
+                              if (result.isConfirmed) {
+                                fetch(
+                                  `/trevo-project/public/api/post/deletar?tipo=post&id=${post.pos_id}`
+                                )
+                                  .then((response) => response.json())
+                                  .then((data) => {
+                                    if (data.sucesso) {
+                                      swal
+                                        .fire(
+                                          "Deletado!",
+                                          data.mensagem,
+                                          "success"
+                                        )
+                                        .then(() => {
+                                          window.location.href =
+                                            "http://localhost/trevo-project/public/forum";
+                                        });
+                                    } else {
+                                      swal.fire(
+                                        "Erro",
+                                        "Não foi possível deletar o post.",
+                                        "error"
+                                      );
+                                    }
                                   });
-                                } else {
-                                  swal.fire("Erro", "Não foi possível deletar o post.", "error");
-                                }
-                              })
-                            }
-                           });
-                          });
+                              }
+                            });
+                        });
                     } else {
                       menu.innerHTML = `
                       <ul class="text-sm text-gray-700">
@@ -359,22 +410,24 @@ window.onload = async function () {
                       menu
                         .querySelector("#denunciar")
                         .addEventListener("click", () => {
-                          swal.fire({
-                            title: "Você deseja denunciar este post?",
-                            text: "Você não poderá reverter isso!",
-                            icon: "warning",
-                            showCancelButton: true,
-                            confirmButtonColor: "#6F23D9",
-                            cancelButtonColor: "#d33",
-                            confirmButtonText: "Sim, denunciar!",
-                            cancelButtonText: "Cancelar"
-                          }).then((result) => {
-                            if(result.isConfirmed){
-                              window.location.href = `/trevo-project/public/denunciar?tipo=post&id=${post.pos_id}`;
-                            }
-                          });                 
+                          swal
+                            .fire({
+                              title: "Você deseja denunciar este post?",
+                              text: "Você não poderá reverter isso!",
+                              icon: "warning",
+                              showCancelButton: true,
+                              confirmButtonColor: "#6F23D9",
+                              cancelButtonColor: "#d33",
+                              confirmButtonText: "Sim, denunciar!",
+                              cancelButtonText: "Cancelar",
+                            })
+                            .then((result) => {
+                              if (result.isConfirmed) {
+                                window.location.href = `/trevo-project/public/denunciar?tipo=post&id=${post.pos_id}`;
+                              }
+                            });
                         });
-                      }
+                    }
 
                     const container = document.createElement("div");
                     container.className = "relative inline-block";
@@ -419,8 +472,8 @@ window.onload = async function () {
                   `;
 
                     comentar.onclick = () => {
-                      window.location.href = `/trevo-project/public/forum-comentario?id=${post.pos_id}&idfr=${post.pos_for_id}`
-                    }
+                      window.location.href = `/trevo-project/public/forum-comentario?id=${post.pos_id}&idfr=${post.pos_for_id}`;
+                    };
                     comentar.append("Comentar");
 
                     acoes.appendChild(comentar);
