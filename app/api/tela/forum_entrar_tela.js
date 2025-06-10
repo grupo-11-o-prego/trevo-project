@@ -91,7 +91,10 @@ window.onload = async function () {
         topo.appendChild(svg);
 
         const titulo = document.createElement("h1");
-        titulo.className = "text-xl font-semibold mt-4 text-gray-900";
+        titulo.className = "text-xl font-semibold mt-4 text-gray-900 cursor-pointer hover:text-gray-700";
+        titulo.onclick = () => {
+          window.location.href = `http://localhost/trevo-project/public/forum-detalhes?id=${forumId}`;
+        }
         titulo.textContent = forum.for_titulo;
         topo.appendChild(titulo);
 

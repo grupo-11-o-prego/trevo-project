@@ -117,6 +117,7 @@ window.onload = async function () {
             forumList.forEach((f) => {
               const item = document.createElement("li");
               const tituloForum = f.for_titulo || "Fórum sem título";
+              const idForum = f.for_id;
 
               item.setAttribute("data-search", tituloForum.toLowerCase());
               item.dataset.id = `forum-${f.for_id}`;
@@ -157,7 +158,86 @@ window.onload = async function () {
                   chatTitle.className =
                     "flex justify-center items-center text-2xl text-center font-semibold text-[#6F23D9]";
                 }             
+                
 
+                const menuforum = document.createElement("div");
+                menuforum.className =
+                  "hidden absolute w-32 bg-white border border-gray-200 rounded shadow-md z-10";
+
+                const opcoesForum = document.createElement("button");
+                opcoesForum.innerHTML = `
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                    <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0"/>
+                  </svg>
+                `;
+                opcoesForum.className =
+                  "hover:bg-gray-100 p-1 rounded-full cursor-pointer";
+                chatTitle.appendChild(opcoesForum);
+                chatTitle.appendChild(menuforum);
+                opcoesForum.addEventListener("click", (e) => {
+                  e.stopPropagation();
+                  menuforum.classList.toggle("hidden");
+                });
+
+                document.addEventListener("click", () => {
+                  menuforum.classList.add("hidden");
+                });
+
+                menuforum.innerHTML = `
+                      <ul class="text-sm text-gray-700">
+
+                        <li class="flex items-center hover:text-red-500 px-4 py-2 hover:bg-gray-100 cursor-pointer" id="sair">
+                          Sair
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right ml-1" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0z"/>
+                            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708z"/>
+                          </svg>
+                        </li>
+                      </ul>
+                    `;
+
+                menuforum
+                  .querySelector("#sair")
+                  .addEventListener("click", () => {
+                    swal.fire({
+                      title: "Você deseja sair do fórum?",
+                      icon: "warning",
+                      showCancelButton: true,
+                      confirmButtonColor: "#6F23D9",
+                      cancelButtonColor: "#d33",
+                      confirmButtonText: "Sim, sair!",
+                      cancelButtonText: "Cancelar"
+                    }).then(async (result) => {
+                      if(result.isConfirmed){
+                        try {
+                          const result = await requisitar(
+                            "GET",
+                            `/trevo-project/public/api/forum/sairforum?id=${idForm}`
+                          );
+
+                          if (result.erro) {
+                            alert("Erro ao sair do fórum.");
+                            console.error(result.erro);
+                          } else if (result.dados.sucesso) {
+                            swal.fire({
+                              title: "Você saiu do fórum",
+                              icon: "success",
+                              showConfirmButton: false,
+                              timer: 1500,
+                              willClose: () => {
+                                window.location.href = "/trevo-project/public/forum-entrar";
+                              },
+                            })
+                          } else {
+                            alert(result.dados.message || "Não foi possível sair do fórum.");
+                          }
+                        } catch (e) {
+                          console.error("Erro ao fazer requisição:", e);
+                          alert("Erro inesperado ao sair do fórum.");
+                        }
+                      }
+                    });  
+                  });
                 
 
                 listaMensagens.innerHTML = "";
