@@ -316,11 +316,32 @@ window.onload = async function () {
                           alert("Editar clicado");
                         });
 
-                      menu
-                        .querySelector("#excluir")
-                        .addEventListener("click", () => {
-                          alert("Excluir clicado");
-                        });
+                     menu.querySelector("#excluir").addEventListener("click", () => {
+                        swal.fire({
+                          title: "Você deseja excluir este post?",
+                          text: "Você não poderá reverter isso!",
+                          icon: "warning",
+                          showCancelButton: true,
+                          confirmButtonColor: "#6F23D9",
+                          cancelButtonColor: "#d33",
+                          confirmButtonText: "Sim, Excluir!",
+                          cancelButtonText: "Cancelar"
+                        }).then((result) => {
+                          if (result.isConfirmed) {                            
+                            fetch(`/trevo-project/public/api/post/deletar?tipo=post&id=${post.pos_id}`)
+                              .then(response => response.json())
+                              .then(data => {
+                                if (data.sucesso) {                                  
+                                  swal.fire("Deletado!", data.mensagem, "success").then(() => {
+                                    window.location.href = "http://localhost/trevo-project/public/forum";
+                                  });
+                                } else {
+                                  swal.fire("Erro", "Não foi possível deletar o post.", "error");
+                                }
+                              })
+                            }
+                           });
+                          });
                     } else {
                       menu.innerHTML = `
                       <ul class="text-sm text-gray-700">

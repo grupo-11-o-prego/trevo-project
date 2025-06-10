@@ -285,7 +285,7 @@ window.onload = async function () {
           }).then(async (res) => {
             if (res.isConfirmed) {
               
-              window.location.href = `/trevo-project/public/denunciar?tipo=com&&id=${idanun}`;
+              window.location.href = `/trevo-project/public/denunciar?tipo=anun&id=${anuncioId}`;
             }
           });
         }
